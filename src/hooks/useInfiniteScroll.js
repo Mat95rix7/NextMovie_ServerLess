@@ -7,7 +7,7 @@ export function useInfiniteScroll(onLoadMore, hasMore) {
     const clientHeight = document.documentElement.clientHeight;
     
     // Charge plus de contenu quand on est proche du bas (100px avant)
-    if (scrollHeight - scrollTop <= clientHeight + 100 && hasMore) {
+    if (scrollHeight - scrollTop <= clientHeight + 50 && hasMore) {
       onLoadMore();
     }
   }, [onLoadMore, hasMore]);

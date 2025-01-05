@@ -24,29 +24,29 @@ export async function fetchMovies(query, page = 1, filters) {
     })
   );
 
-  if (filters.genres.length > 0) {
-    movies = movies.filter((movie) =>
-      movie.genre_ids.some((id) => filters.genres.includes(id))
-    );
-  }
+  // if (filters.selectedGenres.length > 0) {
+  //   movies = movies.filter((movie) =>
+  //     movie.genre_ids.some((id) => filters.selectedGenres.includes(id))
+  //   );
+  // }
 
-  if (filters.minRuntime) {
-    movies = movies.filter(
-      (movie) => movie.runtime >= filters.minRuntime
-    );
-  }
+  // if (filters.minRuntime) {
+  //   movies = movies.filter(
+  //     (movie) => movie.runtime >= filters.minRuntime
+  //   );
+  // }
 
-  if (filters.maxRuntime) {
-    movies = movies.filter(
-      (movie) => movie.runtime <= filters.maxRuntime
-    );
-  }
+  // if (filters.maxRuntime) {
+  //   movies = movies.filter(
+  //     (movie) => movie.runtime <= filters.maxRuntime
+  //   );
+  // }
 
-  if (filters.minRating) {
-    movies = movies.filter(
-      (movie) => movie.vote_average >= filters.minRating
-    );
-  }
+  // if (filters.minRating) {
+  //   movies = movies.filter(
+  //     (movie) => movie.vote_average >= filters.minRating
+  //   );
+  // }
 
   return {
     movies,
