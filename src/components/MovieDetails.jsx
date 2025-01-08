@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Star, Clock, Calendar } from 'lucide-react';
 import Divider from './Divider'
 import VideoPlay from './VideoPlay'
-import { TheaterList } from './MovieDetails/TheaterList';
+import { NearbyCinemas } from './NearbyCinemas';
 
 
 const MovieDetails = () => {
@@ -147,8 +147,8 @@ const MovieDetails = () => {
             </div>
           </div>
           {/* Add Showtimes Section */}
-          <div className="mt-12">
-            <TheaterList movieId={id} />
+          <div className="mt-12 mb-12">
+            <NearbyCinemas />
           </div>
         </div>
     </div>
