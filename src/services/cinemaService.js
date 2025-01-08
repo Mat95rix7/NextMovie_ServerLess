@@ -1,5 +1,5 @@
 import cinemasData from '../data/cinemas.json';
-export function findNearbyCinemas(userLocation, maxDistance = 10) {
+export function findNearbyCinemas(userLocation, maxDistance = 5) {
   const cinemas = cinemasData;
  
   return userLocation ? cinemas
