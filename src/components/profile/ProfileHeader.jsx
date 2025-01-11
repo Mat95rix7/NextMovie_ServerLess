@@ -1,4 +1,5 @@
 import { User } from 'lucide-react';
+import PropTypes from 'prop-types';
 
 export function ProfileHeader({ user, username }) {
   return (
@@ -15,5 +16,10 @@ export function ProfileHeader({ user, username }) {
     </div>
   );
 }
+
+ProfileHeader.propTypes = {
+  user: PropTypes.object,
+  username: PropTypes.string,
+};
 
 export default ProfileHeader

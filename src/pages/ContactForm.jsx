@@ -15,7 +15,7 @@ function ContactForm() {
 
     // Initialiser EmailJS
     useEffect(() => {
-      emailjs.init(Public_Key); // Remplacez par votre clé publique
+      emailjs.init(Public_Key);
     }, []);
 
   const handleSubmit = async (e) => {

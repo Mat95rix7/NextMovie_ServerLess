@@ -7,7 +7,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   server: {
     host: true, // Permet l'accès via le réseau local
-    port: 5173, // Port par défaut (vous pouvez le changer)
+    port: 3000, // Port par défaut (vous pouvez le changer)
   },
   plugins: [react()],
   resolve: {

@@ -1,4 +1,5 @@
 import  MovieCard  from '../../components/MovieCard';
+import PropTypes from 'prop-types';
 
 export function SearchResults({ movies, loading, pagination, totalMovies }) {
   if (loading && pagination.currentPage === 1) {
@@ -14,7 +15,6 @@ export function SearchResults({ movies, loading, pagination, totalMovies }) {
       </div>
     );
   }
-  console.log(pagination.currentPage, loading);
 
   return (
     <>
@@ -30,3 +30,10 @@ export function SearchResults({ movies, loading, pagination, totalMovies }) {
     </>
   );
 }
+
+SearchResults.propTypes = {
+  movies: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired,
+  pagination: PropTypes.object.isRequired,
+  totalMovies: PropTypes.number.isRequired,
+};

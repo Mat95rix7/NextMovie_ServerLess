@@ -60,7 +60,8 @@ const BannerHome = () => {
 
                                 <div className='container mx-auto'>
                                     <div className=' w-full absolute bottom-0 max-w-md px-3'>
-                                        <h2 className='font-bold text-2xl lg:text-4xl text-white drop-shadow-2xl '>{data?.title || data?.name}</h2>
+                                        <h2 className='font-bold text-2xl lg:text-4xl text-white drop-shadow-2xl '>
+                                        <Link to={"/movie/"+data.id}>{data?.title || data?.name}</Link></h2>
                                         <p className='text-ellipsis line-clamp-3 my-2'>{data.overview}</p>
                                         <div className='flex items-center gap-4'>
                                             <p>Rating : { Number(data.vote_average).toFixed(1) }+</p>
@@ -69,7 +70,7 @@ const BannerHome = () => {
                                         </div>
                                         <Link to={"/movie/"+data.id}>
                                             <button  className=' bg-white px-4 py-2 text-black font-bold rounded mt-4  hover:bg-gradient-to-l from-red-700 to-orange-500 shadow-md transition-all hover:scale-105'>
-                                                Play Now
+                                                Voir Plus
                                             </button>
                                         </Link>
                                     </div>

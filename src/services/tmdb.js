@@ -1,52 +1,17 @@
-const API_KEY = import.meta.env.VITE_API_TOKEN;
-const BASE_URL = 'https://api.themoviedb.org/3';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
-const options = {
-  method: 'GET',
-  headers: {
-    accept: 'application/json',
-    Authorization: `Bearer ${API_KEY}`,
-  },
-};
-export async function fetchMovies(query, page = 1, filters) {
-  const searchResponse = await fetch(
-    `${BASE_URL}/search/movie?&query=${query}&language=fr-FR&page=${page}`, options
-  );
-  const searchData = await searchResponse.json();
+export async function fetchMovies(query, page = 1) {
+  const searchResponse = await axios.get(`/search/movie?&query=${query}&language=fr-FR&page=${page}`)
+  const searchData = searchResponse.data;
   
   let movies = await Promise.all(
     searchData.results.map(async (movie) => {
-      const detailsResponse = await fetch(
-        `${BASE_URL}/movie/${movie.id}?&language=fr-FR`, options
-      );
-      const details = await detailsResponse.json();
+      const detailsResponse = await axios.get(`/movie/${movie.id}?&language=fr-FR`)
+      const details = detailsResponse.data;
       return { ...movie, runtime: details.runtime };
     })
   );
-
-  // if (filters.selectedGenres.length > 0) {
-  //   movies = movies.filter((movie) =>
-  //     movie.genre_ids.some((id) => filters.selectedGenres.includes(id))
-  //   );
-  // }
-
-  // if (filters.minRuntime) {
-  //   movies = movies.filter(
-  //     (movie) => movie.runtime >= filters.minRuntime
-  //   );
-  // }
-
-  // if (filters.maxRuntime) {
-  //   movies = movies.filter(
-  //     (movie) => movie.runtime <= filters.maxRuntime
-  //   );
-  // }
-
-  // if (filters.minRating) {
-  //   movies = movies.filter(
-  //     (movie) => movie.vote_average >= filters.minRating
-  //   );
-  // }
 
   return {
     movies,
@@ -57,9 +22,31 @@ export async function fetchMovies(query, page = 1, filters) {
 }
 
 export async function fetchGenres() {
-  const response = await fetch(
-    `${BASE_URL}/genre/movie/list?&language=fr-FR`, options
-  );
-  const data = await response.json();
+  const response = await axios.get(`/genre/movie/list?&language=fr-FR`)
+  const data = response.data;
+  // const data = await response.json();
   return data.genres;
 }
+
+export const FetchNowPlaying = (endpoint)=>{
+  const [data,setData] = useState([])
+  const [loading,setLoading] = useState(false)
+
+  const fetchData = async()=>{
+      try {
+          setLoading(true)
+          const response = await axios.get(endpoint)
+          setLoading(false)
+          setData(response.data.results)
+      } catch (error) {
+          console.log('error',error)
+     }
+  }
+
+  useEffect(()=>{
+      fetchData()
+  },[endpoint])
+
+  return { data , loading}
+}
+

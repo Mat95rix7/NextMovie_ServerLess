@@ -85,7 +85,7 @@ const MovieDetails = () => {
 
           <Divider/>
 
-          <div className="flex items-center gap-5">
+          <div className="flex flex-wrap justify-center md:justify-start items-center gap-5">
             {data.genres.map(genre => (
               <span
                 key={genre.id}

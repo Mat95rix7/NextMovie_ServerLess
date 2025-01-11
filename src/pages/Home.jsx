@@ -1,13 +1,10 @@
-import useFetch from '../hooks/useFetch';
 import BannerHome from '../components/BannerHome';
 import MovieCard from '../components/MovieCard';
+import { FetchNowPlaying } from '../services/tmdb';
 
 const Home = () => {
-
-  const URL = import.meta.env.VITE_NP_API_URL
-
-  const { data : data } = useFetch(URL)
-  
+  const { data : data } = FetchNowPlaying(import.meta.env.VITE_NP_API_URL)
+   
   return (
     <div>
       <BannerHome/>

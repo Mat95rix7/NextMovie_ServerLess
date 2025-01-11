@@ -16,8 +16,10 @@ export function useMovieSearch(searchQuery) {
     setLoading(true);
     try {
       const { movies: newMovies, totalPages, page: currentPage } = await fetchMovies(query, page);
+      console.log(newMovies, totalPages, currentPage);
       setMovies(prev => page === 1 ? newMovies : [...prev, ...newMovies]);
       setPagination({ currentPage, totalPages });
+      console.log(pagination.totalPages);
     } catch (error) {
       console.error('Error fetching movies:', error);
     } finally {
@@ -37,5 +39,55 @@ export function useMovieSearch(searchQuery) {
     fetchMoviesData(searchQuery, 1);
   }, [searchQuery, fetchMoviesData]);
 
-  return { movies, loading, pagination, fetchMoviesData };
+  return { movies, loading, pagination };
 }
+
+// import axios from 'axios'
+// import { useEffect, useState } from 'react'
+// import Card from '../components/Card'
+
+// export const useMovieSearch = (searchQuery) => {
+
+//   const [pageNo,setPageNo] = useState(1)
+//   const [data,setData] = useState([])
+//   const [totalPageNo,setTotalPageNo] = useState(0)
+
+//   const fetchData = async()=>{
+//     try {
+//       const { movies: newMovies, totalPages, totalResults, page: currentPage } = fetchMovies(searchQuery, page)
+
+//         setData((preve)=>{
+//           return[
+//               ...preve,
+//               ...newMovies
+//           ]
+//         })
+//         setTotalPageNo(totalPages)
+//     } catch (error) {
+//         console.log('error',error)
+//     }
+//   }
+
+//   const handleScroll = ()=>{
+//     if((window.innerHeight + window.scrollY ) >= document.body.offsetHeight){
+//       setPageNo(preve => preve + 1)
+//     }
+//   }
+
+//   useEffect(()=>{
+//     fetchData()
+//   },[pageNo])
+
+//   useEffect(()=>{
+//       setPageNo(1)
+//       setData([])
+//       fetchData()
+//   },[searchQuery])
+
+//   useEffect(()=>{
+//       window.addEventListener('scroll',handleScroll)
+//   },[])
+
+//   return { data, loading:false, pagination };
+
+// }

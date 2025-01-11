@@ -5,7 +5,7 @@ import MovieDetails from "../components/MovieDetails";
 import RegisterPage from '../pages/RegisterPage'
 import LoginPage from '../pages/LoginPage'
 import SearchPage from "../pages/SearchPage";
-import { ProfilePage } from "../pages/ProfilePage";
+import ProfilePage  from "../pages/ProfilePage";
 import ContactForm from "../pages/ContactForm";
 import About from "../pages/About";
 

@@ -41,7 +41,7 @@ const Header = () => {
           }
         };
         loadProfile();
-      }, [user]);
+      }, [username, user]);
 
     useEffect(() => {
         window.onclick = (event) => {
@@ -51,18 +51,15 @@ const Header = () => {
         };
     }, []);
 
-    useEffect(() => {
-        if(searchInput) {
-            navigate(`/search?${searchInput}`);
-        }
-    }, [searchInput, navigate]);
-
     const handleInputChange = (e) => {
         setSearchInput(e.target.value);
     };
     
     const handleSearchSubmit = (e) => {
         e.preventDefault();
+        if(searchInput) {
+            navigate(`/search?${searchInput}`);
+        }
         setSearchInput("");
     };
 
@@ -73,19 +70,6 @@ const Header = () => {
     const toggleSearch = () => {
         setIsSearchOpen(!isSearchOpen);
     };
-
-    useEffect(() => {
-        const handleBackButton = (e) => {
-            e.preventDefault();
-            setSearchInput("");
-        };
-     
-        window.addEventListener('popstate', handleBackButton);
-        
-        return () => {
-            window.removeEventListener('popstate', handleBackButton);
-        };
-    }, [navigate]);
     
     return (
         <header className='fixed top-0 w-full h-16 bg-black bg-opacity-50 z-40'>
@@ -94,7 +78,7 @@ const Header = () => {
                     <img
                         src={logo}
                         alt='logo'
-                        className='w-9 min-w-8 rounded-lg'
+                        className='w-9 min-w-8  rounded-lg'
                     />
                 </Link>
 

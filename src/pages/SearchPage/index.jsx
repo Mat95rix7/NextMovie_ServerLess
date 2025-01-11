@@ -4,11 +4,11 @@ import { SearchHeader } from './SearchHeader';
 import { SearchResults } from './SearchResults';
 import { useMovieSearch } from './hooks/useMovieSearch';
 import { useGenres } from './hooks/useGenres';
-import { useMovieFilters } from './hooks/useMovieFilters';
+import { useMovieFilters } from './hooks/useMovieFilters1';
 
 export function SearchPage() {
   const location = useLocation();
-  const { movies, loading, pagination, fetchMoviesData } = useMovieSearch(location.search.slice(1));
+  const { movies, loading, pagination } = useMovieSearch(location.search.slice(1));
   const { genres } = useGenres();
   const { filters, filterHandlers, filteredMovies } = useMovieFilters(movies);
 

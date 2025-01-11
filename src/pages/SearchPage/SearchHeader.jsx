@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 export function SearchHeader({ count, children }) {
   return (
     <div className="flex justify-between mt-14 mx-5">
@@ -8,3 +9,8 @@ export function SearchHeader({ count, children }) {
     </div>
   );
 }
+
+SearchHeader.propTypes = {
+  count: PropTypes.number,
+  children: PropTypes.node,
+};
