@@ -117,18 +117,18 @@ const Header = () => {
                             </button>
                     }
                         {isDropdownOpen && (
-                            <div className="absolute right-0 mt-2 rounded-lg bg-gray-50 min-w-[160px] shadow-lg z-[31]">
+                            <div className="absolute right-0 mt-2 rounded-lg bg-gray-50 min-w-[200px] shadow-lg z-[31]">
                                 {user ? (
                                     <>
                                         <Link 
                                             to="/profile"
-                                            className="block px-4 py-2 text-black text-center hover:bg-gray-300 rounded-t-lg"
+                                            className="block px-4 py-4 text-black text-center hover:bg-gray-300 rounded-t-lg"
                                         >
                                             Mon Espace
                                         </Link>
                                         <button 
                                             onClick={handleLogout}
-                                            className="w-full px-4 py-2 text-black text-center hover:bg-gray-300 rounded-b-lg"
+                                            className="w-full px-4 py-4 text-black text-center hover:bg-gray-300 rounded-b-lg"
                                         >
                                             Déconnexion
                                         </button>
@@ -137,13 +137,13 @@ const Header = () => {
                                     <>
                                         <Link 
                                             to="/login"
-                                            className="block px-4 py-2 text-black text-center hover:bg-gray-300 rounded-t-lg"
+                                            className="block px-4 py-4 text-black text-center hover:bg-gray-300 rounded-t-lg"
                                         >
                                             Connexion
                                         </Link>
                                         <Link 
                                             to="/register"
-                                            className="block px-4 py-2 text-black text-center hover:bg-gray-300 rounded-b-lg"
+                                            className="block px-4 py-4 text-black text-center hover:bg-gray-300 rounded-b-lg"
                                         >
                                             Inscription
                                         </Link>

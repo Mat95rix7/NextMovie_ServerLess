@@ -1,121 +1,150 @@
 import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { createUserProfile } from '../services/userService';
+import { createUserProfile, checkUsernameAvailability } from '../services/userService';
 import { Link, useNavigate } from 'react-router-dom';
+import { validateField } from '../services/errorMessages';
 
 export function RegisterForm() {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+
   const [isLoading, setIsLoading] = useState(false);
   const [validation, setValidation] = useState("")
-  const [errors, setErrors] = useState({});
+
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
+
+  const [errors, setErrors] = useState({
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
 
   const { signup } = useAuth();
   const navigate = useNavigate()
 
-  const validateForm = () => {
-    const newErrors = {};
-
-    // Regex pour valider l'email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      newErrors.email = "Veuillez entrer une adresse email valide.";
-    }
-
-    // Regex pour valider le mot de passe
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    if (!passwordRegex.test(password)) {
-      newErrors.password =
-        "Le mot de passe doit contenir au moins 8 caractères, une majuscule et un chiffre.";
-    }
-
-    // Vérification de la confirmation du mot de passe
-    if (password !== confirmPassword) {
-      newErrors.confirmPassword = "Les mots de passe ne correspondent pas.";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  
+    // Validation en temps réel
+    const error = validateField(name, value);
+    setErrors(prev => ({
+      ...prev,
+      [name]: error
+    }));
   };
-
-
-
-  const handleSubmit = async (e) => {
+  
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    setIsLoading(true);
+    // Validation de tous les champs avant soumission
+    const newErrors = {};
+    Object.keys(formData).forEach(field => {
+      const error = validateField(field, formData[field]);
+      if (error) newErrors[field] = error;
+    });
+  
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
 
-    if (!validateForm()) {
+    const check = await checkUsernameAvailability(formData.username)
+
+    if(!check) {
+      setValidation("Nom d'utilisateur déjà pris");
       setIsLoading(false);
       return;
     }
 
-    try {
-      const userCredential = await signup(email, password);
-      await createUserProfile(userCredential.user.uid, {
-        username,
-        email
-      });
-      navigate('/Login')
-    } catch (error) {
-      console.log(error.message);
-      if (error.message.startsWith("Firebase: Error (auth/invalid-email)")) {
-        setValidation("Email format invalid")
-      } else if (error.message.startsWith("Firebase: Password should be at least 6 characters (auth/weak-password)")) {
-        setValidation("weak-password");
-      } else if (error.message.startsWith("Firebase: Error (auth/email-already-in-use)")) {
-        setValidation("email-already-in-use");
-      } else {
-        setValidation("An unexpected error occurred"); 
-      }
-    } finally {
+    if(formData.password !== formData.confirmPassword) {
+      setValidation("Les mots de passe ne sont pas identiques");
       setIsLoading(false);
+      return
     }
-  };
+
+    try {
+          const userCredential = await signup(formData.email, formData.password);
+          await createUserProfile(userCredential.user.uid, {
+            username: formData.username,
+            email: formData.email
+          });
+          navigate("/")
+        } catch (error) {
+          console.log(error.message);
+          if (error.message.startsWith("Firebase: Error (auth/email-already-in-use)")) {
+            setValidation("Email déjà utilisé")
+          }
+        } finally {
+          // Si pas d'erreurs, on peut soumettre le formulaire
+          setIsLoading(false);
+         
+        }
+      };
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col w-full max-w-xs">
-      <input
-        className="mb-6 p-4 text-lg border border-gray-300 rounded-md"
-        type="text"
-        placeholder="Nom d'utilisateur"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        required
-      />
-      <input
-        className="mb-6 p-4 text-lg border border-gray-300 rounded-md"
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
-      {errors.email && <small className="error-message">{errors.email}</small>}
-      <input
-        className="mb-3 p-4 text-lg border border-gray-300 rounded-md"
-        type="password"
-        placeholder="Mot de passe"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
-      {errors.password && (
-          <small className="error-message">{errors.password}</small>
-      )}
-      <p className="text-amber-400 text-center mb-6">{validation}</p>
-      <input
-        className="mb-3 p-4 text-lg border border-gray-300 rounded-md"
-        type="password"
-        placeholder="Confirmer le mot de passe"
-        value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
-        required
-      />
-      {errors.confirmPassword && (
-          <small className="error-message">{errors.confirmPassword}</small>
-        )}
+
+        <input
+          className="mb-3 p-4 text-lg border text-gray-500 border-gray-300 rounded-md"
+          type="text"
+          placeholder="Nom d'utilisateur"
+          name='username'
+          value={formData.username}
+          onChange={handleChange}
+          required
+        />
+        {errors.username && (
+            <p className="mb-1 text-center text-sm text-amber-500">{errors.username}</p>
+          )}
+          
+        <input
+          className="mb-3 p-4 text-lg border text-gray-500 border-gray-300 rounded-md"
+          type="email"
+          name='email'
+          placeholder="Email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+        {errors.email && (
+            <p className="mb-1 text-center text-sm text-amber-500">{errors.email}</p>
+          )}
+          
+        <input
+          className="mb-3 p-4 text-lg border text-gray-500 border-gray-300 rounded-md"
+          type="password"
+          name='password'
+          placeholder="Mot de passe"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+          {errors.password && (
+            <p className="mb-1 text-center text-sm text-amber-500">{errors.password}</p>
+          )}
+          
+        <input
+          className="mb-3 p-4 text-lg border text-gray-500 border-gray-300 rounded-md"
+          type="password"
+          name='confirmPassword'
+          placeholder="Confirmer le mot de passe"
+          value={formData.confirmPassword}
+          onChange={handleChange}
+          required
+        />
+        {errors.confirmPassword && (
+            <small className="mb-1 text-center text-sm text-amber-500">{errors.confirmPassword}</small>
+          )}
+        
+        <p className="mb-1 text-center text-sm text-amber-500">{validation}</p>
+          
       <button
         type="submit"
         disabled={isLoading}
@@ -123,7 +152,7 @@ export function RegisterForm() {
       >
         {isLoading ? 'Inscription...' : 'Inscription'}
       </button>
-      <p className='text-white text-center mt-1'>Have already an account  ? <Link to="/Login" className='text-amber-400'>Sign In</Link></p>
+      <p className='text-white text-center mt-3'>Have already an account  ? <Link to="/Login" className='text-amber-400'>Sign In</Link></p>
     </form>
   );
 }

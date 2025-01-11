@@ -1,4 +1,4 @@
-import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../config/firebase';
 
 export async function createUserProfile(userId, data) {
@@ -29,4 +29,24 @@ export async function getUserProfile(userId) {
 export async function updateProfile(userId, data) {
   const userRef = doc(db, 'users', userId);
   await updateDoc(userRef, data);
+}
+
+export async function checkUsernameAvailability(username) {
+  const usersCollection = collection(db, 'users');
+  const q = query(usersCollection, where('username', '==', username));
+
+  try {
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      // Aucun document trouvé avec ce nom d'utilisateur
+      return true; // Le nom d'utilisateur est disponible
+    } else {
+      // Au moins un document trouvé avec ce nom d'utilisateur
+      return false; // Le nom d'utilisateur est déjà pris
+    }
+  } catch (error) {
+    console.error("Erreur lors de la vérification :", error);
+    return false; // Ou gérer l'erreur différemment selon vos besoins
+  }
 }

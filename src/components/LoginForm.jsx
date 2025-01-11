@@ -1,12 +1,16 @@
 import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useNavigate, Link } from 'react-router-dom';
+import { validateField } from '../services/errorMessages';
 
 export function LoginForm() {
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [validation, setValidation] = useState("")
+  const [errorMail, setErrorMail] = useState('');
+  const [errorAuth, setErrorAuth] = useState('')
+
   const { login } = useAuth();
   const navigate = useNavigate()
 
@@ -15,18 +19,23 @@ export function LoginForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setErrorMail('');
+    setErrorAuth('')
+
+    const error = validateField('email', email)
+    console.log(error);
+    if (error) {
+      setErrorMail(error)
+      setIsLoading(false)
+      return
+    }
+
     try {
-      setValidation('')
       await login(email, password);
       navigate('/')
     } catch (error) {
-      console.log(error.message);
-      if (error.message.startsWith("Firebase: Error (auth/invalid-email)")) {
-        setValidation("Email format invalid")
-      } else if (error.message.startsWith("Firebase: Error (auth/invalid-credential)")) {
-        setValidation("Email and/or password incorrect");
-      } else {
-        setValidation("An unexpected error occurred"); 
+      if (error.message.startsWith("Firebase: Error (auth/invalid-credential)")) {
+        setErrorAuth("Email et/ou mot de passe incorrect"); 
       }
     } finally {
       setIsLoading(false);
@@ -36,22 +45,25 @@ export function LoginForm() {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col w-full max-w-xs">
       <input
-        className="mb-6 p-4 text-lg border border-gray-300 rounded-md"
+        className="mb-3 p-4 text-lg border text-gray-500 border-gray-300 rounded-md"
         type="email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
       />
+      { errorMail && <p className="mb-3 text-center text-sm text-amber-500">{errorMail}</p>}
+
       <input
-        className="mb-3 p-4 text-lg border border-gray-300 rounded-md"
+        className="mb-3 p-4 text-lg border text-gray-500 border-gray-300 rounded-md"
         type="password"
         placeholder="Mot de passe"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         required
       />
-      <p className="text-amber-400 text-center mb-6">{validation}</p>
+      {errorAuth && <p className="mb-3 text-center text-sm text-amber-500">{errorAuth}</p>}
+      
       <button
         type="submit"
         disabled={isLoading}
@@ -59,7 +71,7 @@ export function LoginForm() {
       >
         {isLoading ? 'Connexion...' : 'Se connecter'}
       </button>
-      <p className='text-white text-center mt-1'>Don&apos;t Have an account ? <Link to="/Register" className='text-amber-400'>Sign Up</Link></p>
+      <p className='text-white text-center mt-3'>Don&apos;t Have an account ? <Link to="/Register" className='text-amber-400'>Sign Up</Link></p>
     </form>
   );
 }
