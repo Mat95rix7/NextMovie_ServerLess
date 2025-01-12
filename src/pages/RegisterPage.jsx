@@ -1,11 +1,9 @@
 import { RegisterForm } from '../components/RegisterForm';
 import Logo from '../assets/Logo.jpg';
-import { Toaster } from 'react-hot-toast';
 
 const RegisterPage = () => {
   return (
     <div className="flex h-screen">
-      <Toaster position="top-right" />
       <div className="flex-1 flex flex-col items-center justify-center bg-gray-500 p-5">
         <h1 className="text-4xl mb-10 text-amber-300 font-semibold capitalize">
           Inscription

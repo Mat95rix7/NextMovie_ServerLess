@@ -6,6 +6,7 @@ import { toast } from 'react-hot-toast';
 import logo from '../assets/Logo.jpg';
 import userIcon from '../assets/user.png';
 import  { getUserProfile }  from '../services/userService';
+import ThemeToggle from './ThemeToggle';
 
 const Header = () => {
     const location = useLocation();
@@ -72,7 +73,7 @@ const Header = () => {
     };
     
     return (
-        <header className='fixed top-0 w-full h-16 bg-black bg-opacity-50 z-40'>
+         <header className='fixed top-0 w-full h-16 bg-black bg-opacity-50 z-40'>
             <div className='container mx-auto px-3 flex items-center h-full'>
                 <Link to={"/"}>
                     <img
@@ -152,8 +153,13 @@ const Header = () => {
                             </div>
                         )}
                     </div>
+                    <div className='ms-6 '>
+                        <ThemeToggle />
+                    </div>
+
                 </div>
-            </div>
+              </div>
+              
             {isSearchOpen && (
                 <div className='md:hidden my-2 mx-4 sticky top-[70px] z-30'>
                     <input 

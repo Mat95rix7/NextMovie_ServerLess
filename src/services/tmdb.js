@@ -28,14 +28,14 @@ export async function fetchGenres() {
   return data.genres;
 }
 
-export const FetchNowPlaying = (endpoint)=>{
+export const Fetching = (endpoint)=>{
   const [data,setData] = useState([])
   const [loading,setLoading] = useState(false)
 
   const fetchData = async()=>{
       try {
           setLoading(true)
-          const response = await axios.get(endpoint)
+          const response = await axios.get(`${endpoint}?include_adult=false&language=fr-FR`)
           setLoading(false)
           setData(response.data.results)
       } catch (error) {
@@ -50,3 +50,26 @@ export const FetchNowPlaying = (endpoint)=>{
   return { data , loading}
 }
 
+export const FetchDetails = (endpoint)=>{
+    const [data,setData] = useState()
+    const [loading,setLoading] = useState(false)
+    const [error,setError] = useState(false)
+
+    const fetchData = async()=>{
+        try {
+            setLoading(true)
+            const response = await axios.get(endpoint)
+            setLoading(false)
+            setData(response.data)
+        } catch (error) {
+            console.log('error',error)
+            setError(error)
+       }
+    }
+
+    useEffect(()=>{
+        fetchData()
+    },[endpoint])
+
+    return { data , loading, error}
+}

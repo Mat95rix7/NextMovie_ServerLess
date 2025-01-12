@@ -35,7 +35,7 @@ export function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 pt-20">
+    <div className="min-h-screen  pt-20">
       <Toaster position="top-right" />
       <div className="max-w-3xl mx-auto px-4">
         <div className="bg-white rounded-lg shadow-md overflow-hidden">

@@ -1,10 +1,11 @@
-import useFetchDetails from '../hooks/useFetchDetails';
+
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { Star, Clock, Calendar } from 'lucide-react';
 import Divider from './Divider'
 import VideoPlay from './VideoPlay'
 import { NearbyCinemas } from './NearbyCinemas';
+import { FetchDetails } from '../services/tmdb';
 
 
 const MovieDetails = () => {
@@ -14,7 +15,7 @@ const MovieDetails = () => {
   const [playVideoId,setPlayVideoId] = useState("")
   const { id } = useParams();
   
-  const { data: data, isLoading, error } = useFetchDetails(`/movie/${id}?language=fr-FR&append_to_response=credits`);
+  const { data: data, isLoading, error } = FetchDetails(`/movie/${id}?language=fr-FR&append_to_response=credits`);
 
   if (isLoading) {
     return (
@@ -67,7 +68,7 @@ const MovieDetails = () => {
       <div className='absolute w-full h-full top-0 bg-gradient-to-t from-neutral-900/90 to-transparent'></div>    
     </div>
 
-    <div className='container mx-auto px-3 py-16 lg:py-0 flex flex-col lg:flex-row gap-5 lg:gap-10 '>
+    <div className='container mx-auto mt-10 px-3 py-16 lg:py-0 flex flex-col lg:flex-row gap-5 lg:gap-10 '>
       <div className="w-full md:w-1/3 lg:w-1/4 flex-shrink-0">
           {data.poster_path && (
             <img
@@ -80,7 +81,7 @@ const MovieDetails = () => {
           <button onClick={()=>handlePlayVideo(data)} className='mt-3 w-full py-2 px-4 text-center bg-white text-black rounded font-bold text-lg hover:bg-gradient-to-l from-red-500 to-orange-500 hover:scale-105 transition-all'>Play Now</button>
         </div>
         <div>
-          <h2 className='text-2xl lg:text-4xl font-bold text-white '>{data?.title || data?.name}</h2>
+          <h2 className='text-2xl lg:text-4xl font-bold '>{data?.title || data?.name}</h2>
           <p className='text-neutral-400'>{data?.tagline}</p> 
 
           <Divider/>
@@ -98,7 +99,7 @@ const MovieDetails = () => {
 
           <Divider/>
 
-          <div className="flex flex-wrap gap-6 text-gray-300">
+          <div className="flex flex-wrap gap-6">
             <div className="flex items-center gap-2">
               <Star className="w-5 h-5 text-amber-500" />
               <span>{data.vote_average.toFixed(1)}/10</span>
@@ -118,7 +119,7 @@ const MovieDetails = () => {
           <Divider/>
             
           <div className='mb-5'>
-              <h3 className='text-xl font-bold text-white mb-1'>Synopsis</h3>
+              <h3 className='text-xl font-bold mb-1'>Synopsis</h3>
               <p>{data?.overview}</p>
           </div>
           

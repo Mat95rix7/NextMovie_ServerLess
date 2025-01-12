@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.4",
     "@reduxjs/toolkit": "^2.5.0",
     "axios": "^1.7.9",
     "class-variance-authority": "^0.7.1",
@@ -27,6 +28,7 @@
     "redux": "^5.0.1",
     "redux-logger": "^3.0.6",
     "tailwind-merge": "^2.6.0",
+    "tailwind-scrollbar-hide": "^2.0.0",
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {

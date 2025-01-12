@@ -16,7 +16,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
-  @apply bg-neutral-900 text-neutral-300 p-0 m-0
+  /* @apply bg-neutral-900 text-neutral-300 p-0 m-0 */
 }
 
 code {
@@ -86,5 +86,14 @@ code {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+.scrolbar-none::-webkit-scrollbar{
+  display: none;
+}
+
+@layer base {
+  body {
+    @apply bg-neutral-300 text-black dark:bg-neutral-900 dark:text-neutral-300 p-0 m-0;
   }
 }

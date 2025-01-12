@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import { IoClose } from "react-icons/io5";
-import useFetchDetails from '../hooks/useFetchDetails';
+import { FetchDetails } from '../services/tmdb';
 
 const VideoPlay = ({data, close}) => {
-  const { data : videoData } = useFetchDetails(`/movie/${data?.id}/videos?language=fr-FR`)
+  const { data : videoData } = FetchDetails(`/movie/${data?.id}/videos?language=fr-FR`)
 
   return (
     <section className='fixed bg-neutral-700 top-0 right-0 bottom-0 left-0 z-40 bg-opacity-50 flex justify-center items-center'> 

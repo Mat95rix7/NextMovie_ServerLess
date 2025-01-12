@@ -31,7 +31,7 @@ const MovieCard = ({ data }) => {
   };
 
   return (
-          <div className="relative group overflow-hidden rounded-lg shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer" onClick={handleDetailsClick}>
+          <div className="relative group overflow-hidden min-w-[230px] max-w-[230px] rounded-lg shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer m-3" onClick={handleDetailsClick}>
             <img
               src={ data.poster_path ? `https://image.tmdb.org/t/p/w500${data.poster_path}` : NoImage }
               alt={data.title}
