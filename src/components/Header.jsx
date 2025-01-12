@@ -153,7 +153,7 @@ const Header = () => {
                             </div>
                         )}
                     </div>
-                    <div className='ms-6 '>
+                    <div>
                         <ThemeToggle />
                     </div>
 

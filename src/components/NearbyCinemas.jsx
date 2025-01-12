@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { findNearbyCinemas } from '../services/cinemaService';
-import { MapPin, SlidersHorizontal } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 
 export function NearbyCinemas() {
   const [cinemas, setCinemas] = useState([]);
@@ -49,27 +49,24 @@ export function NearbyCinemas() {
     return `https://www.google.com/maps/search/?api=1&query=${addressQuery}`;
 };
   if (loading) return <div className="text-center py-4">Recherche des cinémas proches...</div>;
-  if (error) return <div className="text-red-500 py-4">{error}</div>;
+  if (error) return <div className="text-amber-500 py-4">{error}</div>;
 
   return (
     <div className="mt-6">
       <div className="flex items-center justify-between mb-2">
         <h3 className="text-2xl font-bold mb-6 flex items-center gap-2"><MapPin className="w-6 h-6" />Cinémas à proximité</h3>
-        <div className="flex items-center">
-              <SlidersHorizontal className="w-4 h-4 mr-2 text-amber-600 text-lg" />
-              <span className="text-lg  mr-2">Distance</span>
-        </div>
       </div>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center text-lg gap-6 mb-4">
+          <span className="ms-3">Distance</span>
           <input
             type="range"
             min="1"
             max="10"
             value={maxDistance}
             onChange={(e) => setMaxDistance(Number(e.target.value))}
-            className="w-full h-2 bg-gray-200 accent-amber-400 rounded-lg appearance-none cursor-pointer mb-5"
+            className="w-full h-2 bg-gray-200 accent-amber-400 rounded-lg appearance-none cursor-pointer"
           />
-          <span className="min-w-[60px] text-xl mb-5">{maxDistance} km</span>
+          <span className="min-w-[60px] me-3 ">{maxDistance} km</span>
         </div>
       {cinemas.length > 0 ? (
         <div className="space-y-4">
@@ -79,17 +76,17 @@ export function NearbyCinemas() {
                 <h4 className="font-bold text-amber-600 mb-2">{cinema.nom}</h4>
                 <span className="text-amber-600">{formatDistance(cinema.distance)}</span>
               </div>
-              <div className='flex justify-between'>
-                <p className="text-gray-600 mb-2">{cinema.adresse}</p>
-                <div className="flex gap-2 mt-2">
+              <div className='flex justify-between mb-2 mt-2'>
+                <p className="text-gray-600">{cinema.adresse}</p>
+                <div className="flex gap-2 ">
                     <a
                       href={getGoogleMapsUrl(cinema)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-600 hover:text-blue-800 text-sm flex items-center"
+                      className="text-gray-600 hover:text-blue-800 text-sm flex items-center"
                     >
-                      <MapPin className="w-4 h-4 mr-1" />
-                      Voir sur Google Maps
+                      <MapPin className="w-4 h-4 me-2" />
+                      Itinéraire
                     </a>
                   </div>
               </div>

@@ -69,7 +69,7 @@ const MovieDetails = () => {
     </div>
 
     <div className='container mx-auto mt-10 px-3 py-16 lg:py-0 flex flex-col lg:flex-row gap-5 lg:gap-10 '>
-      <div className="w-full md:w-1/3 lg:w-1/4 flex-shrink-0">
+      <div className="w-full md:w-3/4 md:mx-auto lg:w-1/4 flex-shrink-0">
           {data.poster_path && (
             <img
               src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
