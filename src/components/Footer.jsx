@@ -12,7 +12,7 @@ const Footer = () => {
         </div>
         <div>
           <div className="text-center mt-3 mb-3 text-amber-600">Liens Rapides</div>
-          <div className='grid grid-cols-1 md:grid-cols-3 justify-center items-center text-center gap-4'>
+          <div className='grid grid-cols-3 justify-center items-center text-center gap-4'>
             <Link to="/">Home</Link>
             <Link to="/contact">Contact</Link> 
             <Link to="/about" >About</Link>

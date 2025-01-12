@@ -28,6 +28,10 @@ function App() {
     }
   }
 
+  useEffect(() => {
+    document.documentElement.classList.add('dark');
+  }, []);
+
   useEffect(()=>{
     fetchNowPlaying()
     fetchConfiguration()

@@ -4,7 +4,7 @@ import { MapPin, SlidersHorizontal } from 'lucide-react';
 
 export function NearbyCinemas() {
   const [cinemas, setCinemas] = useState([]);
-  const [maxDistance, setMaxDistance] = useState(10);
+  const [maxDistance, setMaxDistance] = useState(5);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
