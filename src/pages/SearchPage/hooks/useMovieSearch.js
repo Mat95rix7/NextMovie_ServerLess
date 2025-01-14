@@ -16,7 +16,6 @@ export function useMovieSearch(searchQuery) {
     setLoading(true);
     try {
       const { movies: newMovies, totalPages, page: currentPage } = await fetchMovies(query, page);
-      console.log(newMovies, totalPages, currentPage);
       setMovies(prev => page === 1 ? newMovies : [...prev, ...newMovies]);
       setPagination({ currentPage, totalPages });
       console.log(pagination.totalPages);

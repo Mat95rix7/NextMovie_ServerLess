@@ -3,6 +3,7 @@ import { useAuth } from '../hooks/useAuth';
 import { useNavigate, Link } from 'react-router-dom';
 import { validateField } from '../services/errorMessages';
 import  SuccessModal  from './SuccessModal';
+import { getUserProfile } from '../services/userService';
 
 export function LoginForm() {
 
@@ -34,8 +35,17 @@ export function LoginForm() {
       return
     }
 
+    const updateProfile = async (userId) => {
+      if (userId) {
+          const userProfile = await getUserProfile(userId);
+          localStorage.setItem('profile', JSON.stringify(userProfile));
+          return userProfile;
+      };
+    };
+
     try {
-      await login(email, password);
+      const account = await login(email, password);
+      updateProfile(account.uid);
       setShowModal(true);
       setTimeout(() => {
         navigate("/")

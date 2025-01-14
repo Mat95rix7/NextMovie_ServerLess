@@ -8,6 +8,7 @@ const Home = () => {
   const { data : topPopularData } = Fetching('/movie/popular')
   const { data : topUpcomingdData } = Fetching('/movie/upcoming')
 
+
    
   return (
     <div>

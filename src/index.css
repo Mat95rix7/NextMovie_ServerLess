@@ -94,6 +94,6 @@ code {
 
 @layer base {
   body {
-    @apply bg-neutral-300 text-black dark:bg-neutral-900 dark:text-neutral-300 p-0 m-0;
+    @apply bg-neutral-400 text-black dark:bg-neutral-700 dark:text-neutral-300 p-0 m-0;
   }
 }

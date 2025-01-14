@@ -18,7 +18,7 @@ export function SearchResults({ movies, loading, pagination, totalMovies }) {
 
   return (
     <>
-      <div className="grid grid-cols-[repeat(auto-fit,300px)] gap-24 justify-center mx-auto m-10">
+      <div className="grid grid-cols-[repeat(auto-fit,300px)]  justify-center mx-auto m-10">
         {movies.map((movie) => (
           <MovieCard key={`${movie.id}-${movie.title}`} data={movie} />
         ))}

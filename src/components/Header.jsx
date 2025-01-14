@@ -24,6 +24,7 @@ const Header = () => {
     const handleLogout = async () => {
         try {
             await logout();
+            localStorage.removeItem('profile');
             toast.success('Déconnexion réussie');
             navigate('/');
         } catch (error) {
@@ -73,7 +74,7 @@ const Header = () => {
     };
     
     return (
-         <header className='fixed top-0 w-full h-16 bg-black bg-opacity-50 z-40'>
+         <header className='fixed top-0 w-full h-16 bg-gray-300 bg-opacity-50 dark:bg-black dark:bg-opacity-50  z-40'>
             <div className='container mx-auto px-3 flex items-center h-full'>
                 <Link to={"/"}>
                     <img
@@ -90,7 +91,7 @@ const Header = () => {
                         <input
                             type='text'
                             placeholder='Tapez votre recherche...'
-                            className='bg-transparent px-4 py-1 outline-none border-none hidden md:block text-white'
+                            className='bg-transparent px-4 py-1 outline-none border-none hidden md:block text-amber-500'
                             onChange={handleInputChange}
                             value={searchInput}
                         />
@@ -99,11 +100,13 @@ const Header = () => {
                         </button>
                     </form>
 
-                    <div className="relative inline-block w-8 h-8">
+
+
+                    <div className="relative inline-block h-8">
                     {user ? 
                             <span 
                                 onClick={toggleDropdown}
-                                className="dropdown rounded-full w-full h-full cursor-pointer text-amber-400">
+                                className="dropdown rounded-full w-full h-full cursor-pointer mx-auto text-amber-400">
                                 { username || user.email?.split('@')[0] }
                             </span>
                              :
@@ -153,7 +156,7 @@ const Header = () => {
                             </div>
                         )}
                     </div>
-                    <div>
+                    <div className='m'>
                         <ThemeToggle />
                     </div>
 
