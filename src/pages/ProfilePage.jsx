@@ -1,52 +1,52 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import  { getUserProfile }  from '../services/userService';
+import  { getUserProfile }  from '../hooks/userProfile';
 import  ProfileHeader   from '../components/profile/ProfileHeader';
-import { getDoc, doc } from 'firebase/firestore';
 import  ProfileSettings  from '../components/profile/ProfileSettings';
 import { Toaster } from 'react-hot-toast';
 import  UserStats  from '../components/profile/UserStats';
-import { db } from '../config/firebase';
-
 
 export function ProfilePage() {
   const { user } = useAuth();
-  const [profile, setProfile] = useState(null);
-  const [username, setUsername] = useState('');
+  const [profile, setProfile] = useState();
+  const [displayName, setDisplayName] = useState('');
+  const [stats, setstats] = useState('');
 
-  useEffect(() => {
-    const loadProfile = async () => {
-      if (user) {
-        const userProfile = await getUserProfile(user.uid);
-        setProfile(userProfile);
-        // setUsername(userProfile?.username || '');
-      }
-    };
-    loadProfile();
-  }, [profile]);
-
-  useEffect(() => {
-      const updateProfile = async () => {
-        if (user) {
-            const userProfile = await getUserProfile(user.uid);
-            localStorage.setItem('profile', JSON.stringify(userProfile));
-            return userProfile;
-        };
-      };
-      updateProfile()
-  },[user])
-
-
-  useEffect(() => {
-        const savedProfile = localStorage.getItem('profile');
-        if (savedProfile) {
-          setProfile(JSON.parse(savedProfile));
-        }
+  const loadProfile = useCallback(async () => {
+    if (user) {
+      const userProfile = await getUserProfile(user.uid);
+      setProfile(userProfile);
+      setDisplayName(userProfile?.displayName || '');
+      setstats(userProfile?.stats || '');
+    }
   }, [user]);
+
+  useEffect(() => {
+    loadProfile();
+  }, [loadProfile]);  
+
+  // useEffect(() => {
+  //     const updateProfile = async () => {
+  //       if (user) {
+  //           const userProfile = await getUserProfile(user.uid);
+  //           localStorage.setItem('profile', JSON.stringify(userProfile));
+  //           return userProfile;
+  //       };
+  //     };
+  //     updateProfile()
+  // },[user])
+
+
+  // useEffect(() => {
+  //       const savedProfile = localStorage.getItem('profile');
+  //       if (savedProfile) {
+  //         setProfile(JSON.parse(savedProfile));
+  //       }
+  // }, [user]);
   
 
-  const handleProfileUpdate = (newUsername) => {
-    setUsername(newUsername);
+  const handleProfileUpdate = (newdisplayName) => {
+    setDisplayName(newdisplayName);
   };
 
   if (!user) {
@@ -62,8 +62,8 @@ export function ProfilePage() {
       <Toaster position="top-right" />
       <div className="max-w-6xl mx-auto px-4">
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
-          <ProfileHeader user={user} username={username} />
-          <UserStats stats={profile?.stats} />  
+          <ProfileHeader user={user} displayName={displayName} />
+          <UserStats stats={stats} />  
           <div className="border-t border-gray-200">
             <ProfileSettings user={user} onUpdate={handleProfileUpdate} />
           </div>

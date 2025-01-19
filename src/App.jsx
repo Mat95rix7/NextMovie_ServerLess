@@ -9,7 +9,6 @@ import { setBannerData,setImageURL } from './store/movieSlice';
 function App() {
   
   const dispatch = useDispatch()
-
   const fetchNowPlaying = async()=>{
     try {
         const response = await axios.get('/movie/now_playing?include_adult=false&language=fr-FR')
@@ -38,13 +37,13 @@ function App() {
   })
   
   return (
-    <main className='pb-14 lg:pb-0'>
-        <Header/>
-        <div className='min-h-[90vh]'>
-            <Outlet/>
-        </div>
-        <Footer/>
-    </main>
+      <main className='pb-14 lg:pb-0'>
+          <Header/>
+          <div className='min-h-[90vh]'>
+              <Outlet/>
+          </div>
+          <Footer/>
+      </main>
   );
 }
 

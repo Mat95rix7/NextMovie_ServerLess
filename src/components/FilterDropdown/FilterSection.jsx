@@ -1,5 +1,5 @@
-import React from 'react';
 import { ChevronDown } from 'lucide-react';
+import PropTypes from 'prop-types';
 
 export function FilterSection({ title, children, isExpandable = false, isExpanded = false, onToggle }) {
   return (
@@ -19,3 +19,11 @@ export function FilterSection({ title, children, isExpandable = false, isExpande
     </div>
   );
 }
+
+FilterSection.propTypes = {
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+  isExpandable: PropTypes.bool,
+  isExpanded: PropTypes.bool,
+  onToggle: PropTypes.func,
+};

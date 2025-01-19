@@ -24,6 +24,10 @@ code {
     monospace;
 }
 
+.scrolbar-none::-webkit-scrollbar{
+  display: none;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -88,12 +92,9 @@ code {
     @apply bg-background text-foreground;
   }
 }
-.scrolbar-none::-webkit-scrollbar{
-  display: none;
-}
 
 @layer base {
   body {
-    @apply bg-neutral-400 text-black dark:bg-neutral-700 dark:text-neutral-300 p-0 m-0;
+    @apply bg-neutral-300 text-neutral-900 dark:bg-neutral-900 dark:text-neutral-300 p-0 m-0;
   }
 }

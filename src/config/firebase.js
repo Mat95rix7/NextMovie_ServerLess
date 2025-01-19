@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, browserLocalPersistence, setPersistence} from 'firebase/auth';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -15,10 +16,11 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 setPersistence(auth, browserLocalPersistence);
 export const db = getFirestore(app);
+export const storage = getStorage(app);
 
-// export const usersCollectionRef = collection(db, 'users');
-// export const getUsers = async () => {
-//   const data = await getDocs(usersCollectionRef);
-//   return data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-// };
+export const usersCollectionRef = collection(db, 'users');
+export const getUsers = async () => {
+  const data = await getDocs(usersCollectionRef);
+  return data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+};
 

@@ -134,7 +134,7 @@ const MovieDetails = () => {
                     <img
                       src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
                       alt={actor.name}
-                      className="w-1/2 rounded-3xl mx-auto mb-2"
+                      className="w-1/2 rounded-xl mx-auto mb-2"
                     />
                   ) : (
                     <div className="w-1/2 mx-auto aspect-[2/3] bg-gray-800 rounded-lg mb-2 flex items-center justify-center">

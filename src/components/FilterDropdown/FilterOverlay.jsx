@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import PropTypes from 'prop-types';
 import { X } from 'lucide-react';
 import { FilterSection } from './FilterSection';
 
@@ -7,7 +8,7 @@ export function FilterOverlay({
   onClose,
   genres,
   selectedGenres,
-  minRuntime,
+  // minRuntime,
   maxRuntime,
   minRating,
   isRecent,
@@ -18,22 +19,18 @@ export function FilterOverlay({
   onReset,
 }) {
   const [isGenresExpanded, setIsGenresExpanded] = useState(false);
+  const [value, setValue] = useState(0);
 
   if (!isOpen) return null;
 
-  const handleRuntimeChange = (value) => {
-    const minutes = Math.round((value / 100) * 240);
-    onRuntimeChange(0, minutes);
-  };
+  const marks = [0, 1, 2, 3, 4];
 
-  const getRuntimeLabel = (maxMinutes) => {
-    if (maxMinutes >= 240) return "Tous";
-    if (maxMinutes >= 180) return "3h et moins";
-    if (maxMinutes >= 120) return "2h et moins";
-    return "1h30 et moins";
-  };
 
-  const sliderValue = (maxRuntime / 240) * 100;
+   const handleRuntimeChange = (value) => {
+    setValue(value);
+    const minutes = value * 60;
+    onRuntimeChange(minutes);
+  };
 
   return (
     <div className="fixed top-0 right-5  z-50 flex items-start justify-center pt-20">
@@ -96,23 +93,30 @@ export function FilterOverlay({
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
-                Ancien
+                Tous
               </button>
             </div>
           </FilterSection>
 
           <FilterSection title="Durée">
-            <div className="space-y-4 ">
+            <div>
               <input
                 type="range"
                 min="0"
-                max="100"
-                value={sliderValue}
-                onChange={(e) => handleRuntimeChange(Number(e.target.value))}
+                max="4"
+                step="0.5"
+                value={maxRuntime/60}
+                onChange={(e) => handleRuntimeChange(e.target.value)}
                 className="w-full accent-amber-500"
               />
-              <div className="text-center text-sm text-gray-600">
-                {getRuntimeLabel(maxRuntime)}
+
+              <div className="relative w-full flex justify-between">
+                {marks.map((mark) => (
+                  <div key={mark} className="flex flex-col items-center text-sm text-gray-600">
+                    <div className={`w-1 h-1 rounded-full mb-2 ${value >= mark ? 'bg-amber-600' : 'bg-gray-300'}`} /> 
+                      {mark}h
+                </div>
+              ))}
               </div>
             </div>
           </FilterSection>
@@ -128,7 +132,7 @@ export function FilterOverlay({
                 onChange={(e) => onRatingChange(Number(e.target.value))}
                 className="w-full accent-amber-500"
               />
-              <div className="text-center">{minRating} / 10</div>
+              <div className="text-center text-sm text-gray-600">{minRating} / 10</div>
             </div>
           </FilterSection>
         </div>
@@ -151,3 +155,19 @@ export function FilterOverlay({
     </div>
   );
 }
+
+FilterOverlay.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  genres: PropTypes.array.isRequired,
+  selectedGenres: PropTypes.array.isRequired,
+  minRuntime: PropTypes.number.isRequired,
+  maxRuntime: PropTypes.number.isRequired,
+  minRating: PropTypes.number.isRequired,
+  isRecent: PropTypes.bool.isRequired,
+  onGenreChange: PropTypes.func.isRequired,
+  onRuntimeChange: PropTypes.func.isRequired,
+  onRatingChange: PropTypes.func.isRequired,
+  onRecentChange: PropTypes.func.isRequired,
+  onReset: PropTypes.func.isRequired,
+};

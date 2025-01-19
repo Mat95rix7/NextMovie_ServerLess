@@ -121,7 +121,7 @@ MovieCard.propTypes = {
   data: PropTypes.shape({
     poster_path: PropTypes.string,
     vote_count: PropTypes.number,
-    genres:PropTypes.number,
+    genres:PropTypes.array,
     genre_ids: PropTypes.array,
     title: PropTypes.string,
     release_date: PropTypes.string,

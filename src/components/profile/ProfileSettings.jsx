@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { updateProfile } from '../../services/userService';
+import { updateProfile } from '../../hooks/userProfile';
+import PropTypes from 'prop-types';
 
 export function ProfileSettings({ user, onUpdate }) {
-  const [username, setUsername] = useState('');
+  
+  const [displayName, setDisplayName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -11,11 +13,12 @@ export function ProfileSettings({ user, onUpdate }) {
     setIsLoading(true);
     
     try {
-      await updateProfile(user.uid, { username });
-      onUpdate(username);
+      await updateProfile(user.uid, { displayName });
+      onUpdate(displayName);
       toast.success('Profil mis à jour avec succès');
-      setUsername('');
+      setDisplayName('');
     } catch (error) {
+      console.log(error);
       toast.error('Erreur lors de la mise à jour du profil');
     } finally {
       setIsLoading(false);
@@ -28,19 +31,19 @@ export function ProfileSettings({ user, onUpdate }) {
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
-            Nom d'utilisateur
+            Nom d&apos;utilisateur
           </label>
           <input
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={displayName}
+            onChange={(e) => setDisplayName(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-amber-400"
             placeholder="Nouveau nom d'utilisateur"
           />
         </div>
         <button
           type="submit"
-          disabled={isLoading || !username}
+          disabled={isLoading || !displayName}
           className="bg-amber-400 text-white px-4 py-2 rounded hover:bg-amber-500 transition-colors disabled:opacity-50"
         >
           {isLoading ? 'Mise à jour...' : 'Mettre à jour'}
@@ -49,5 +52,10 @@ export function ProfileSettings({ user, onUpdate }) {
     </div>
   );
 }
+
+ProfileSettings.propTypes = {
+  user: PropTypes.object.isRequired,
+  onUpdate: PropTypes.func.isRequired,
+};
 
 export default ProfileSettings

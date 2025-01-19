@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { fetchMovies } from '../../../services/tmdb';
-import { useInfiniteScroll } from '../../../hooks/useInfiniteScroll'
+import { fetchMovies } from '../services/tmdb';
+import { useInfiniteScroll } from './useInfiniteScroll'
 
 export function useMovieSearch(searchQuery) {
   const [movies, setMovies] = useState([]);

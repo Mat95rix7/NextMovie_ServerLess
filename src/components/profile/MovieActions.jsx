@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Heart, Clock, Star, MoreHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -102,5 +103,10 @@ function MovieActions({ userId, movieId }) {
     </div>
   );
 }
+
+MovieActions.propTypes = {
+  userId: PropTypes.string.isRequired,
+  movieId: PropTypes.number.isRequired,
+};
 
 export default MovieActions;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { createUserProfile, checkUsernameAvailability } from '../services/userService';
+import { createUserProfile, checkUsernameAvailability } from '../hooks/userProfile';
 import { Link, useNavigate } from 'react-router-dom';
 import { validateField } from '../services/errorMessages';
 import  SuccessModal  from './SuccessModal';
@@ -13,14 +13,14 @@ export function RegisterForm() {
   const [showModal, setShowModal] = useState(false);
 
   const [formData, setFormData] = useState({
-    username: '',
+    displayName: '',
     email: '',
     password: '',
     confirmPassword: ''
   });
 
   const [errors, setErrors] = useState({
-    username: '',
+    displayName: '',
     email: '',
     password: '',
     confirmPassword: ''
@@ -35,8 +35,7 @@ export function RegisterForm() {
       ...prev,
       [name]: value
     }));
-  
-    // Validation en temps réel
+ 
     const error = validateField(name, value);
     setErrors(prev => ({
       ...prev,
@@ -47,13 +46,13 @@ export function RegisterForm() {
   useEffect(() => {
     setValidUsername('')
     const checkUsername = async() => {
-      const check = await checkUsernameAvailability(formData.username)
+      const check = await checkUsernameAvailability(formData.displayName)
       if(!check) {
         setValidUsername("Nom d'utilisateur déjà pris");
       }
     };
     checkUsername()
-  }, [formData.username])
+  }, [formData.displayName])
 
   useEffect(() => {
     setValidation('')
@@ -61,10 +60,9 @@ export function RegisterForm() {
       setValidation("Les mots de passe ne sont pas identiques");
     }
   },[formData.password, formData.confirmPassword])
-
+  
   const handleSubmit = async(e) => {
     e.preventDefault();
-    // Validation de tous les champs avant soumission
     const newErrors = {};
     Object.keys(formData).forEach(field => {
       const error = validateField(field, formData[field]);
@@ -75,32 +73,26 @@ export function RegisterForm() {
       setErrors(newErrors);
       return;
     }
-
     setIsLoading(true);  
-
     if(validation) {
       setIsLoading(false);
       return
     }
-
     try {
-          const userCredential = await signup(formData.email, formData.password);
+          const userCredential = await signup(formData.email, formData.password, formData.displayName);
+          console.log(userCredential);
           await createUserProfile(userCredential.user.uid, {
-            username: formData.username,
+            displayName: formData.displayName,
             email: formData.email
           });
           setShowModal(true);
-          setTimeout(() => {
-            navigate("/")
-          }, 2000)
-        } catch (error) {
+          navigate("/")
+      } catch (error) {
           if (error.message.startsWith("Firebase: Error (auth/email-already-in-use)")) {
             setValidation("Email déjà utilisé")
           }
         } finally {
-          // Si pas d'erreurs, on peut soumettre le formulaire
           setIsLoading(false);
-         
         }
       }
 
@@ -113,13 +105,13 @@ export function RegisterForm() {
             className="mb-3 p-4 text-lg border text-gray-500 border-gray-300 rounded-md"
             type="text"
             placeholder="Nom d'utilisateur"
-            name='username'
-            value={formData.username}
+            name='displayName'
+            value={formData.displayName}
             onChange={handleChange}
             required
           />
-          {errors.username && (
-              <p className="mb-3 text-center text-sm text-amber-500">{errors.username}</p>
+          {errors.displayName && (
+              <p className="mb-3 text-center text-sm text-amber-500">{errors.displayName}</p>
             )}
           {validUsername && (
               <p className="mb-3 text-center text-sm text-amber-500">{validUsername}</p>
@@ -175,11 +167,13 @@ export function RegisterForm() {
         </button>
         <p className='text-white text-center mt-3'>Have already an account  ? <Link to="/Login" className='text-amber-400'>Sign In</Link></p>
       </form>
+
       <SuccessModal 
           showModal={showModal}
           setShowModal={setShowModal}
           type="Inscription"
         />
+
       </div>
   );
 }

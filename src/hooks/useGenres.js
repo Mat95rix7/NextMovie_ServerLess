@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchGenres } from '../../../services/tmdb';
+import { fetchGenres } from '../services/tmdb';
 
 export function useGenres() {
   const [genres, setGenres] = useState([]);

@@ -5,8 +5,9 @@ export async function createUserProfile(userId, data) {
   try { 
     const userRef = doc(db, 'users', userId);
     await setDoc(userRef, {
-      username: data.username, 
-      email: data.email, 
+      displayName: data.displayName, 
+      email: data.email,
+      role : "user", 
       createdAt: new Date().toISOString(), 
       stats: {
         watchlist: 0, 
@@ -21,6 +22,10 @@ export async function createUserProfile(userId, data) {
   }
 
 export async function getUserProfile(userId) {
+  if (!userId) {
+    console.log("Aucun utilisateur connecté");
+    return null;
+  }
   const userRef = doc(db, 'users', userId);
   const docSnap = await getDoc(userRef);
   return docSnap.exists() ? docSnap.data() : null;
@@ -33,11 +38,9 @@ export async function updateProfile(userId, data) {
 
 export async function checkUsernameAvailability(username) {
   const usersCollection = collection(db, 'users');
-  const q = query(usersCollection, where('username', '==', username));
-
+  const q = query(usersCollection, where('displayName', '==', username));
   try {
     const querySnapshot = await getDocs(q);
-
     if (querySnapshot.empty) {
       // Aucun document trouvé avec ce nom d'utilisateur
       return true; // Le nom d'utilisateur est disponible
@@ -50,3 +53,11 @@ export async function checkUsernameAvailability(username) {
     return false; // Ou gérer l'erreur différemment selon vos besoins
   }
 }
+
+//   const updateDisplayName = async (newName) => {
+//     try {
+//       await updateUserProfile({ displayName: newName });
+//     } catch (error) {
+//       throw new Error('Erreur lors de la mise à jour du nom d\'utilisateur');
+//     }
+//   };

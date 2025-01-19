@@ -3,7 +3,7 @@ import { useState, useMemo } from 'react';
 export function useMovieFilters(movies) {
   const [filters, setFilters] = useState({
     selectedGenres: [],
-    minRuntime: 0,
+    // minRuntime: 0,
     maxRuntime: 240,
     minRating: 0,
     isRecent: false,
@@ -13,8 +13,10 @@ export function useMovieFilters(movies) {
   const filterHandlers = {
     setSelectedGenres: (genres) => 
       setFilters(prev => ({ ...prev, selectedGenres: genres })),
-    setRuntime: (min, max) => 
-      setFilters(prev => ({ ...prev, minRuntime: min, maxRuntime: max })),
+    // setRuntime: (min, max) => 
+    //   setFilters(prev => ({ ...prev, minRuntime: min, maxRuntime: max })),
+    setRuntime: (max) => 
+      setFilters(prev => ({ ...prev, maxRuntime: max })),
     setMinRating: (rating) => 
       setFilters(prev => ({ ...prev, minRating: rating })),
     setIsRecent: (isRecent) => 
@@ -45,7 +47,10 @@ export function useMovieFilters(movies) {
       }
 
       // Runtime filter
-      if (movie.runtime < filters.minRuntime || movie.runtime > filters.maxRuntime) {
+      // if (movie.runtime < filters.minRuntime || movie.runtime > filters.maxRuntime) {
+      //   return false;
+      // }
+      if (movie.runtime >  filters.maxRuntime) {
         return false;
       }
 
@@ -54,12 +59,13 @@ export function useMovieFilters(movies) {
         return false;
       }
 
-      // Recent movies filter (within last 2 years)
+      // Recent movies filter (within last 1 years)
       if (filters.isRecent) {
-        const twoYearsAgo = new Date();
-        twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - 2);
+        const oneYearsAgo = new Date();
+        oneYearsAgo.setFullYear(oneYearsAgo.getFullYear() - 1);
         const movieDate = new Date(movie.release_date);
-        if (movieDate < twoYearsAgo) {
+        console.log(movieDate, oneYearsAgo);
+        if (movieDate < oneYearsAgo) {
           return false;
         }
       }

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import PropTypes from 'prop-types';
 import { FilterButton } from './FilterButton';
 import { FilterOverlay } from './FilterOverlay';
 
@@ -13,7 +14,7 @@ export function FilterDropdown(props) {
 
   const handleReset = () => {
     props.onGenreChange([]);
-    props.onRuntimeChange(0, 240);
+    props.onRuntimeChange(240);
     props.onRatingChange(0);
     props.onRecentChange(false);
   };
@@ -32,4 +33,17 @@ export function FilterDropdown(props) {
       />
     </>
   );
+}
+
+FilterDropdown.propTypes = {
+  genres: PropTypes.array.isRequired,
+  selectedGenres: PropTypes.arrayOf(PropTypes.string).isRequired,
+  minRuntime: PropTypes.number.isRequired,
+  maxRuntime: PropTypes.number.isRequired,
+  minRating: PropTypes.number.isRequired,
+  isRecent: PropTypes.bool.isRequired,
+  onGenreChange: PropTypes.func.isRequired,
+  onRuntimeChange: PropTypes.func.isRequired,
+  onRatingChange: PropTypes.func.isRequired,
+  onRecentChange: PropTypes.func.isRequired,
 }

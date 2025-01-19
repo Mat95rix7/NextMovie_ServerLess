@@ -27,7 +27,7 @@ const HorizontalScollCard = ({data = [], heading}) => {
                     }
                 </div>
 
-                <div className='absolute top-0 hidden lg:flex justify-between w-full h-full items-center'>
+                <div className='absolute top-0 flex justify-between w-full h-full items-center'>
                     <button onClick={handlePrevious} className='bg-white p-1 text-black rounded-full -ml-2 z-10'>
                         <FaAngleLeft/>
                     </button>

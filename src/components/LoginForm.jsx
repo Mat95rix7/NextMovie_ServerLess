@@ -3,7 +3,7 @@ import { useAuth } from '../hooks/useAuth';
 import { useNavigate, Link } from 'react-router-dom';
 import { validateField } from '../services/errorMessages';
 import  SuccessModal  from './SuccessModal';
-import { getUserProfile } from '../services/userService';
+import { getUserProfile } from '../hooks/userProfile';
 
 export function LoginForm() {
 
@@ -44,8 +44,8 @@ export function LoginForm() {
     };
 
     try {
-      const account = await login(email, password);
-      updateProfile(account.uid);
+      const user = await login(email, password);
+      updateProfile(user.uid);
       setShowModal(true);
       setTimeout(() => {
         navigate("/")
@@ -92,10 +92,10 @@ export function LoginForm() {
         <p className='text-white text-center mt-3'>Don&apos;t Have an account ? <Link to="/Register" className='text-amber-400'>Sign Up</Link></p>
       </form>
       <SuccessModal 
-      showModal={showModal}
-      setShowModal={setShowModal}
-      type="connexion"
-    />
+        showModal={showModal}
+        setShowModal={setShowModal}
+        type="connexion"
+      />
   </div>
   );
 }
