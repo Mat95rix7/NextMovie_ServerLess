@@ -71,8 +71,8 @@ const Header = () => {
                                     {displayName || user.email?.split('@')[0]}
                                 </span>  
                             ) : (
-                                <Button variant="ghost" className="h-8 w-8 p-0 bg-white/30 hover:bg-white/50">
-                                    <img src={userIcon} alt="User menu" className="w-full h-full"/>
+                                <Button variant="ghost" className="w-full h-full cursor-pointer">
+                                    <img src={userIcon} alt="User menu" className="w-10/12"/>
                                 </Button>
                             )
                         }   
