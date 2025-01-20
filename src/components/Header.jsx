@@ -20,14 +20,17 @@ const Header = () => {
     const { user, logout } = useAuth();
     const [profile, setProfile] = useState(null);
     const [displayName, setDisplayName] = useState('');
+    const [userRole, setUserRole] = useState('');
     const [isOpen, setIsOpen] = useState(false);
+
+    console.log(user);
 
    
 
 
     const menuItems = user
     ? [
-        { label: "Espace Client", onClick: () => navigate('/profile') },
+        { label: "Espace Client", onClick: () => (userRole === "admin") ? navigate('/admin') : navigate('/profile') },
         { label: "Logout", onClick: async() => {
             try {
                 await logout();
@@ -50,6 +53,7 @@ const Header = () => {
             const userProfile = await getUserProfile(user.uid);
             setProfile(userProfile);
             setDisplayName(userProfile?.displayName || '');
+            setUserRole(userProfile?.role || 'user');
           }
         };
         loadProfile();

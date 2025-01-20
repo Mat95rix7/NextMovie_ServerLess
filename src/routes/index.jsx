@@ -8,6 +8,7 @@ import SearchPage from "../pages/SearchPage";
 import ProfilePage  from "../pages/ProfilePage";
 import ContactForm from "../pages/ContactForm";
 import About from "../pages/About";
+import AdminDashboard from "../pages/AdminDashboard";
 
 const router = createBrowserRouter([
     {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
             {
                 path : "/profile",
                 element : <ProfilePage/>
+            },
+            {
+                path : "admin",
+                element : <AdminDashboard />
             },
             {
                 path : "search",
