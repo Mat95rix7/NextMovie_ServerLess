@@ -67,7 +67,6 @@ const Header = () => {
                 </Link>
                 <div className='ml-auto flex items-center gap-10'>
                     <IoSearchOutline className="w-full text-2xl cursor-pointer" onClick={() => navigate("/search")}/>
-                    <ThemeToggle />
                     <DropdownMenu open={isOpen} onOpenChange={setIsOpen} >
                         <DropdownMenuTrigger asChild>
                             {user ? (
@@ -93,6 +92,7 @@ const Header = () => {
                             ))}
                         </DropdownMenuContent>
                     </DropdownMenu>  
+                    <ThemeToggle />
                 </div>
               </div>
         </header>
