@@ -22,12 +22,7 @@ const Header = () => {
     const [displayName, setDisplayName] = useState('');
     const [userRole, setUserRole] = useState('');
     const [isOpen, setIsOpen] = useState(false);
-
-    console.log(user);
-
-   
-
-
+    
     const menuItems = user
     ? [
         { label: "Mon Espace", onClick: () => (userRole === "admin") ? navigate('/admin') : navigate('/profile') },
