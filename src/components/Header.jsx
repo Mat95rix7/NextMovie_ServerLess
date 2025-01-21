@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+ctimport { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { IoSearchOutline } from "react-icons/io5";
 import { useAuth } from '../hooks/useAuth';
@@ -31,7 +31,7 @@ const Header = () => {
     const menuItems = user
     ? [
         { label: "Mon Espace", onClick: () => (userRole === "admin") ? navigate('/admin') : navigate('/profile') },
-        { label: "Logout", onClick: async() => {
+        { label: "Déconnexion", onClick: async() => {
             try {
                 await logout();
                 toast.success('Déconnexion réussie');
