@@ -30,7 +30,7 @@ const Header = () => {
 
     const menuItems = user
     ? [
-        { label: "Espace Client", onClick: () => (userRole === "admin") ? navigate('/admin') : navigate('/profile') },
+        { label: "Mon Espace", onClick: () => (userRole === "admin") ? navigate('/admin') : navigate('/profile') },
         { label: "Logout", onClick: async() => {
             try {
                 await logout();
