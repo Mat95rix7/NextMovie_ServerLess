@@ -18,7 +18,8 @@ function UserStats({ stats }) {
     const ids = [
       ...(stats.favorites || []),
       ...(stats.watchlist || []),
-      ...(stats.reviews?.map(r => r.movieId) || [])
+      // ...(stats.reviews?.map(r => r.movieId) || [])
+      ...(Array.isArray(stats.reviews) ? stats.reviews.map(r => r.movieId) : [])
     ];
     return [...new Set(ids)];
   }, [stats]);
