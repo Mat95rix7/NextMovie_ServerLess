@@ -11,7 +11,7 @@ export function SearchResults({ movies, loading, pagination, totalMovies }) {
       <div className="text-center py-20 text-gray-300">
         {totalMovies > 0 
           ? `Il n'y a pas de films correspondants aux filtres sélectionnés.`
-          : 'Utilise la barre de recherche pour trouver des films.'}
+          : 'Utilisez la barre de recherche pour trouver des films.'}
       </div>
     );
   }
