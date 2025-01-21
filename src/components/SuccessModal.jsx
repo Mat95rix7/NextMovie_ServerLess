@@ -11,7 +11,7 @@ import { CheckCircle } from 'lucide-react';
 const SuccessModal = ({ showModal, setShowModal, type}) => {
 
   return (
-    <div className="space-y-4 mx-4">
+    <div className="space-y-4 space-x-4">
       <Dialog open={showModal} onOpenChange={setShowModal}>
         <DialogContent className="sm:max-w-md p-0 overflow-hidden bg-gradient-to-b from-white to-gray-50">
           <div className="relative">
