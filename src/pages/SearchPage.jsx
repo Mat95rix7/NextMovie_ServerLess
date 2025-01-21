@@ -46,7 +46,7 @@ export function SearchPage() {
         </form>
         </div>
         <h3 className="capitalize text-lg lg:text-xl font-semibold ms-10 mt-24">
-            Resultats de recharche ({filteredMovies.length})
+            Resultats de recherche ({filteredMovies.length})
         </h3>
         <SearchResults
           movies={filteredMovies}

@@ -86,7 +86,7 @@ const AboutPage = () => {
           <CardContent className="p-8">
             <div className="flex flex-col md:flex-row items-center gap-8">
               <div className="relative group">
-                <div className="w-40 h-48 rounded-full overflow-hidden shadow-xl group-hover:shadow-2xl transition-shadow duration-300">
+                <div className="w-44 h-48 rounded-3xl overflow-hidden shadow-xl group-hover:shadow-2xl transition-shadow duration-300">
                   <img 
                     src={Mat95rix7}
                     alt="Photo du créateur"
