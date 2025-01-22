@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Users, Film, Activity, Settings, Shield, Star, Eye, Trash2, Edit, Search, MapPin, Armchair } from 'lucide-react';
-import { fetchUsers, fetchMovies } from '../services/adminUtils';
+import { Users, Film, Activity, Settings, Shield, Star, Eye, Trash2, Edit, Search, MapPin, Armchair, Projector } from 'lucide-react';
 import { getUsers } from '../config/firebase';
+import CinemasData from '../data/cinemas.json'
 
 function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('users');
@@ -28,7 +28,7 @@ function AdminDashboard() {
     
     // getUsers();
     // fetchMovies();
-    // fetchTheaters();
+    fetchTheaters();
   }, []);
 
   // const fetchStats = async () => {
@@ -45,9 +45,10 @@ function AdminDashboard() {
   //   // À implémenter avec Firebase
   // };
 
-  // const fetchTheaters = async () => {
-  //   // implémenter avec Firebase
-  // };
+  const fetchTheaters = async () => {
+    setTheaters(CinemasData);
+    // implémenter avec Firebase
+  };
 
   const handleDeleteUser = async () => {
     if (window.confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
@@ -67,7 +68,7 @@ function AdminDashboard() {
     }
   };
 
-  console.log(users);
+  console.log(theaters)
 
   const cardContent = () => {
     switch (activeTab) {
@@ -295,7 +296,7 @@ function AdminDashboard() {
                         Salles Totales
                       </dt>
                       <dd className="text-lg font-medium text-gray-900">
-                        {stats.totalTheaters}
+                        {theaters.length || 0}
                       </dd>
                     </dl>
                   </div>
@@ -552,7 +553,7 @@ function AdminDashboard() {
                       Capacité
                     </th>
                     <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Type
+                      Ecrans
                     </th>
                     <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Équipements
@@ -574,15 +575,22 @@ function AdminDashboard() {
                             <MapPin className="h-6 w-6 text-gray-400" />
                           </div>
                           <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900">{theater.name}</div>
-                            <div className="text-sm text-gray-500">{theater.location}</div>
+                            <div className="text-sm font-medium text-gray-900">{theater.nom}</div>
+                            <div className="text-sm text-gray-500">{theater.adresse}</div>
+                            <div className="text-sm text-gray-500">{theater.commune}</div>
                           </div>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         <div className="flex items-center">
                           <Armchair className="h-4 w-4 mr-1" />
-                          {theater.capacity} places
+                          {theater.fauteuils} places
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <div className="flex items-center">
+                          <Projector className="h-4 w-4 mr-1" />
+                          {theater.ecrans} ecrans
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -591,10 +599,10 @@ function AdminDashboard() {
                           theater.type === '3D' ? 'bg-green-100 text-green-800' : 
                           'bg-gray-100 text-gray-800'
                         }`}>
-                          {theater.type}
+                          {/* {theater.type} */}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         <div className="flex flex-wrap gap-1">
                           {theater.equipment.map((item, index) => (
                             <span key={index} className="px-2 py-1 bg-gray-100 rounded-full text-xs">
@@ -602,10 +610,10 @@ function AdminDashboard() {
                             </span>
                           ))}
                         </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      </td> */}
+                      {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {theater.todayScreenings || 0} séances
-                      </td>
+                      </td> */}
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <button 
                           className="text-indigo-600 hover:text-indigo-900 mr-4"
