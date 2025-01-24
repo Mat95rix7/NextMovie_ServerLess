@@ -19,6 +19,7 @@ export const db = getFirestore(app);
 export const storage = getStorage(app);
 
 export const usersCollectionRef = collection(db, 'users');
+
 export const getUsers = async () => {
   const data = await getDocs(usersCollectionRef);
   return data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));

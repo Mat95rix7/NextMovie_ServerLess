@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { auth } from '../config/firebase';
+import { auth, db } from '../config/firebase';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { 
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -12,7 +13,13 @@ export function useAuth() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async(user) => {
+      if (!user) {
+        setUser(null);
+        setLoading(false);
+        return;
+      }
+      await updateLastLogin(user.uid);
       setUser(user);
       setLoading(false);
     });
@@ -38,7 +45,20 @@ export function useAuth() {
         throw error; 
       } 
     }; 
-    
+
+  const updateLastLogin = async (userId) => {
+    const userRef = doc(db, "users", userId);
+    try {
+      const userDoc = await getDoc(userRef);
+      const userData = userDoc.data() || {};
+      await setDoc(userRef, 
+        { ...userData, lastLogin: new Date().toISOString() }, 
+        { merge: true }
+      );
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour:", error);
+    }
+  };
   const logout = () => {
     return signOut(auth);
   };
