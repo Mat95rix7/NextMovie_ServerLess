@@ -9,6 +9,9 @@ export default defineConfig({
     host: true, // Permet l'accès via le réseau local
     port: 3000, // Port par défaut (vous pouvez le changer)
   },
+  build: {
+    outDir: "dist" // Par défaut, Vite construit dans "dist"
+  },
   plugins: [react()],
   resolve: {
     alias: {
