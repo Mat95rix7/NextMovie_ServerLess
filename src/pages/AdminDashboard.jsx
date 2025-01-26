@@ -63,7 +63,7 @@ function AdminDashboard() {
                   Films Consultés
                 </dt>
                 <dd className="text-lg font-medium text-gray-900">
-                  {getTotalMoviesInApp(users).size || 0}
+                  {getTotalMoviesInApp(users).totalMovies || 0}
                 </dd>
               </dl>
             </div>
@@ -83,7 +83,7 @@ function AdminDashboard() {
                   Films Favoris
                 </dt>
                 <dd className="text-lg font-medium text-gray-900">
-                  {getTotalMoviesInApp(users).totalFovorites || 0}
+                  {getTotalMoviesInApp(users).totalFavorites || 0}
                 </dd>
               </dl>
             </div>

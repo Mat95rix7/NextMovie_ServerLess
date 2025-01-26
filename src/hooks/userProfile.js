@@ -45,26 +45,6 @@ export async function updateProfile(userId, data) {
   }
 }
 
-// const updateUserProfile = async (userId, newDisplayName) => {
-//   try {
-//     // Mise à jour dans Firebase
-//     await updateProfile(auth.currentUser, {
-//       displayName: newDisplayName
-//     });
-    
-//     // Mise à jour de l'état global (exemple avec Redux)
-//     dispatch(updateDisplayName(newDisplayName));
-    
-//     // Mise à jour dans Firestore si nécessaire
-//     const userRef = doc(db, 'users', userId);
-//     await updateDoc(userRef, { displayName: newDisplayName });
-
-//   } catch (error) {
-//     console.error("Erreur lors de la mise à jour du profil :", error);
-//   }
-// };
-
-
 export async function checkUsernameAvailability(username) {
   const usersCollection = collection(db, 'users');
   const q = query(usersCollection, where('displayName', '==', username));
@@ -83,37 +63,39 @@ export async function checkUsernameAvailability(username) {
   }
 }
 
-//   const updateDisplayName = async (newName) => {
-//     try {
-//       await updateUserProfile({ displayName: newName });
-//     } catch (error) {
-//       throw new Error('Erreur lors de la mise à jour du nom d\'utilisateur');
-//     }
-//   };
 export const getTotalMoviesPerUser =  (user) => {
   
-    const favorites = user.stats?.favorites?.length || 0;
-    const watchlist = user.stats?.watchlist?.length || 0;
-    const ratedMovies = user.stats?.reviews?.length || 0;
-    
-    return favorites + watchlist + ratedMovies;
+    const favorites = user.stats?.favorites || [];
+    const watchlist = user.stats?.watchlist || [];
+    const ratedMovies = user.stats?.reviews || [];
+    const allMovies = [...favorites, ...watchlist, ...ratedMovies];
+    // Use a Set to remove duplicates
+    const uniqueMovies = new Set(allMovies);
+    // Return the size of the Set
+    return uniqueMovies.size;
 };
 
 export const getTotalMoviesInApp = (users) => {
-  
-  let totalMovies = new Set();
-  let totalFovorites = 0;
+  let totalUniqueMovies = new Set();
+  let uniqueFavorites = new Set();
 
-  users.forEach(user => {
+  users.forEach((user) => {
     const favorites = user.stats?.favorites || [];
     const watchlist = user.stats?.watchlist || [];
-    const ratedMovies = (Array.isArray(user.stats?.reviews) ? user.stats?.reviews?.map(review => review.movieId) : []);
-    totalMovies = new Set([...totalMovies, ...favorites, ...watchlist, ...ratedMovies]);
-    totalFovorites += favorites.length;
-  });
-  let size = totalMovies.size
+    const ratedMovies = user.stats?.reviews 
+      ? user.stats.reviews.map((review) => review.movieId) 
+      : [];
 
-  return { size, totalFovorites }
+    // Ajouter tous les films uniques au Set
+    totalUniqueMovies = new Set([...totalUniqueMovies, ...favorites, ...watchlist, ...ratedMovies]);
+
+    // Ajouter au total des favoris
+    uniqueFavorites = new Set([...uniqueFavorites, ...favorites]);
+  });
+  const totalMovies = totalUniqueMovies.size;
+  const totalFavorites = uniqueFavorites.size;
+
+  return { totalMovies, totalFavorites };
 };
 
 export async function deleteUserAccount(userid) {

@@ -119,7 +119,7 @@ function UserStats({ stats }) {
         </TabsContent>
 
         <TabsContent value="reviews" className="text-black mt-6 px-3 my-10 container mx-auto">
-          <h2 className='text-xl lg:text-2xl font-bold mb-3 capitalize'>Mes Note</h2>
+          <h2 className='text-xl lg:text-2xl font-bold mb-3  capitalize'>Mes Notes</h2>
           <div className="flex flex-wrap justify-evenly gap-6">
             {getFilteredMovies("reviews").map(movie => {
               const review = stats.reviews?.find(r => r.movieId === movie.id);
