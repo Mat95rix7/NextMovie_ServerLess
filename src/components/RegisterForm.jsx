@@ -80,7 +80,6 @@ export function RegisterForm() {
     }
     try {
           const userCredential = await signup(formData.email, formData.password, formData.displayName);
-          console.log(userCredential);
           await createUserProfile(userCredential.user.uid, {
             displayName: formData.displayName,
             email: formData.email

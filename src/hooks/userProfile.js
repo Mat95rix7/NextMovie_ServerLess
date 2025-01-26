@@ -1,5 +1,6 @@
 import { doc, getDoc, setDoc, updateDoc, collection, query, where, getDocs, deleteDoc } from 'firebase/firestore';
-import { db } from '../config/firebase';
+import { db, auth } from '../config/firebase';
+import { updateProfile as firebaseUpdateProfile } from 'firebase/auth';
 import axios from 'axios';
 
 export async function createUserProfile(userId, data) {
@@ -36,7 +37,33 @@ export async function getUserProfile(userId) {
 export async function updateProfile(userId, data) {
   const userRef = doc(db, 'users', userId);
   await updateDoc(userRef, data);
+  
+  if (auth.currentUser) {
+    await firebaseUpdateProfile(auth.currentUser, {
+      displayName: data.displayName
+    });
+  }
 }
+
+// const updateUserProfile = async (userId, newDisplayName) => {
+//   try {
+//     // Mise à jour dans Firebase
+//     await updateProfile(auth.currentUser, {
+//       displayName: newDisplayName
+//     });
+    
+//     // Mise à jour de l'état global (exemple avec Redux)
+//     dispatch(updateDisplayName(newDisplayName));
+    
+//     // Mise à jour dans Firestore si nécessaire
+//     const userRef = doc(db, 'users', userId);
+//     await updateDoc(userRef, { displayName: newDisplayName });
+
+//   } catch (error) {
+//     console.error("Erreur lors de la mise à jour du profil :", error);
+//   }
+// };
+
 
 export async function checkUsernameAvailability(username) {
   const usersCollection = collection(db, 'users');

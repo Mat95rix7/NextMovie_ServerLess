@@ -8,6 +8,7 @@ import ThemeToggle from './ThemeToggle';
 import logo from '../assets/Logo.jpg';
 import userIcon from '../assets/user.png';
 import { Button } from '@/components/ui/button';
+import { useUser}  from '../context/userContext';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -16,6 +17,7 @@ import {
   } from '@/components/ui/dropdown-menu';
 
 const Header = () => {
+    const { state } = useUser();
     const navigate = useNavigate();
     const { user, logout } = useAuth();
     const [profile, setProfile] = useState(null);
@@ -25,7 +27,8 @@ const Header = () => {
     
     const menuItems = user
     ? [
-        { label: "Mon Espace", onClick: () => (userRole === "admin") ? navigate('/admin') : navigate('/profile') },
+        { label: "Mon Espace", onClick: () => navigate('/profile') },
+        ...(userRole === "admin" ? [{ label: "Dashboard", onClick: () => navigate('/admin') }] : []),
         { label: "Déconnexion", onClick: async() => {
             try {
                 await logout();
@@ -47,12 +50,12 @@ const Header = () => {
           if (user) {
             const userProfile = await getUserProfile(user.uid);
             setProfile(userProfile);
-            setDisplayName(userProfile?.displayName || '');
+            setDisplayName(state.displayName || userProfile?.displayName);
             setUserRole(userProfile?.role || 'user');
           }
         };
         loadProfile();
-      }, [user]);
+      }, [user, state]);
 
     return (
          <header className='fixed top-0 w-full h-16 bg-gray-300 bg-opacity-50 dark:bg-black dark:bg-opacity-50  z-40'>
@@ -63,9 +66,9 @@ const Header = () => {
                 <div className='ml-auto flex items-center gap-10'>
                     <IoSearchOutline className="w-full text-2xl cursor-pointer" onClick={() => navigate("/search")}/>
                     <DropdownMenu open={isOpen} onOpenChange={setIsOpen} >
-                        <DropdownMenuTrigger asChild>
+                        <DropdownMenuTrigger asChild aria-label="User menu">
                             {user ? (
-                                <span className="rounded-full w-full h-full cursor-pointer text-amber-400">
+                                <span className="rounded-full w-full h-full cursor-pointer text-black dark:text-amber-400 ">
                                     {displayName || user.email?.split('@')[0]}
                                 </span>  
                             ) : (
@@ -79,7 +82,7 @@ const Header = () => {
                             {menuItems.map((item, index) => (
                                 <DropdownMenuItem
                                 key={index}
-                                className="font-bold rounded-xl cursor-pointer text-lg justify-center py-2"
+                                className="font-bold rounded-xl cursor-pointer text-lg justify-center  py-2 hover:bg-amber-100"
                                 onClick={item.onClick}
                                 >
                                 <span>{item.label}</span>

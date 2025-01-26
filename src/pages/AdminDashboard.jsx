@@ -142,7 +142,7 @@ function AdminDashboard() {
   const renderContent = () => {
     switch (activeTab) {
       case 'users':
-        return <UserManagement users={users} />;
+        return <UserManagement />;
       case 'movies':
         // return <MovieStats />;
         return <MovieManagement movies={movieStats} />;

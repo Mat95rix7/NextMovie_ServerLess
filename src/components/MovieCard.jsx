@@ -7,9 +7,6 @@ import { fetchGenres } from '../services/tmdb'
 import MovieActions from './profile/MovieActions';
 import { useAuth } from '../hooks/useAuth';
 
-
-
-
 const MovieCard = ({ data }) => {
 
   const { user } = useAuth()
@@ -18,7 +15,6 @@ const MovieCard = ({ data }) => {
   if (user){
     userId = user.uid
   }
-  
   
   const [genres, setGenres] = useState([]);
 
@@ -70,8 +66,6 @@ const MovieCard = ({ data }) => {
                 movieId={data.id}
               />
             )}
-
-            
               <div className="absolute top-2 left-2 bg-black bg-opacity-25 text-white px-2 py-1 rounded-lg flex items-center">
                   <Star className="w-4 h-4 text-amber-500 mr-1" />
                   {data.vote_average.toFixed(1)}
@@ -99,17 +93,6 @@ const MovieCard = ({ data }) => {
                   <ThumbsUp className="w-4 h-4 mr-1 text-amber-500" />
                   {data.vote_count} votes
                 </div>
-                </div>
-                <div className="mt-2 flex items-center justify-between">
-                  {/* <button
-                    onClick={() => onFavorite?.(data)}
-                    className={cn(
-                      "p-2 rounded-full transition-colors",
-                      isFavorite ? "text-red-500" : "text-white hover:text-red-500"
-                    )}
-                  >
-                    <Heart className={cn("w-6 h-6", isFavorite && "fill-current")} />
-                  </button> */}
                 </div>
               </div>
             </div>

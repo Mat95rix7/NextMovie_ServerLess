@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { validateField } from '../services/errorMessages';
 import  SuccessModal  from './SuccessModal';
 import { getUserProfile } from '../hooks/userProfile';
+import { useUser } from '../context/userContext';
 
 export function LoginForm() {
 
@@ -13,6 +14,8 @@ export function LoginForm() {
   const [errorMail, setErrorMail] = useState('');
   const [errorAuth, setErrorAuth] = useState('')
   const [showModal, setShowModal] = useState(false);
+
+  const { dispatch } = useUser();
 
   const { login } = useAuth();
   const navigate = useNavigate()
@@ -35,17 +38,9 @@ export function LoginForm() {
       return
     }
 
-    const updateProfile = async (userId) => {
-      if (userId) {
-          const userProfile = await getUserProfile(userId);
-          localStorage.setItem('profile', JSON.stringify(userProfile));
-          return userProfile;
-      };
-    };
-
     try {
       const user = await login(email, password);
-      updateProfile(user.uid);
+      dispatch({ type: 'UPDATE_DISPLAY_NAME', payload: user.displayName });
       setShowModal(true);
       setTimeout(() => {
         navigate("/")
@@ -53,7 +48,8 @@ export function LoginForm() {
     } catch (error) {
       if (error.message.startsWith("Firebase: Error (auth/invalid-credential)")) {
         setErrorAuth("Email et/ou mot de passe incorrect"); 
-      }
+      } else {
+        console.log(error.message);}
     } finally {
       setIsLoading(false);
     }
