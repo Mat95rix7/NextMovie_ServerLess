@@ -80,7 +80,7 @@ const Header = () => {
                                 </span>  
                             ) : (
                                 <Button variant="ghost" className="w-full h-full cursor-pointer">
-                                    <img src={userIcon} alt="User menu" className="w-10/12"/>
+                                    <img src={userIcon} alt="User menu" className="w-9"/>
                                 </Button>
                             )
                         }   
