@@ -13,9 +13,9 @@ export async function createUserProfile(userId, data) {
       createdAt: new Date().toISOString(),
       lastLogin: new Date().toISOString(),
       stats: {
-        watchlist: 0, 
-        favorites: 0, 
-        reviews: 0 
+        watchlist:[], 
+        favorites: [], 
+        reviews: [] 
       }, 
       ...data }); 
       console.log("Profil utilisateur créé avec succès"); 

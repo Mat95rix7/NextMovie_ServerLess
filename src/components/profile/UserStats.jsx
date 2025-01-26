@@ -18,8 +18,8 @@ function UserStats({ stats }) {
     const ids = [
       ...(stats.favorites || []),
       ...(stats.watchlist || []),
-      // ...(stats.reviews?.map(r => r.movieId) || [])
-      ...(Array.isArray(stats.reviews) ? stats.reviews.map(r => r.movieId) : [])
+      ...(stats.reviews?.map(r => r.movieId) || [])
+      // ...(Array.isArray(stats.reviews) ? stats.reviews.map(r => r.movieId) : [])
     ];
     return [...new Set(ids)];
   }, [stats]);
@@ -87,10 +87,10 @@ function UserStats({ stats }) {
         <TabsContent value="favorites" className="mt-6 text-black">
         <div>
           {getFilteredMovies("favorites").length > 4 ? (
-            <HorizontalScollCard data={getFilteredMovies("favorites")} heading={"Mes Films Favoris"} />
+            <HorizontalScollCard data={getFilteredMovies("favorites")} heading={"Mes Favoris"} />
           ) : (
             <div className="px-3 my-10 container mx-auto">
-              <h2 className='text-xl lg:text-2xl font-bold mb-3 capitalize'>Mes Films Favoris</h2>
+              <h2 className='text-xl lg:text-2xl font-bold mb-3 capitalize'>Mes Favoris</h2>
               <div className='flex flex-wrap gap-6 justify-evenly'>
                 {getFilteredMovies("favorites").map((movie, index) => (
                         <MovieCard key={movie.id+"heading"+index} data={movie} index={index+1} />
@@ -104,10 +104,10 @@ function UserStats({ stats }) {
         <TabsContent value="watchlist" className="mt-6 text-black">
         <div>
           {getFilteredMovies("watchlist").length > 4 ? (
-            <HorizontalScollCard data={getFilteredMovies("watchlist")} heading={"Mes Films Favoris"} />
+            <HorizontalScollCard data={getFilteredMovies("watchlist")} heading={"A voir"} />
           ) : (
             <div className="px-3 my-10 container mx-auto">
-              <h2 className='text-xl lg:text-2xl font-bold mb-3 capitalize'>Ma liste de films a voir</h2>
+              <h2 className='text-xl lg:text-2xl font-bold mb-3 capitalize'>A Voir</h2>
               <div className='flex flex-wrap gap-6 justify-evenly'>
                 {getFilteredMovies("watchlist").map((movie, index) => (
                         <MovieCard key={movie.id+"heading"+index} data={movie} index={index+1} />
@@ -119,7 +119,7 @@ function UserStats({ stats }) {
         </TabsContent>
 
         <TabsContent value="reviews" className="text-black mt-6 px-3 my-10 container mx-auto">
-          <h2 className='text-xl lg:text-2xl font-bold mb-3 capitalize'>Mes avis</h2>
+          <h2 className='text-xl lg:text-2xl font-bold mb-3 capitalize'>Mes Note</h2>
           <div className="flex flex-wrap justify-evenly gap-6">
             {getFilteredMovies("reviews").map(movie => {
               const review = stats.reviews?.find(r => r.movieId === movie.id);
