@@ -6,6 +6,9 @@ import {
   createUserWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  setPersistence,
+  browserSessionPersistence,
+  browserLocalPersistence,
 } from 'firebase/auth';
 
 export function useAuth() {
@@ -28,6 +31,8 @@ export function useAuth() {
   }, []);
 
   const login = async (email, password) => {
+    setPersistence(auth, browserLocalPersistence)
+    // setPersistence(auth, browserSessionPersistence)
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       return userCredential.user;

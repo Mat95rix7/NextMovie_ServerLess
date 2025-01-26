@@ -49,7 +49,7 @@ const MovieDetails = () => {
 
   if (error) {
     return (
-      <div className="p-4 text-amber-500 text-center">
+      <div className="flex flex-col justify-center items-center min-h-screen text-amber-500">
         Une erreur est survenue lors du chargement du film
       </div>
     );

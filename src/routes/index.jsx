@@ -9,6 +9,7 @@ import ProfilePage  from "../pages/ProfilePage";
 import ContactForm from "../pages/ContactForm";
 import About from "../pages/About";
 import AdminDashboard from "../pages/AdminDashboard";
+import NotFoundPage from "../pages/NotFoundPage";
 
 const router = createBrowserRouter([
     {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
             {
                 path : "search",
                 element : <SearchPage />
+            },
+            {
+                path : "*",
+                element : <NotFoundPage />
             },
             {
                 path : "movie/:id",

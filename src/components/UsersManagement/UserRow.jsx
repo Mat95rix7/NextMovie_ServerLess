@@ -54,18 +54,22 @@ const UserRow = ({
   return (
     <>
     <tr key={user.id}>
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+        {user.displayName}
+      </td>
+      {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
         {isEditing ? (
-          <input
-            type="text"
-            value={editedUsername}
-            onChange={(e) => setEditedUsername(e.target.value)}
-            className="border rounded px-2 py-1"
-          />
+          // <input
+          //   type="text"
+          //   value={editedUsername}
+          //   onChange={(e) => setEditedUsername(e.target.value)}
+          //   className="border rounded px-2 py-1"
+          // />
         ) : (
         editedUsername
         )}
-      </td>
+      </td> */}
+
       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
         {user.email}
       </td>

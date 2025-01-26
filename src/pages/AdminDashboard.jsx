@@ -2,14 +2,10 @@ import { useState, useEffect } from 'react';
 import { Shield, Users, Film, Armchair, Star } from 'lucide-react';
 import { getUsers } from '../config/firebase';
 import CinemasData from '../data/cinemas.json';
-import UserManagement from '../components/UsersManagement/UsersManagement';
+import UserManagement from '../components/UsersManagement';
 import MovieManagement from '../components/MoviesManagement';
 import TheaterManagement from '../components/TheatersManagement';
 import { getMovieStats, getTotalMoviesInApp } from '../hooks/userProfile';
-import { Navigate } from 'react-router-dom';
-
-
-
 function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('users');
   const [users, setUsers] = useState([]);
@@ -20,39 +16,18 @@ function AdminDashboard() {
     fetchUsers();
     fetchTheaters();
     getMovieStats()
-    fetchMovies();
-    fetchStats
     fetchMovieStats();
-    
   }, []);
 
   const fetchUsers = async () => {
     setUsers(await getUsers());
   };
-
-    const fetchMovies = async () => {
-    };
-
-    const fetchMovieStats = async () => {
-      setMovieStats(await getMovieStats());
-      
-    
-    }
-
-
-
-
-// Récupérer tous les IDs des films regardés
-
-    const fetchStats = async () => {
-    // À implémenter avec Firebase
-  };
-
+  const fetchMovieStats = async () => {
+    setMovieStats(await getMovieStats());
+  }
   const fetchTheaters = async () => {
     setTheaters(CinemasData);
   };
-
-
   const CardContent = () => {
     return (
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
@@ -125,7 +100,7 @@ function AdminDashboard() {
             <div className="ml-5 w-0 flex-1">
               <dl>
                 <dt className="text-sm font-medium text-gray-500 truncate">
-                  Salles Totales
+                  Nombre des salles
                 </dt>
                 <dd className="text-lg font-medium text-gray-900">
                   {theaters?.length || 0}
@@ -144,7 +119,6 @@ function AdminDashboard() {
       case 'users':
         return <UserManagement />;
       case 'movies':
-        // return <MovieStats />;
         return <MovieManagement movies={movieStats} />;
       case 'theaters':
         return <TheaterManagement theaters={theaters} />;

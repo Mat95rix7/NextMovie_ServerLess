@@ -161,7 +161,7 @@ FilterOverlay.propTypes = {
   onClose: PropTypes.func.isRequired,
   genres: PropTypes.array.isRequired,
   selectedGenres: PropTypes.array.isRequired,
-  minRuntime: PropTypes.number.isRequired,
+  // minRuntime: PropTypes.number.isRequired,
   maxRuntime: PropTypes.number.isRequired,
   minRating: PropTypes.number.isRequired,
   isRecent: PropTypes.bool.isRequired,

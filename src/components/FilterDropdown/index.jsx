@@ -38,7 +38,7 @@ export function FilterDropdown(props) {
 FilterDropdown.propTypes = {
   genres: PropTypes.array.isRequired,
   selectedGenres: PropTypes.arrayOf(PropTypes.string).isRequired,
-  minRuntime: PropTypes.number.isRequired,
+  // minRuntime: PropTypes.number.isRequired,
   maxRuntime: PropTypes.number.isRequired,
   minRating: PropTypes.number.isRequired,
   isRecent: PropTypes.bool.isRequired,

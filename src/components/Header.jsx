@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { IoSearchOutline } from "react-icons/io5";
 import { useAuth } from '../hooks/useAuth';
 import { toast } from 'react-hot-toast';
@@ -9,6 +9,7 @@ import logo from '../assets/Logo.jpg';
 import userIcon from '../assets/user.png';
 import { Button } from '@/components/ui/button';
 import { useUser}  from '../context/userContext';
+import { cn } from '@/lib/utils';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -24,7 +25,9 @@ const Header = () => {
     const [displayName, setDisplayName] = useState('');
     const [userRole, setUserRole] = useState('');
     const [isOpen, setIsOpen] = useState(false);
-    
+
+    const location = useLocation().pathname.slice(1);
+ 
     const menuItems = user
     ? [
         { label: "Mon Espace", onClick: () => navigate('/profile') },
@@ -56,6 +59,7 @@ const Header = () => {
         };
         loadProfile();
       }, [user, state]);
+      
 
     return (
          <header className='fixed top-0 w-full h-16 bg-gray-300 bg-opacity-50 dark:bg-black dark:bg-opacity-50  z-40'>
@@ -64,7 +68,10 @@ const Header = () => {
                     <img src={logo} alt='logo' className='w-9 min-w-8  rounded-lg'/>
                 </Link>
                 <div className='ml-auto flex items-center gap-10'>
-                    <IoSearchOutline className="w-full text-2xl cursor-pointer" onClick={() => navigate("/search")}/>
+                    <IoSearchOutline className={cn(
+                "w-full text-2xl cursor-pointer",
+                location === "search" ? "hidden" : "block")}
+                    onClick={() => navigate("/search")}/>
                     <DropdownMenu open={isOpen} onOpenChange={setIsOpen} >
                         <DropdownMenuTrigger asChild aria-label="User menu">
                             {user ? (

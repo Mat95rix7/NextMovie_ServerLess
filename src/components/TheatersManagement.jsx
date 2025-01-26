@@ -58,7 +58,7 @@ const TheatersManagement = ({ theaters }) => {
               <input
                 type="text"
                 placeholder="Rechercher une salle..."
-                className="pl-10 pr-4 py-2 border rounded-lg"
+                className="pl-10 pr-4 py-2 text-gray-500 border rounded-lg"
                 value={searchTerm}
                 onChange={handleSearch}
               />

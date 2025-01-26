@@ -51,8 +51,8 @@ const AboutPage = () => {
                 },
                 {
                   icon: <Ticket className="w-8 h-8 text-green-500" />,
-                  title: "Réservation Simple",
-                  description: "Réservez vos places en quelques clics"
+                  title: "Salles de Cinema",
+                  description: "Vous trouverez les meilleures salles de cinema de votre ville"
                 },
                 {
                   icon: <Smartphone className="w-8 h-8 text-purple-500" />,

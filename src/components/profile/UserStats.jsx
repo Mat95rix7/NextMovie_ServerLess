@@ -85,15 +85,37 @@ function UserStats({ stats }) {
       <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
 
         <TabsContent value="favorites" className="mt-6 text-black">
-          <div className="">
+        <div>
+          {getFilteredMovies("favorites").length > 4 ? (
             <HorizontalScollCard data={getFilteredMovies("favorites")} heading={"Mes Films Favoris"} />
-          </div>
+          ) : (
+            <div className="px-3 my-10 container mx-auto">
+              <h2 className='text-xl lg:text-2xl font-bold mb-3 capitalize'>Mes Films Favoris</h2>
+              <div className='flex flex-wrap gap-6 justify-evenly'>
+                {getFilteredMovies("favorites").map((movie, index) => (
+                        <MovieCard key={movie.id+"heading"+index} data={movie} index={index+1} />
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
         </TabsContent>
 
         <TabsContent value="watchlist" className="mt-6 text-black">
-          <div className="">
-            <HorizontalScollCard data={getFilteredMovies("watchlist")} heading={"Ma liste de films a voir"} />
-          </div>
+        <div>
+          {getFilteredMovies("watchlist").length > 4 ? (
+            <HorizontalScollCard data={getFilteredMovies("watchlist")} heading={"Mes Films Favoris"} />
+          ) : (
+            <div className="px-3 my-10 container mx-auto">
+              <h2 className='text-xl lg:text-2xl font-bold mb-3 capitalize'>Ma liste de films a voir</h2>
+              <div className='flex flex-wrap gap-6 justify-evenly'>
+                {getFilteredMovies("watchlist").map((movie, index) => (
+                        <MovieCard key={movie.id+"heading"+index} data={movie} index={index+1} />
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
         </TabsContent>
 
         <TabsContent value="reviews" className="text-black mt-6 px-3 my-10 container mx-auto">
@@ -105,7 +127,7 @@ function UserStats({ stats }) {
                 <div key={movie.id} className="relative">
                   <MovieCard data={movie} />
                   {review && (
-                    <div className="absolute top-2 left-0 bg-amber-500 text-white rounded-full px-2 py-1">
+                    <div className="absolute top-2 left-1/2 transform -translate-x-1/2 bg-amber-500 text-white rounded-full px-2 py-1">
                       {review.rating} ★
                     </div>
                   )}

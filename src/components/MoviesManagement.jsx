@@ -32,13 +32,13 @@ const MoviesManagement = ({  movies }) => {
     <div className="bg-white shadow overflow-hidden sm:rounded-lg">
       <div className="px-4 py-5 sm:px-6 flex justify-between items-center">
         <h3 className="text-lg leading-6 font-medium text-gray-900">
-          Gestion des Films
+          Gestion des Films ({filteredMovies.length})
         </h3>
         <div className="relative">
           <input
             type="text"
             placeholder="Rechercher un film..."
-            className="pl-10 pr-4 py-2 border rounded-lg"
+            className="pl-10 pr-4 py-2 text-gray-500 border rounded-lg"
             value={searchTerm}
             onChange={handleSearch}
           />

@@ -3,7 +3,6 @@ import { useAuth } from '../hooks/useAuth';
 import { useNavigate, Link } from 'react-router-dom';
 import { validateField } from '../services/errorMessages';
 import  SuccessModal  from './SuccessModal';
-import { getUserProfile } from '../hooks/userProfile';
 import { useUser } from '../context/userContext';
 
 export function LoginForm() {
@@ -19,7 +18,7 @@ export function LoginForm() {
 
   const { login } = useAuth();
   const navigate = useNavigate()
-
+  
   useEffect(() => {
     setErrorMail('')
     const error = validateField('email', email)
