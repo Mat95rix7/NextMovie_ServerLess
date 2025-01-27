@@ -117,6 +117,55 @@ const getMovieDetails = async (movieId) => {
   };
 };
 
+// export const getMovieStats = async () => {
+//   const usersRef = collection(db, 'users');
+//   const snapshot = await getDocs(usersRef);
+
+//   let movieStats = {};
+
+//   snapshot.forEach(doc => {
+//     const userData = doc.data().stats;
+
+//     if (userData.watchlist) {
+//       userData.watchlist.forEach(movieId => {
+//         if (!movieStats[movieId]) movieStats[movieId] = { id: movieId, watchlist: 0, favorites: 0, reviews: 0, ratings: [] };
+//         movieStats[movieId].watchlist++;
+//       });
+//     }
+
+//     if (userData.favorites) {
+//       userData.favorites.forEach(movieId => {
+//         if (!movieStats[movieId]) movieStats[movieId] = { id: movieId, watchlist: 0, favorites: 0, reviews: 0, ratings: [] };
+//         movieStats[movieId].favorites++;
+//       });
+//     }
+
+//     if (userData.reviews) {
+//       userData.reviews.forEach(review => {
+//         if (!movieStats[review.movieId]) movieStats[review.movieId] = { id: review.movieId, watchlist: 0, favorites: 0, reviews: 0, ratings: [] };
+//         movieStats[review.movieId].reviews++;
+//         movieStats[review.movieId].ratings.push(review.rating);
+//       });
+//     }
+//   });
+
+//   for (const movieId in movieStats) {
+//     const ratings = movieStats[movieId].ratings;
+//     if (ratings.length > 0) {
+//       movieStats[movieId].averageRating = ratings.reduce((a, b) => a + b) / ratings.length;
+//     }
+//     delete movieStats[movieId].ratings;
+
+//     const { title, releaseDate } = await getMovieDetails(movieId);
+//     movieStats[movieId].title = title;
+//     movieStats[movieId].releaseDate = releaseDate;
+//   }
+
+//   return Object.values(movieStats);
+// };
+
+
+
 export const getMovieStats = async () => {
   const usersRef = collection(db, 'users');
   const snapshot = await getDocs(usersRef);
@@ -124,27 +173,29 @@ export const getMovieStats = async () => {
   let movieStats = {};
 
   snapshot.forEach(doc => {
-    const userData = doc.data().stats;
+    const userData = doc.data().stats || {};
 
-    if (userData.watchlist) {
+    if (Array.isArray(userData.watchlist)) {
       userData.watchlist.forEach(movieId => {
         if (!movieStats[movieId]) movieStats[movieId] = { id: movieId, watchlist: 0, favorites: 0, reviews: 0, ratings: [] };
         movieStats[movieId].watchlist++;
       });
     }
 
-    if (userData.favorites) {
+    if (Array.isArray(userData.favorites)) {
       userData.favorites.forEach(movieId => {
         if (!movieStats[movieId]) movieStats[movieId] = { id: movieId, watchlist: 0, favorites: 0, reviews: 0, ratings: [] };
         movieStats[movieId].favorites++;
       });
     }
 
-    if (userData.reviews) {
+    if (Array.isArray(userData.reviews)) {
       userData.reviews.forEach(review => {
-        if (!movieStats[review.movieId]) movieStats[review.movieId] = { id: review.movieId, watchlist: 0, favorites: 0, reviews: 0, ratings: [] };
-        movieStats[review.movieId].reviews++;
-        movieStats[review.movieId].ratings.push(review.rating);
+        if (review && review.movieId && typeof review.rating === 'number') {
+          if (!movieStats[review.movieId]) movieStats[review.movieId] = { id: review.movieId, watchlist: 0, favorites: 0, reviews: 0, ratings: [] };
+          movieStats[review.movieId].reviews++;
+          movieStats[review.movieId].ratings.push(review.rating);
+        }
       });
     }
   });
@@ -153,14 +204,23 @@ export const getMovieStats = async () => {
     const ratings = movieStats[movieId].ratings;
     if (ratings.length > 0) {
       movieStats[movieId].averageRating = ratings.reduce((a, b) => a + b) / ratings.length;
+    } else {
+      movieStats[movieId].averageRating = null;
     }
     delete movieStats[movieId].ratings;
 
-    const { title, releaseDate } = await getMovieDetails(movieId);
-    movieStats[movieId].title = title;
-    movieStats[movieId].releaseDate = releaseDate;
+    const movieDetails = await getMovieDetails(movieId);
+    if (movieDetails) {
+      movieStats[movieId].title = movieDetails.title || "Titre inconnu";
+      movieStats[movieId].releaseDate = movieDetails.releaseDate || "Date inconnue";
+    } else {
+      movieStats[movieId].title = "Titre inconnu";
+      movieStats[movieId].releaseDate = "Date inconnue";
+    }
   }
 
   return Object.values(movieStats);
 };
+
+
 

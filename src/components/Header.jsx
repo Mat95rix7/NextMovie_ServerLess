@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { IoSearchOutline } from "react-icons/io5";
 import { useAuth } from '../hooks/useAuth';
+import { useAuth2 } from '../context/userContext';
 import { toast } from 'react-hot-toast';
-import { getUserProfile }  from '../hooks/userProfile';
 import ThemeToggle from './ThemeToggle';
 import logo from '../assets/Logo.jpg';
 import userIcon from '../assets/user.png';
 import { Button } from '@/components/ui/button';
-import { useUser}  from '../context/userContext';
+// import { useUser}  from '../context/userContext';
 import { cn } from '@/lib/utils';
 import {
     DropdownMenu,
@@ -18,20 +18,17 @@ import {
   } from '@/components/ui/dropdown-menu';
 
 const Header = () => {
-    const { state } = useUser();
     const navigate = useNavigate();
-    const { user, logout } = useAuth();
-    const [profile, setProfile] = useState(null);
-    const [displayName, setDisplayName] = useState('');
-    const [userRole, setUserRole] = useState('');
+    const { logout } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
+    const { user, isAdmin } = useAuth2();
 
     const location = useLocation().pathname.slice(1);
  
     const menuItems = user
     ? [
         { label: "Mon Espace", onClick: () => navigate('/profile') },
-        ...(userRole === "admin" ? [{ label: "Dashboard", onClick: () => navigate('/admin') }] : []),
+        ...(isAdmin ? [{ label: "Dashboard", onClick: () => navigate('/admin') }] : []),
         { label: "Déconnexion", onClick: async() => {
             try {
                 await logout();
@@ -48,19 +45,6 @@ const Header = () => {
         { label: "Inscription", onClick: () => navigate('/register') }
       ];
 
-      useEffect(() => {
-        const loadProfile = async () => {
-          if (user) {
-            const userProfile = await getUserProfile(user.uid);
-            setProfile(userProfile);
-            setDisplayName(state.displayName || userProfile?.displayName);
-            setUserRole(userProfile?.role || 'user');
-          }
-        };
-        loadProfile();
-      }, [user, state]);
-      
-
     return (
          <header className='fixed top-0 w-full h-16 bg-gray-300 bg-opacity-50 dark:bg-black dark:bg-opacity-50  z-40'>
             <div className='container mx-auto px-3 flex items-center h-full'>
@@ -76,7 +60,7 @@ const Header = () => {
                         <DropdownMenuTrigger asChild aria-label="User menu">
                             {user ? (
                                 <span className="rounded-full w-full h-full cursor-pointer text-black dark:text-amber-400 ">
-                                    {displayName || user.email?.split('@')[0]}
+                                    {user.displayName || user.email?.split('@')[0]}
                                 </span>  
                             ) : (
                                 <Button variant="ghost" className="w-full h-full cursor-pointer">
@@ -105,3 +89,20 @@ const Header = () => {
 };
 
 export default Header;
+
+// const [profile, setProfile] = useState(null);
+// const [displayName, setDisplayName] = useState('');
+// const [userRole, setUserRole] = useState('');
+
+
+    //   useEffect(() => {
+    //     const loadProfile = async () => {
+    //       if (user) {
+    //         const userProfile = await getUserProfile(user.uid);
+    //         setProfile(userProfile);
+    //         // setDisplayName(state.displayName || userProfile?.displayName);
+    //         setUserRole(userProfile?.role || 'user');
+    //       }
+    //     };
+    //     loadProfile();
+    //   }, [user]);

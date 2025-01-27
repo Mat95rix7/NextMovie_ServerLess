@@ -1,19 +1,15 @@
 // import { createContext, useReducer, useContext } from 'react';
-import PropTypes from 'prop-types';
-import { use } from 'react';
 
 // const UserContext = createContext();
 
 // const initialState = {
 //   displayName: '',
-//   // Ajoutez d'autres propriétés utilisateur si nécessaire
 // };
 
 // function userReducer(state, action) {
 //   switch (action.type) {
 //     case 'UPDATE_DISPLAY_NAME':
 //       return { ...state, displayName: action.payload };
-//     // Ajoutez d'autres cas pour différentes actions
 //     default:
 //       return state;
 //   }
@@ -33,47 +29,56 @@ import { use } from 'react';
 //   return useContext(UserContext);
 // }
 
-// UserProvider.propTypes = {
+// UserProvider.propTypes = {  
 //   children: PropTypes.node.isRequired,
 // };
 
 // export default UserProvider; useUser;
 
-import { createContext, useReducer, useContext } from 'react';
+import { createContext, useState, useEffect, useContext } from "react";
+import { auth } from "../config/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import PropTypes from "prop-types";
+import { getUserProfile } from "../hooks/userProfile";
 
-const UserContext = createContext();
+const AuthContext = createContext();
 
-const initialState = {
-  displayName: '',
-  // Ajoutez d'autres propriétés utilisateur si nécessaire
-};
+export const useAuth2 = () => useContext(AuthContext);
 
-function userReducer(state, action) {
-  switch (action.type) {
-    case 'UPDATE_DISPLAY_NAME':
-      return { ...state, displayName: action.payload };
-    // Ajoutez d'autres cas pour différentes actions
-    default:
-      return state;
-  }
-}
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  
 
-export function UserProvider({ children }) {
-  const [state, dispatch] = useReducer(userReducer, initialState);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const userProfile = await getUserProfile(user.uid);
+        setUser({ ...user, role: userProfile?.role });
+        
+      } else {
+        setUser(null);
+      }
+      setIsLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const value = {
+    user,
+    isAuthenticated: !!user,
+    isAdmin: user?.role === "admin",
+    setUser,
+  };
 
   return (
-    <UserContext.Provider value={{ state, dispatch }}>
-      {children}
-    </UserContext.Provider>
+    <AuthContext.Provider value={value}>
+      {!isLoading && children}
+    </AuthContext.Provider>
   );
-}
-
-export function useUser() {
-  return useContext(UserContext);
-}
-
-UserProvider.propTypes = {  
-  children: PropTypes.node.isRequired,
 };
 
-export default UserProvider; useUser;
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};

@@ -9,6 +9,7 @@ import {
   setPersistence,
   browserSessionPersistence,
   browserLocalPersistence,
+  updateProfile,
 } from 'firebase/auth';
 
 export function useAuth() {
@@ -44,7 +45,8 @@ export function useAuth() {
   const signup = async (email, password) => { 
     try { 
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      return userCredential; 
+      return userCredential;
+
     } catch (error) { 
         console.error("Erreur lors de l'inscription :", error.message); 
         throw error; 

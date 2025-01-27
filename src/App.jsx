@@ -5,7 +5,7 @@ import axios from 'axios';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import { setBannerData,setImageURL } from './store/movieSlice';
-import  UserProvider  from './context/userContext';
+import  { AuthProvider } from './context/userContext';
 
 function App() {
   
@@ -38,7 +38,7 @@ function App() {
   })
   
   return (
-    <UserProvider>
+    <AuthProvider>
       <main className='pb-14 lg:pb-0'>
           <Header/>
           <div className='min-h-[80vh]'>
@@ -46,7 +46,7 @@ function App() {
           </div>
           <Footer/>
       </main>
-    </UserProvider>
+    </AuthProvider>
   );
 }
 

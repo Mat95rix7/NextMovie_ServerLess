@@ -3,7 +3,6 @@ import { useAuth } from '../hooks/useAuth';
 import { useNavigate, Link } from 'react-router-dom';
 import { validateField } from '../services/errorMessages';
 import  SuccessModal  from './SuccessModal';
-import { useUser } from '../context/userContext';
 
 export function LoginForm() {
 
@@ -13,9 +12,7 @@ export function LoginForm() {
   const [errorMail, setErrorMail] = useState('');
   const [errorAuth, setErrorAuth] = useState('')
   const [showModal, setShowModal] = useState(false);
-
-  const { dispatch } = useUser();
-
+  
   const { login } = useAuth();
   const navigate = useNavigate()
   
@@ -24,8 +21,6 @@ export function LoginForm() {
     const error = validateField('email', email)
     if (error) setErrorMail(error);
   }, [email])
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,8 +33,7 @@ export function LoginForm() {
     }
 
     try {
-      const user = await login(email, password);
-      dispatch({ type: 'UPDATE_DISPLAY_NAME', payload: user.displayName });
+      await login(email, password);
       setShowModal(true);
       setTimeout(() => {
         navigate("/")

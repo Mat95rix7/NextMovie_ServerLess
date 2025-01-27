@@ -2,13 +2,11 @@ import { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import { updateProfile, checkUsernameAvailability } from '../../hooks/userProfile';
 import PropTypes from 'prop-types';
-import { useUser } from '../../context/userContext';
 
 export function ProfileSettings({ user, onUpdate }) {
   const [displayName, setDisplayName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [usernameError, setUsernameError] = useState('');
-  const { dispatch } = useUser();
 
   useEffect(() => {
     const validateUsername = async () => {
@@ -33,8 +31,8 @@ export function ProfileSettings({ user, onUpdate }) {
     setIsLoading(true);
     
     try {
+      
       await updateProfile(user.uid, { displayName });
-      dispatch({ type: 'UPDATE_DISPLAY_NAME', payload: user.displayName });
       onUpdate(displayName);
       toast.success('Profil mis à jour avec succès');
       setDisplayName('');

@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '../hooks/useAuth';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import ProfileHeader from '../components/profile/ProfileHeader';
 import ProfileSettings from '../components/profile/ProfileSettings';
 import { Toaster } from 'react-hot-toast';
 import UserStats from '../components/profile/UserStats';
+import { useAuth2 } from '../context/userContext';
 
 export function ProfilePage() {
-  const { user } = useAuth();
   const [profile, setProfile] = useState(null);
   const [displayName, setDisplayName] = useState('');
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { user, setUser } = useAuth2(); 
 
   useEffect(() => {
     if (user) {
@@ -34,6 +34,7 @@ export function ProfilePage() {
 
   const handleProfileUpdate = (newDisplayName) => {
     setDisplayName(newDisplayName);
+    setUser({ ...user, displayName: newDisplayName });
   };
 
   if (!user) {
