@@ -3,6 +3,7 @@ import { useAuth } from '../hooks/useAuth';
 import { useNavigate, Link } from 'react-router-dom';
 import { validateField } from '../services/errorMessages';
 import  SuccessModal  from './SuccessModal';
+import { getUserProfile } from '../hooks/userProfile';
 
 export function LoginForm() {
 
@@ -12,8 +13,9 @@ export function LoginForm() {
   const [errorMail, setErrorMail] = useState('');
   const [errorAuth, setErrorAuth] = useState('')
   const [showModal, setShowModal] = useState(false);
+  const [showDeactivationModal, setShowDeactivationModal] = useState(false);
   
-  const { login } = useAuth();
+  const { login, logout } = useAuth();
   const navigate = useNavigate()
   
   useEffect(() => {
@@ -21,6 +23,8 @@ export function LoginForm() {
     const error = validateField('email', email)
     if (error) setErrorMail(error);
   }, [email])
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,7 +37,15 @@ export function LoginForm() {
     }
 
     try {
-      await login(email, password);
+      const userData = await login(email, password);
+      const userDoc = await getUserProfile(userData.uid)
+      if (userDoc.isActive === false) {
+        await logout();
+        setIsLoading(false);
+        setShowDeactivationModal(true)
+        return
+      }
+
       setShowModal(true);
       setTimeout(() => {
         navigate("/")
@@ -47,6 +59,8 @@ export function LoginForm() {
       setIsLoading(false);
     }
   };
+
+
 
   return (
     <div className='w-full max-w-xs'>
@@ -85,6 +99,32 @@ export function LoginForm() {
         setShowModal={setShowModal}
         type="connexion"
       />
+      {/* Modal pour compte désactivé */}
+      {showDeactivationModal && (
+        <div className="fixed inset-0 bg-gray-600 text-gray-900 bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
+            <h2 className="text-xl font-semibold mb-4 text-center">Compte désactivé</h2>
+            <p className="mb-6 text-justify">
+              Votre compte est actuellement désactivé. Si vous souhaitez réactiver votre compte,
+              veuillez nous contacter.
+            </p>
+            <div className="flex justify-evenly space-x-4">
+              <button
+                className="bg-gray-200 text-gray-700 px-4 py-2 rounded"
+                onClick={() => setShowDeactivationModal(false)}
+              >
+                Fermer
+              </button>
+              <button
+                className="bg-amber-500 text-white px-4 py-2 rounded"
+                onClick={() => navigate('/contact')}
+              >
+                Contacter le support
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
   </div>
   );
 }

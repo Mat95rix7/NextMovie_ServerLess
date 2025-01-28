@@ -1,16 +1,42 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Heart, Clock, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import MovieCard from '../MovieCard';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import HorizontalScollCard from '../HorizontalScollCard';
+import MovieCard from '../MovieCard';
+import HorizontalScrollCard from '../HorizontalScollCard';
+
+const StatButton = ({ icon, count, isSelected, onClick }) => {
+  const IconComponent = {
+    Heart,
+    Clock,
+    Star
+  }[icon];
+
+  return (
+    <Button
+      variant="outline"
+      className={`flex flex-col items-center mx-auto w-1/2 p-6 space-y-2 hover:bg-amber-500 ${
+        isSelected ? 'bg-amber-300 text-black' : ''
+      }`}
+      onClick={onClick}
+    >
+      <IconComponent className="w-6 h-6 text-amber-600" />
+      <span className="text-2xl font-bold pb-8">{count}</span>
+    </Button>
+  );
+};
+
+const TABS_CONFIG = [
+  { id: 'favorites', title: 'Mes Favoris', icon: 'Heart' },
+  { id: 'watchlist', title: 'A voir', icon: 'Clock' },
+  { id: 'reviews', title: 'Mes Notes', icon: 'Star' }
+];
 
 function UserStats({ stats }) {
-
-  const [selectedTab, setSelectedTab] = useState('all');
-  const [ movies, setMovies ] = useState([]);
+  const [selectedTab, setSelectedTab] = useState('favorites');
+  const [moviesCache, setMoviesCache] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -19,130 +45,145 @@ function UserStats({ stats }) {
       ...(stats.favorites || []),
       ...(stats.watchlist || []),
       ...(stats.reviews?.map(r => r.movieId) || [])
-      // ...(Array.isArray(stats.reviews) ? stats.reviews.map(r => r.movieId) : [])
     ];
     return [...new Set(ids)];
   }, [stats]);
 
-  const table = [['favorites','Heart'], ['watchlist','Clock'], ['reviews','Star']]
-
+  // Fetch movies only once and cache them
   useEffect(() => {
     const fetchMovies = async () => {
+      const missingIds = movieIds.filter(id => !moviesCache[id]);
+      
+      if (missingIds.length === 0) return;
+
       setLoading(true);
       setError(null);
+      
       try {
         const movieData = await Promise.all(
-          movieIds.map(async (id) => {
+          missingIds.map(async (id) => {
             const response = await axios.get(`/movie/${id}`);
             return response.data;
           })
         );
-        setMovies(movieData);
-      } catch (error) {
-        setError(error);
+
+        setMoviesCache(prev => {
+          const newCache = { ...prev };
+          movieData.forEach(movie => {
+            newCache[movie.id] = movie;
+          });
+          return newCache;
+        });
+      } catch (err) {
+        console.log(err);
+        setError('Erreur lors de la récupération des films');
       } finally {
         setLoading(false);
       }
     };
+
     fetchMovies();
   }, [movieIds]);
-
-
 
   const getFilteredMovies = (tab) => {
     switch (tab) {
       case 'favorites':
-        return movies.filter(movie => stats.favorites?.includes(movie.id));
+        return stats.favorites?.map(id => moviesCache[id]).filter(Boolean) || [];
       case 'watchlist':
-        return movies.filter(movie => stats.watchlist?.includes(movie.id));
+        return stats.watchlist?.map(id => moviesCache[id]).filter(Boolean) || [];
       case 'reviews':
-        return movies.filter(movie => stats.reviews?.some(r => r.movieId === movie.id));
+        return stats.reviews?.map(r => moviesCache[r.movieId]).filter(Boolean) || [];
       default:
-        return movies;
+        return [];
     }
   };
+
+  const renderMovieWithReview = (movie) => {
+    const review = stats.reviews?.find(r => r.movieId === movie.id);
+    return (
+      <div key={movie.id} className="relative">
+        <MovieCard data={movie} />
+        {review && (
+          <div className="absolute top-2 left-1/2 transform -translate-x-1/2 bg-amber-500 text-white rounded-full px-2 py-1">
+            {review.rating} ★
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  const renderSection = (tab, title) => {
+    const filteredMovies = getFilteredMovies(tab);
+
+    if (error) {
+      return <div className="text-center py-8 text-red-500">{error}</div>;
+    }
+
+    if (!filteredMovies.length) {
+      return (
+        <div className="px-3 my-10 container mx-auto">
+          <h2 className="text-xl lg:text-2xl font-bold mb-3 capitalize">{title}</h2>
+          <p>Aucun film dans cette catégorie.</p>
+        </div>
+      );
+    }
+
+    return (
+      <HorizontalScrollCard
+        data={filteredMovies}
+        heading={title}
+        renderItem={tab === 'reviews' ? renderMovieWithReview : undefined}
+      />
+    );
+  };
+
+  if (loading && !Object.keys(moviesCache).length) {
+    return <div className="text-center py-8">Chargement initial...</div>;
+  }
 
   return (
     <div className="w-full space-y-6 mt-8">
       <div className="grid grid-cols-3 gap-4">
-
-        {table.map(([tab, icon]) => (
-          <Button
-            key={tab}
-            variant="outline"
-            className={`flex flex-col items-center mx-auto w-1/2 p-6 space-y-2 ${selectedTab === tab ? 'bg-amber-100' : ''}`}
-            onClick={() => setSelectedTab(tab)}
-          >
-            {icon === 'Heart' && <Heart className="h-6 w-6 text-amber-600" />}
-            {icon === 'Clock' && <Clock className="h-6 w-6 text-amber-600" />}
-            {icon === 'Star' && <Star className="h-6 w-6 text-amber-600" />}
-            <span className="text-2xl font-bold pb-8">{stats[tab]?.length || 0}</span>
-          
-          </Button>
+        {TABS_CONFIG.map(({ id, icon }) => (
+          <StatButton
+            key={id}
+            icon={icon}
+            count={stats[id]?.length || 0}
+            isSelected={selectedTab === id}
+            onClick={() => setSelectedTab(id)}
+          />
         ))}
       </div>
 
       <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-
-        <TabsContent value="favorites" className="mt-6 text-black">
-        <div>
-          {getFilteredMovies("favorites").length > 4 ? (
-            <HorizontalScollCard data={getFilteredMovies("favorites")} heading={"Mes Favoris"} />
-          ) : (
-            <div className="px-3 my-10 container mx-auto">
-              <h2 className='text-xl lg:text-2xl font-bold mb-3 capitalize'>Mes Favoris</h2>
-              <div className='flex flex-wrap gap-6 justify-evenly'>
-                {getFilteredMovies("favorites").map((movie, index) => (
-                        <MovieCard key={movie.id+"heading"+index} data={movie} index={index+1} />
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-        </TabsContent>
-
-        <TabsContent value="watchlist" className="mt-6 text-black">
-        <div>
-          {getFilteredMovies("watchlist").length > 4 ? (
-            <HorizontalScollCard data={getFilteredMovies("watchlist")} heading={"A voir"} />
-          ) : (
-            <div className="px-3 my-10 container mx-auto">
-              <h2 className='text-xl lg:text-2xl font-bold mb-3 capitalize'>A Voir</h2>
-              <div className='flex flex-wrap gap-6 justify-evenly'>
-                {getFilteredMovies("watchlist").map((movie, index) => (
-                        <MovieCard key={movie.id+"heading"+index} data={movie} index={index+1} />
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-        </TabsContent>
-
-        <TabsContent value="reviews" className="text-black mt-6 px-3 my-10 container mx-auto">
-          <h2 className='text-xl lg:text-2xl font-bold mb-3  capitalize'>Mes Notes</h2>
-          <div className="flex flex-wrap justify-evenly gap-6">
-            {getFilteredMovies("reviews").map(movie => {
-              const review = stats.reviews?.find(r => r.movieId === movie.id);
-              return (
-                <div key={movie.id} className="relative">
-                  <MovieCard data={movie} />
-                  {review && (
-                    <div className="absolute top-2 left-1/2 transform -translate-x-1/2 bg-amber-500 text-white rounded-full px-2 py-1">
-                      {review.rating} ★
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </TabsContent>
+        {TABS_CONFIG.map(({ id, title }) => (
+          <TabsContent key={id} value={id} className="mt-6 text-black">
+            {renderSection(id, title)}
+          </TabsContent>
+        ))}
       </Tabs>
     </div>
   );
 }
 
-UserStats.propTypes= {
-  stats: PropTypes.object
+UserStats.propTypes = {
+  stats: PropTypes.shape({
+    favorites: PropTypes.arrayOf(PropTypes.number),
+    watchlist: PropTypes.arrayOf(PropTypes.number),
+    reviews: PropTypes.arrayOf(
+      PropTypes.shape({
+        movieId: PropTypes.number.isRequired,
+        rating: PropTypes.number.isRequired
+      })
+    )
+  }).isRequired
+};
+
+StatButton.propTypes = {
+  icon: PropTypes.string.isRequired,
+  count: PropTypes.number.isRequired,
+  isSelected: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
 export default UserStats;
