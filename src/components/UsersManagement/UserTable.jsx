@@ -21,11 +21,11 @@ const UserTable = ({ users, formatDate, getTotalMoviesPerUser }) => {
     <table className="min-w-full divide-y divide-gray-200">
       <thead>
         <tr>
-          {['Nom d\'utilisateur', 'Email', 'Rôle', 'Films vus', 'Critiques', 'Date d\'inscription', 'Dernière connexion', 'Actions']
+          {['Nom d\'utilisateur', 'Email', 'Rôle', 'Films vus', 'Films notés', 'Date d\'inscription', 'Dernière connexion', 'Actions']
             .map(header => (
               <th 
                 key={header} 
-                className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-3 bg-gray-50 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 {header}
               </th>

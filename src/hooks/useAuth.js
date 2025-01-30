@@ -6,7 +6,7 @@ import {
   createUserWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  setPersistence,
+  // setPersistence,
   // browserSessionPersistence,
   // browserLocalPersistence,
   updateProfile,

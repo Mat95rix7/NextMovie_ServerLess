@@ -9,7 +9,8 @@ export async function createUserProfile(userId, data) {
     await setDoc(userRef, {
       displayName: data.displayName, 
       email: data.email,
-      role : "user", 
+      role : "user",
+      isActive: true, 
       createdAt: new Date().toISOString(),
       lastLogin: new Date().toISOString(),
       stats: {

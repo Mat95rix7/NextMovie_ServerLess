@@ -49,12 +49,12 @@ const router = createBrowserRouter([
                 element : <SearchPage />
             },
             {
-                path : "*",
-                element : <NotFoundPage />
-            },
-            {
                 path : "movie/:id",
                 element : <MovieDetails />
+            },
+            {
+                path : "*",
+                element : <NotFoundPage />
             }
         ]
     }

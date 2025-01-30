@@ -90,9 +90,10 @@ function AdminDashboard() {
   const { totalMovies, totalFavorites } = getTotalMoviesInApp(state.users);
   const stats = [
     { icon: Users, title: "Nombre d'utilisateurs", value: state.users.length || 0 },
+    { icon: Armchair, title: "Nombre des salles", value: state.theaters?.length || 0 },
     { icon: Film, title: "Films Consultés", value: totalMovies || 0 },
-    { icon: Star, title: "Films Favoris", value: totalFavorites || 0 },
-    { icon: Armchair, title: "Nombre des salles", value: state.theaters?.length || 0 }
+    { icon: Star, title: "Films Favoris", value: totalFavorites || 0 }
+    
   ];
 
   const tabs = [
