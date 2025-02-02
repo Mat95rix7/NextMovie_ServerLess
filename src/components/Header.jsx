@@ -8,7 +8,6 @@ import ThemeToggle from './ThemeToggle';
 import logo from '../assets/Logo.jpg';
 import userIcon from '../assets/user.png';
 import { Button } from '@/components/ui/button';
-// import { useUser}  from '../context/userContext';
 import { cn } from '@/lib/utils';
 import {
     DropdownMenu,
@@ -44,9 +43,6 @@ const Header = () => {
         { label: "Connexion", onClick: () => navigate('/login') },
         { label: "Inscription", onClick: () => navigate('/register') }
       ];
-
-      console.log(user);
-
     return (
          <header className='fixed top-0 w-full h-16 bg-gray-300 bg-opacity-50 dark:bg-black dark:bg-opacity-50  z-40'>
             <div className='container mx-auto px-3 flex items-center h-full'>

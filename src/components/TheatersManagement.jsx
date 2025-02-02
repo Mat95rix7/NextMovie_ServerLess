@@ -141,9 +141,7 @@ const TheatersManagement = ({ theaters }) => {
 };
 
 TheatersManagement.propTypes = {
-  theaters: PropTypes.array.isRequired,
-  onEditTheater: PropTypes.func.isRequired,
-  onDeleteTheater: PropTypes.func.isRequired,
+  theaters: PropTypes.array.isRequired
 };
 
 export default TheatersManagement;

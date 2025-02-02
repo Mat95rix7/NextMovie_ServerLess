@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { validateField } from '../services/errorMessages';
 import  SuccessModal  from './SuccessModal';
 import { getUserProfile } from '../hooks/userProfile';
+import ResetPasswordModal from './ResetPassword';
 
 export function LoginForm() {
 
@@ -14,6 +15,7 @@ export function LoginForm() {
   const [errorAuth, setErrorAuth] = useState('')
   const [showModal, setShowModal] = useState(false);
   const [showDeactivationModal, setShowDeactivationModal] = useState(false);
+  const [isResetModalOpen, setIsResetModalOpen] = useState(false);
   
   const { login, logout } = useAuth();
   const navigate = useNavigate()
@@ -92,7 +94,18 @@ export function LoginForm() {
         >
           {isLoading ? 'Connexion...' : 'Se connecter'}
         </button>
-        <p className='text-white text-center mt-3'>Don&apos;t Have an account ? <Link to="/Register" className='text-amber-400'>Sign Up</Link></p>
+        <p className='text-white text-center mt-3'>Vous n&apos;avez pas de compte ? <Link to="/Register" className='text-amber-400'>Sign Up</Link></p>
+        <button 
+          onClick={() => setIsResetModalOpen(true)}
+          className="text-amber-400 hover:text-amber-600"
+        >
+          Mot de passe oublié ?
+        </button>
+
+        <ResetPasswordModal 
+          isOpen={isResetModalOpen}
+          onClose={() => setIsResetModalOpen(false)}
+        />
       </form>
       <SuccessModal 
         showModal={showModal}

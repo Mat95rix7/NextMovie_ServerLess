@@ -157,7 +157,7 @@ TabButton.propTypes = {
 };
 
 StatCard.propTypes = {
-  icon: PropTypes.string.isRequired,
+  icon: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
   value: PropTypes.number.isRequired
 };

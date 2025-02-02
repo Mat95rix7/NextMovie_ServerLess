@@ -1,13 +1,19 @@
 export const validateField = (name, value) => {
     switch (name) {
+      
       case 'username':
-        if (value.length < 3) {
-          return 'Le nom d\'utilisateur doit contenir au moins 3 caractères';
-        }
-        if (value.length > 20) {
-          return 'Le nom d\'utilisateur ne doit pas dépasser 20 caractères';
-        }
+        if (value.length < 3) return 'Le nom d\'utilisateur doit contenir au moins 3 caractères';
+        if (value.length > 20) return 'Le nom d\'utilisateur ne doit pas dépasser 20 caractères';
+        if (!/^[a-zA-Z0-9_]+$/.test(value)) return "Le nom d'utilisateur ne peut contenir que des lettres, chiffres et _";
         return '';
+        
+        case 'actualPassword':
+          if (!value) return "Le mot de passe actuel est requis";
+          return '';
+        
+        case 'confirmPassword':
+          if (!value) return "La confirmation du mot de passe est requise";
+          return '';
   
       case 'email':
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

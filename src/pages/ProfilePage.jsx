@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import ProfileHeader from '../components/profile/ProfileHeader';
-import ProfileSettings from '../components/profile/ProfileSettings';
+import UsernameSection from '../components/profile/UsernameSection';
+import PasswordSection from '../components/profile/PasswordSection';
 import { Toaster } from 'react-hot-toast';
 import UserStats from '../components/profile/UserStats';
 import { useAuth2 } from '../context/userContext';
@@ -37,6 +38,10 @@ export function ProfilePage() {
     setUser({ ...user, displayName: newDisplayName });
   };
 
+  const handlePasswordUpdate = (currentPassword, newPassword) => {
+    setUser({ ...user, password: newPassword });
+  };
+
   if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -61,7 +66,17 @@ export function ProfilePage() {
           <ProfileHeader user={user} displayName={displayName} />
           <UserStats stats={stats} />  
           <div className="border-t border-gray-200">
-            <ProfileSettings user={user} onUpdate={handleProfileUpdate} />
+            <div className="w-full space-y-8 p-4 md:p-6 lg:p-8 bg-gradient-to-b from-gray-50 to-white">
+              <h1 className="text-xl md:text-2xl font-semibold mb-2 text-amber-600">
+                Paramètres de profil
+              </h1>
+              <UsernameSection 
+                user={user}
+                onDisplayNameUpdate={handleProfileUpdate}
+              />
+              <PasswordSection onPasswordUpdate={handlePasswordUpdate}
+              />
+            </div>
           </div>
         </div>
       </div>

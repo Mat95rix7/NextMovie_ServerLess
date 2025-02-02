@@ -51,13 +51,7 @@ export async function checkUsernameAvailability(username) {
   const q = query(usersCollection, where('displayName', '==', username));
   try {
     const querySnapshot = await getDocs(q);
-    if (querySnapshot.empty) {
-      // Aucun document trouvé avec ce nom d'utilisateur
-      return true; // Le nom d'utilisateur est disponible
-    } else {
-      // Au moins un document trouvé avec ce nom d'utilisateur
-      return false; // Le nom d'utilisateur est déjà pris
-    }
+    return querySnapshot.empty
   } catch (error) {
     console.error("Erreur lors de la vérification :", error);
     return false; // Ou gérer l'erreur différemment selon vos besoins
