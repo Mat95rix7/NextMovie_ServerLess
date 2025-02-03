@@ -164,7 +164,7 @@ export function RegisterForm() {
         >
           {isLoading ? 'Inscription...' : 'Inscription'}
         </button>
-        <p className='text-white text-center mt-3'>Have already an account  ? <Link to="/Login" className='text-amber-400'>Sign In</Link></p>
+        <p className='text-white text-center mt-3'>Vous avez déjà un compte ? <Link to="/Login" className='text-amber-400'>Connectez-vous</Link></p>
       </form>
 
       <SuccessModal 

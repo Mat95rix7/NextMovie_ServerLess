@@ -9,7 +9,7 @@ import {
   // setPersistence,
   // browserSessionPersistence,
   // browserLocalPersistence,
-  updateProfile,
+  // updateProfile,
 } from 'firebase/auth';
 
 export function useAuth() {

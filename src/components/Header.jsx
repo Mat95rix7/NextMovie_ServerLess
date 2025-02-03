@@ -87,20 +87,3 @@ const Header = () => {
 };
 
 export default Header;
-
-// const [profile, setProfile] = useState(null);
-// const [displayName, setDisplayName] = useState('');
-// const [userRole, setUserRole] = useState('');
-
-
-    //   useEffect(() => {
-    //     const loadProfile = async () => {
-    //       if (user) {
-    //         const userProfile = await getUserProfile(user.uid);
-    //         setProfile(userProfile);
-    //         // setDisplayName(state.displayName || userProfile?.displayName);
-    //         setUserRole(userProfile?.role || 'user');
-    //       }
-    //     };
-    //     loadProfile();
-    //   }, [user]);

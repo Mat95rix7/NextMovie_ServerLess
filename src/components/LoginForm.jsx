@@ -94,7 +94,7 @@ export function LoginForm() {
         >
           {isLoading ? 'Connexion...' : 'Se connecter'}
         </button>
-        <p className='text-white text-center mt-3'>Vous n&apos;avez pas de compte ? <Link to="/Register" className='text-amber-400'>Sign Up</Link></p>
+        <p className='text-white text-center mt-3'>Vous n&apos;avez pas de compte ? <Link to="/Register" className='text-amber-400'>Inscrivez-Vous</Link></p>
         <button 
           onClick={() => setIsResetModalOpen(true)}
           className="text-amber-400 hover:text-amber-600"

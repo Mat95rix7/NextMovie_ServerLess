@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, browserLocalPersistence, setPersistence} from 'firebase/auth';
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, query, where } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
@@ -25,3 +25,19 @@ export const getUsers = async () => {
   return data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
 };
 
+export const getUserByMail = async (email) => {
+  try {
+    const q = query(collection(db, 'users'), where('email', '==', email));
+    
+    const querySnapshot = await getDocs(q);
+    console.log(querySnapshot);
+    
+    if (!querySnapshot.empty) {
+      return querySnapshot.docs[0].data();
+    }
+    return null;
+  } catch (error) {
+    console.error('Erreur de recherche utilisateur:', error);
+    return null;
+  }
+};

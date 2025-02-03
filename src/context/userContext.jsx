@@ -1,40 +1,3 @@
-// import { createContext, useReducer, useContext } from 'react';
-
-// const UserContext = createContext();
-
-// const initialState = {
-//   displayName: '',
-// };
-
-// function userReducer(state, action) {
-//   switch (action.type) {
-//     case 'UPDATE_DISPLAY_NAME':
-//       return { ...state, displayName: action.payload };
-//     default:
-//       return state;
-//   }
-// }
-
-// export function UserProvider({ children }) {
-//   const [state, dispatch] = useReducer(userReducer, initialState);
-
-//   return (
-//     <UserContext.Provider value={{ state, dispatch }}>
-//       {children}
-//     </UserContext.Provider>
-//   );
-// }
-
-// export function useUser() {
-//   return useContext(UserContext);
-// }
-
-// UserProvider.propTypes = {  
-//   children: PropTypes.node.isRequired,
-// };
-
-// export default UserProvider; useUser;
-
 import { createContext, useState, useEffect, useContext } from "react";
 import { auth } from "../config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
@@ -54,7 +17,12 @@ export const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         const userProfile = await getUserProfile(user.uid);
-        setUser({ ...user, role: userProfile?.role });
+        console.log(userProfile);
+        setUser({...user,
+          displayName: userProfile?.displayName,  // S'assurer que le displayName est bien stocké
+          role: userProfile?.role || "user",  // S'assurer d'avoir un role par défaut
+        });
+        // setUser({ ...user, role: userProfile?.role });
         
       } else {
         setUser(null);
