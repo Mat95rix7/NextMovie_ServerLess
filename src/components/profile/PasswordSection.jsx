@@ -4,7 +4,7 @@ import { validateField } from '../../services/errorMessages';
 import { EmailAuthProvider, reauthenticateWithCredential, updatePassword, getAuth } from 'firebase/auth';
 import { toast } from 'react-hot-toast';
 
-function PasswordSection({ onPasswordUpdate }) {
+function PasswordSection({ onPasswordUpdate, isOpen }) {
   const [isEditing, setIsEditing] = useState(false);
   const [isPasswordLoading, setIsPasswordLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -17,6 +17,14 @@ function PasswordSection({ onPasswordUpdate }) {
     password: '',
     confirmPassword: ''
   });
+
+  useEffect(()=>{
+    if(isOpen) setIsEditing(false)
+  },[isOpen])
+
+  
+
+  console.log(isOpen, isEditing);
 
   useEffect(() => {
     const validatePasswords = () => {

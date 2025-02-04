@@ -5,11 +5,15 @@ import { checkUsernameAvailability } from '../../hooks/userProfile';
 import { updateProfile } from '../../hooks/userProfile';
 import { toast } from 'react-hot-toast';
 
-function UsernameSection({ user, onDisplayNameUpdate }) {
+function UsernameSection({ user, onDisplayNameUpdate, isOpen }) {
   const [displayName, setDisplayName] = useState(user.displayName || '');
   const [isEditing, setIsEditing] = useState(false);
   const [usernameError, setUsernameError] = useState('');
   const [isDisplayNameLoading, setIsDisplayNameLoading] = useState(false);
+
+  useEffect(()=>{
+    if(isOpen) setIsEditing(false)
+  },[isOpen])
 
   useEffect(() => {
     const validateUsername = async () => {
