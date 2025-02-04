@@ -17,7 +17,6 @@ export const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         const userProfile = await getUserProfile(user.uid);
-        console.log(userProfile);
         setUser({...user,
           displayName: userProfile?.displayName,  // S'assurer que le displayName est bien stocké
           role: userProfile?.role || "user",  // S'assurer d'avoir un role par défaut

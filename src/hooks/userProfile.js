@@ -62,7 +62,7 @@ export const getTotalMoviesPerUser =  (user) => {
   
     const favorites = user.stats?.favorites || [];
     const watchlist = user.stats?.watchlist || [];
-    const ratedMovies = user.stats?.reviews || [];
+    const ratedMovies = user.stats?.reviews ? user.stats.reviews.map((review) => review.movieId) : [];
     const allMovies = [...favorites, ...watchlist, ...ratedMovies];
     // Use a Set to remove duplicates
     const uniqueMovies = new Set(allMovies);

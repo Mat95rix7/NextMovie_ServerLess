@@ -137,7 +137,8 @@ UsernameSection.propTypes = {
     uid: PropTypes.string.isRequired,
     displayName: PropTypes.string
   }).isRequired,
-  onDisplayNameUpdate: PropTypes.func.isRequired
+  onDisplayNameUpdate: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired
 };
 
 export default UsernameSection;
