@@ -257,13 +257,13 @@ export function ProfilePage() {
               className={`
                 relative flex w-1/2 py-3
                 justify-center
-                rounded-t-3xl
+                rounded-t-xl
                 border border-b-0 
                 transition-all duration-200
                 before:absolute before:top-0 before:left-0 before:w-full before:h-full 
-                before:border-b before:border-gray-200
+                before:border-b before:border-gray-50
                 ${activeTab === tab 
-                  ? "bg-amber-400 text-gray-700 z-10 " 
+                  ? "bg-amber-400 text-gray-700 font-bold z-10 " 
                   : "bg-amber-100/50 text-gray-600 hover:bg-amber-100"
                 }
               `}

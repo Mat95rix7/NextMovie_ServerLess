@@ -5,7 +5,7 @@ export function ProfileHeader({ user, displayName }) {
 
 
   return (
-    <div className="bg-amber-400 p-8 rounded-t-lg text-white mt-1">
+    <div className="bg-amber-400 p-8 rounded-lg text-white mx-3">
       <div className="flex items-center gap-4">
         <div className="p-4 bg-white rounded-full">
           <User className="w-12 h-12 text-amber-400" />
