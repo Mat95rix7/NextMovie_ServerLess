@@ -22,10 +22,6 @@ function PasswordSection({ onPasswordUpdate, isOpen }) {
     if(isOpen) setIsEditing(false)
   },[isOpen])
 
-  
-
-  console.log(isOpen, isEditing);
-
   useEffect(() => {
     const validatePasswords = () => {
         const newErrors = { ...errors };
@@ -138,7 +134,8 @@ function PasswordSection({ onPasswordUpdate, isOpen }) {
 }
 
 PasswordSection.propTypes = {
-  onPasswordUpdate: PropTypes.func.isRequired
+  onPasswordUpdate: PropTypes.func,
+  isOpen: PropTypes.bool.isRequired
 };
 
 export default PasswordSection;

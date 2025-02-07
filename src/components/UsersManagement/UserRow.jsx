@@ -132,11 +132,11 @@ const UserRow = ({
                   : "Cliquez pour activer cet utilisateur"
               }
             >
-              <button onClick={toggleAccountStatus} className="relative flex items-center">
+              <div onClick={toggleAccountStatus} className="relative flex items-center">
                 <div  className="scale-75">
                 <Switch checked={isActive} />
                 </div>
-              </button>
+              </div>
             </Tooltip>
 
             {/* Actions : Enregistrer / Annuler ou Modifier / Supprimer */}

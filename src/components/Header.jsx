@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { IoSearchOutline } from "react-icons/io5";
 import { useAuth } from '../hooks/useAuth';
@@ -21,6 +21,10 @@ const Header = () => {
     const { logout } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
     const { user, isAdmin } = useAuth2();
+
+    useEffect(() => {
+        console.log(user);
+    }, [user]);
 
     const location = useLocation().pathname.slice(1);
  
@@ -56,7 +60,24 @@ const Header = () => {
                     onClick={() => navigate("/search")}/>
                     <DropdownMenu open={isOpen} onOpenChange={setIsOpen} >
                         <DropdownMenuTrigger asChild aria-label="User menu">
-                            {user ? (
+                            <div className="flex items-center gap-2 me-6 cursor-pointer">
+                                {user ? (
+                                    <>
+                                        {user.photoURL && (
+                                            <img src={user.photoURL} alt="User menu" className="w-9 h-9 m-2 rounded-full object-cover"/>
+                                        )}
+                                        <span className="text-black dark:text-amber-400">
+                                            {user.displayName || user.email?.split('@')[0]}
+                                        </span>
+                                    </>
+                                ) : (
+                                    <Button variant="ghost" className="cursor-pointer">
+                                        <img src={userIcon} alt="User menu" className="w-9"/>
+                                    </Button>
+                                )}
+                            </div>
+                            
+                            {/* {user ? (
                                 <span className="rounded-full w-full h-full cursor-pointer text-black dark:text-amber-400 ">
                                     {user.displayName || user.email?.split('@')[0]}
                                 </span>  
@@ -65,7 +86,7 @@ const Header = () => {
                                     <img src={userIcon} alt="User menu" className="w-9"/>
                                 </Button>
                             )
-                        }   
+                        }     */}
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="w-48 rounded-xl bg-gray-100 text-amber-700 border-none">
                             {menuItems.map((item, index) => (

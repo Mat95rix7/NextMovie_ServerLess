@@ -35,13 +35,13 @@ const HorizontalScrollCard = ({ data = [], heading, renderItem }) => {
                 <div className='absolute top-0 flex justify-between w-full h-full items-center'>
                     <button 
                         onClick={handlePrevious} 
-                        className='bg-white p-1 text-black rounded-full -ml-2 z-10 hover:bg-gray-100 transition-colors hidden sm:block'
+                        className='bg-white p-1 text-black rounded-full -ml-2 z-10 hover:bg-gray-100 transition-colors'
                     >
                         <FaAngleLeft />
                     </button>
                     <button 
                         onClick={handleNext} 
-                        className='bg-white p-1 text-black rounded-full -mr-2 z-10 hover:bg-gray-100 transition-colors hidden sm:block'
+                        className='bg-white p-1 text-black rounded-full -mr-2 z-10 hover:bg-gray-100 transition-colors'
                     >
                         <FaAngleRight />
                     </button>
