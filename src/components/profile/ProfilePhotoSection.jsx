@@ -83,65 +83,67 @@ const ProfilePhotoSection = () => {
   };
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center space-x-4">
-        <div className="relative">
-          {user.photoURL ? (
-            <img 
-              src={user.photoURL} 
-              alt="Photo de profil" 
-              className="w-24 h-24 rounded-full object-cover border-2 border-amber-400"
-            />
-          ) : (
-            <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center">
-              <Camera className="w-12 h-12 text-gray-500" />
-            </div>
-          )}
+<div className="w-full space-y-6 p-4">
+  <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
+    {/* Section Photo */}
+    <div className="relative flex-shrink-0">
+      {user.photoURL ? (
+        <img 
+          src={user.photoURL} 
+          alt="Photo de profil" 
+          className="w-32 h-32 sm:w-24 sm:h-24 rounded-full object-cover border-2 border-amber-400"
+        />
+      ) : (
+        <div className="w-32 h-32 sm:w-24 sm:h-24 bg-gray-200 rounded-full flex items-center justify-center">
+          <Camera className="w-16 h-16 sm:w-12 sm:h-12 text-gray-500" />
         </div>
-        
-        <div className="flex space-x-2">
-          <button 
-            onClick={() => fileInputRef.current.click()} 
-            disabled={isUploading}
-            className="bg-amber-500 text-white px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-amber-600 disabled:opacity-50"
-          >
-            {isUploading ? (
-              <>
-                <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                Téléchargement...
-              </>
-            ) : (
-              <>
-                <Camera className="w-4 h-4 mr-2" />
-                {user.photoURL ? "Modifier" : "Ajouter"}
-              </>
-            )}
-          </button>
-
-          {user.photoURL && (
-            <button 
-              onClick={handleRemovePhoto}
-              className="bg-red-100 text-red-600 px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-red-200"
-            >
-              <Trash2 className="w-4 h-4 mr-2" />
-              Supprimer
-            </button>
-          )}
-
-          <input 
-            type="file" 
-            ref={fileInputRef}
-            onChange={handleFileSelect}
-            accept="image/jpeg,image/png,image/gif"
-            className="hidden"
-          />
-        </div>
-      </div>
-      <p className="text-sm text-gray-600">
-        Formats : JPEG, PNG, GIF (max 5 Mo)
-      </p>
+      )}
     </div>
-  );
+    
+    {/* Section Boutons */}
+    <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-2 w-full sm:w-auto">
+      <button 
+        onClick={() => fileInputRef.current.click()} 
+        disabled={isUploading}
+        className="w-full sm:w-auto bg-amber-500 text-white px-6 py-3 sm:px-4 sm:py-2 rounded-lg flex items-center justify-center space-x-2 hover:bg-amber-600 disabled:opacity-50 transition-colors"
+      >
+        {isUploading ? (
+          <>
+            <Loader2 className="w-5 h-5 sm:w-4 sm:h-4 animate-spin mr-2" />
+            <span className="text-sm sm:text-base">Téléchargement...</span>
+          </>
+        ) : (
+          <>
+            <Camera className="w-5 h-5 sm:w-4 sm:h-4 mr-2" />
+            <span className="text-sm sm:text-base">{user.photoURL ? "Modifier" : "Ajouter"}</span>
+          </>
+        )}
+      </button>
+
+      {user.photoURL && (
+        <button 
+          onClick={handleRemovePhoto}
+          className="w-full sm:w-auto bg-red-100 text-red-600 px-6 py-3 sm:px-4 sm:py-2 rounded-lg flex items-center justify-center space-x-2 hover:bg-red-200 transition-colors"
+        >
+          <Trash2 className="w-5 h-5 sm:w-4 sm:h-4 mr-2" />
+          <span className="text-sm sm:text-base">Supprimer</span>
+        </button>
+      )}
+
+      <input 
+        type="file" 
+        ref={fileInputRef}
+        onChange={handleFileSelect}
+        accept="image/jpeg,image/png,image/gif"
+        className="hidden"
+      />
+    </div>
+  </div>
+
+  <p className="text-sm text-gray-600 text-center sm:text-left">
+    Formats : JPEG, PNG, GIF (max 5 Mo)
+  </p>
+</div>  );
 };
 
 export default ProfilePhotoSection;
