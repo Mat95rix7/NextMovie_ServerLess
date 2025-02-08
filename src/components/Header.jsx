@@ -63,13 +63,15 @@ const Header = () => {
             {/* Right Section */}
             <div className='flex items-center gap-2 sm:gap-5'>
             {/* Search Icon */}
-            <IoSearchOutline 
-                className={cn(
-                "text-xl sm:text-2xl cursor-pointer hover:text-amber-600 transition-colors",
-                location === "search" ? "hidden" : "block"
-                )}
-                onClick={() => navigate("/search")}
-            />
+                <div className="me-10 sm:me-16">
+                    <IoSearchOutline 
+                    className={cn(
+                        "text-xl sm:text-2xl cursor-pointer hover:text-amber-600 transition-colors",
+                        location === "search" ? "hidden" : "block"
+                    )}
+                    onClick={() => navigate("/search")}
+                    />
+                </div>
             {/* User Dropdown */}
             <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
                 <DropdownMenuTrigger asChild aria-label="User menu">
@@ -82,7 +84,7 @@ const Header = () => {
                         className="w-8 h-8 sm:w-9 sm:h-9 rounded-full object-cover"
                         />
                     ) : null}
-                    <span className="hidden sm:block text-sm sm:text-base text-black dark:text-amber-400 max-w-[120px] truncate">
+                    <span className="  text-black dark:text-amber-400 max-w-[120px] truncate">
                         {user.displayName || user.email?.split('@')[0]}
                     </span>
                     </div>
