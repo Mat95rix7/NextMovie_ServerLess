@@ -395,10 +395,8 @@ export function ProfilePage() {
                       isOpen={openSection === "photo"}
                       onClick={() => setOpenSection(openSection === "photo" ? null : "photo")}
                     >
-                      <ProfilePhotoSection 
-                        isOpen={openSection === "photo"} 
-                        profilePhotoUrl={profileData.profilePhotoUrl} 
-                      />
+                      <ProfilePhotoSection />
+                    
                     </SettingsCard>
 
                     <SettingsCard

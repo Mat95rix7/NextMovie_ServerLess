@@ -7,7 +7,7 @@ import { toast } from "react-hot-toast";
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from "../../config/firebase";
 
-const ProfilePhotoSection = ({ isOpen, profilePhotoUrl }) => {
+const ProfilePhotoSection = () => {
   const { user, setUser } = useAuth2();
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef(null);

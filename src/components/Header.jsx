@@ -53,30 +53,27 @@ const Header = () => {
                 <Link to={"/"}>
                     <img src={logo} alt='logo' className='w-9 min-w-8  rounded-lg'/>
                 </Link>
-                <div className='ml-auto flex items-center gap-10'>
+                <div className='ml-auto flex items-center gap-5'>
                     <IoSearchOutline className={cn(
                 "w-full text-2xl cursor-pointer",
                 location === "search" ? "hidden" : "block")}
                     onClick={() => navigate("/search")}/>
                     <DropdownMenu open={isOpen} onOpenChange={setIsOpen} >
                         <DropdownMenuTrigger asChild aria-label="User menu">
-                            <div className="flex items-center gap-2 me-6 cursor-pointer">
                                 {user ? (
-                                    <>
+                                    <div className="flex items-center gap-2 me-8 cursor-pointer">
                                         {user.photoURL && (
-                                            <img src={user.photoURL} alt="User menu" className="w-9 h-9 m-2 rounded-full object-cover"/>
+                                            <img src={user.photoURL} alt="User menu" className="w-9 h-9 rounded-full object-cover"/>
                                         )}
                                         <span className="text-black dark:text-amber-400">
                                             {user.displayName || user.email?.split('@')[0]}
                                         </span>
-                                    </>
-                                ) : (
-                                    <Button variant="ghost" className="cursor-pointer">
-                                        <img src={userIcon} alt="User menu" className="w-9"/>
-                                    </Button>
+                                   </div>
+                                 ) : ( 
+                                        <Button variant="ghost" className="w-full h-full cursor-pointer">
+                                            <img src={userIcon} alt="User menu" className="w-9"/>
+                                        </Button>
                                 )}
-                            </div>
-                            
                             {/* {user ? (
                                 <span className="rounded-full w-full h-full cursor-pointer text-black dark:text-amber-400 ">
                                     {user.displayName || user.email?.split('@')[0]}

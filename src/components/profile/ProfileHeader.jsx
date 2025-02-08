@@ -20,12 +20,12 @@ export function ProfileHeader({ user, displayName }) {
   return (
     <div className="bg-amber-400 p-8 rounded-b-lg text-white mx-3">
       <div className="flex items-center gap-4">
-        <div className="p-2 bg-white rounded-full">
+        <div className="p-1 bg-white rounded-full">
           {currentUser?.photoURL ? (
             <img 
               src={currentUser.photoURL} 
               alt="Photo de profil" 
-              className="w-24 h-24 rounded-full object-cover"
+              className="w-12 h-12 rounded-full object-cover"
             />
           ) : (
             <User className="w-12 h-12 text-amber-400" />
