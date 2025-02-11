@@ -97,7 +97,9 @@ export function RegisterForm() {
 
   return (
     <div className='w-full max-w-xs'>
-
+      <h1 className="text-4xl mb-10 text-amber-500 font-bold capitalize text-center">
+          Inscription
+      </h1>
       <form onSubmit={handleSubmit} className="flex flex-col w-full max-w-xs">
 
           <input

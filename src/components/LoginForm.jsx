@@ -71,6 +71,9 @@ export function LoginForm() {
 
   return (
     <div className='w-full max-w-xs'>
+      <h1 className="text-4xl mb-10 text-amber-500 font-bold capitalize">
+        Connexion
+      </h1>
       <form onSubmit={handleSubmit} className="flex flex-col w-full max-w-xs">
         <input
           className="mb-3 p-4 text-lg border text-gray-500 border-gray-300 rounded-md"
