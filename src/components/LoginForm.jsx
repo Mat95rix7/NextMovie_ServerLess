@@ -90,7 +90,7 @@ export function LoginForm() {
         <button
           type="submit"
           disabled={isLoading}
-          className="bg-amber-400 text-white font-bold py-4 px-4 rounded-md hover:bg-amber-600 transition-colors duration-300 ease-in-out disabled:opacity-50"
+          className="bg-gradient-to-t from-amber-400 to-amber-700 text-white text-xl font-bold py-4 px-4 rounded-md hover:bg-amber-600 transition-colors duration-300 ease-in-out disabled:opacity-50"
         >
           {isLoading ? 'Connexion...' : 'Se connecter'}
         </button>

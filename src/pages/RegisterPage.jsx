@@ -13,7 +13,7 @@ const RegisterPage = () => {
           shadow-md transition-all duration-300 hover:shadow-lg hover:scale-105 
           border border-gray-700 hover:border-amber-500 animate-fade-in">
           
-          <h1 className="text-4xl mb-10 text-amber-300 font-semibold capitalize">
+          <h1 className="text-4xl mb-10 text-amber-500 font-bold capitalize">
           Inscription
           </h1>
           <RegisterForm />
