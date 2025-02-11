@@ -5,12 +5,15 @@ import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 import { toast } from 'react-hot-toast';
 import PropTypes from 'prop-types';
 import { getUserByMail } from '../config/firebase';
+import { useNavigate } from 'react-router-dom';
 
 const ResetPasswordModal = ({ isOpen, onClose }) => {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
   const [emailError, setEmailError] = useState('');
+  
+  const navigate = useNavigate();
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -37,7 +40,8 @@ const ResetPasswordModal = ({ isOpen, onClose }) => {
       }
       await sendPasswordResetEmail(auth, email);
       setEmailSent(true);
-      toast.success("Email de réinitialisation envoyé !");
+      navigate('/login');
+      toast.success("Un email de réinitialisation a été envoyé !");
     } catch (error) {
       console.error('Reset password error:', error);
       const errorMessages = {

@@ -1,13 +1,15 @@
 import { LoginForm } from '../components/LoginForm';
 import Logo from '../assets/Logo.jpg';
 import { Toaster } from 'react-hot-toast';
+// import SlidingLoginModal from '../components/Slide';
+import BannerHome from '../components/BannerHome';
 
 const LoginPage = () => {
   return (
         <div className="flex flex-col md:flex-row h-screen">
           <Toaster position="top-right" />
 
-          {/* Section Connexion */}
+          {/* Section Connexion */} */
           <div className="flex-1 flex flex-col items-center justify-center bg-gray-500 p-5">
             <div className="relative flex flex-col items-center justify-center 
               bg-gradient-to-b from-gray-800 to-gray-900 p-6 rounded-2xl w-full max-w-md py-10 
@@ -20,7 +22,6 @@ const LoginPage = () => {
               <LoginForm />
             </div>
           </div>
-
           {/* Section Image */}
           <div className="hidden md:flex flex-1 items-center justify-center bg-gray-800">
             <img

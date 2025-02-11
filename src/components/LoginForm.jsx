@@ -5,7 +5,6 @@ import { validateField } from '../services/errorMessages';
 import  SuccessModal  from './SuccessModal';
 import { getUserProfile } from '../hooks/userProfile';
 import ResetPasswordModal from './ResetPassword';
-
 export function LoginForm() {
 
   const [email, setEmail] = useState('');
@@ -25,6 +24,12 @@ export function LoginForm() {
     const error = validateField('email', email)
     if (error) setErrorMail(error);
   }, [email])
+
+  const handleForgotPassword = () => {
+    setEmail('');
+    setPassword('');
+    setIsResetModalOpen(true);
+  };
 
 
 
@@ -95,18 +100,18 @@ export function LoginForm() {
           {isLoading ? 'Connexion...' : 'Se connecter'}
         </button>
         <p className='text-white text-center mt-3'>Vous n&apos;avez pas de compte ? <Link to="/Register" className='text-amber-400'>Inscrivez-Vous</Link></p>
-        <button 
-          onClick={() => setIsResetModalOpen(true)}
-          className="text-amber-400 hover:text-amber-600"
-        >
-          Mot de passe oublié ?
-        </button>
-
         <ResetPasswordModal 
           isOpen={isResetModalOpen}
           onClose={() => setIsResetModalOpen(false)}
         />
       </form>
+      <button
+        type='button'
+        onClick={handleForgotPassword}
+        className="w-full text-amber-400 hover:text-amber-600 text-center mt-2"
+        >
+          Mot de passe oublié ?
+      </button>
       <SuccessModal 
         showModal={showModal}
         setShowModal={setShowModal}

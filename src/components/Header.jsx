@@ -124,6 +124,11 @@ const Header = () => {
 
 export default Header;
 
+
+
+
+
+
         //  <header className='fixed top-0 w-full h-16 bg-gray-300 bg-opacity-50 dark:bg-black dark:bg-opacity-50  z-40'>
         //     <div className='container mx-auto px-3 flex items-center h-full'>
         //         <Link to={"/"}>
