@@ -4,7 +4,7 @@ import BannerLogin from '../components/BannerLogin';
 
 const LoginPage = () => {
   return (
-        <div className="flex flex-col md:flex-row h-screen">
+        <div className="flex">
           <Toaster position="top-right" />
 
           {/* Section Connexion */}
@@ -24,13 +24,13 @@ const LoginPage = () => {
               
               <div className="relative rounded-2xl w-full max-w-xl 
               shadow-md transition-all duration-300 hover:shadow-lg hover:scale-105 
-              border border-gray-700 hover:border-amber-500 animate-fade-in mx-auto my-5">
+              border border-gray-700 hover:border-amber-500 animate-fade-in mx-auto mt-5">
                 <BannerLogin />
               </div>
               
               <div className="relative rounded-2xl w-full max-w-xl
               shadow-md transition-all duration-300 hover:shadow-lg hover:scale-105 
-              border border-gray-700 hover:border-amber-500 animate-fade-in mx-auto my-5">
+              border border-gray-700 hover:border-amber-500 animate-fade-in mx-auto mt-5">
                 <BannerLogin excludeIndex={-1}/>
               </div>
           </div>

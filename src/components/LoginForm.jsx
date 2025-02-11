@@ -71,7 +71,7 @@ export function LoginForm() {
 
   return (
     <div className='w-full max-w-xs'>
-      <h1 className="text-4xl mb-10 text-amber-500 font-bold capitalize">
+      <h1 className="text-4xl mb-10 text-amber-500 font-bold capitalize text-center">
         Connexion
       </h1>
       <form onSubmit={handleSubmit} className="flex flex-col w-full max-w-xs">

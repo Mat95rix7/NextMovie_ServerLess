@@ -39,13 +39,11 @@ function App() {
   
   return (
     <AuthProvider>
-      <main className='pb-14 lg:pb-0'>
           <Header/>
-          <div className='min-h-[80vh]'>
+          <div className='min-h-[78vh] mt-14'>
               <Outlet/>
           </div>
           <Footer/>
-      </main>
     </AuthProvider>
   );
 }

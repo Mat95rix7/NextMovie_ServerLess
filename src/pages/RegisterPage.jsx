@@ -1,11 +1,10 @@
 import { RegisterForm } from '../components/RegisterForm';
-// import Logo from '../assets/Logo.jpg';
 import { Toaster } from 'react-hot-toast';
 import BannerLogin from '../components/BannerLogin';
 
 const RegisterPage = () => {
   return (
-    <div className="flex flex-col md:flex-row h-screen">
+    <div className="flex ">
       <Toaster position="top-right"/>
       {/* Section Inscription */}
       <div className="flex-1 flex flex-col items-center justify-center p-5">
@@ -22,13 +21,13 @@ const RegisterPage = () => {
 
           <div className="relative rounded-2xl w-full max-w-xl 
           shadow-md transition-all duration-300 hover:shadow-lg hover:scale-105 
-          border border-gray-700 hover:border-amber-500 animate-fade-in mx-auto my-5">
+          border border-gray-700 hover:border-amber-500 animate-fade-in mx-auto mt-5">
             <BannerLogin />
           </div>
           
           <div className="relative rounded-2xl w-full max-w-xl
           shadow-md transition-all duration-300 hover:shadow-lg hover:scale-105 
-          border border-gray-700 hover:border-amber-500 animate-fade-in mx-auto my-5">
+          border border-gray-700 hover:border-amber-500 animate-fade-in mx-auto mt-5">
             <BannerLogin excludeIndex={-1}/>
           </div>
         {/* <img
