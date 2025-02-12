@@ -10,6 +10,7 @@ import ContactForm from "../pages/ContactForm";
 import About from "../pages/About";
 import AdminDashboard from "../pages/AdminDashboard";
 import NotFoundPage from "../pages/NotFoundPage";
+import ProtectedAdminRoute from "../components/ProtectedAdminRoute";
 
 const router = createBrowserRouter([
     {
@@ -41,8 +42,14 @@ const router = createBrowserRouter([
                 element : <ProfilePage/>
             },
             {
-                path : "admin",
-                element : <AdminDashboard />
+                path: 'admin',
+                element: <ProtectedAdminRoute />,
+                children: [
+                    {
+                        path: '',
+                        element: <AdminDashboard />
+                    }
+                ]
             },
             {
                 path : "search",

@@ -86,11 +86,6 @@ SuccessModal.propTypes = {
   showModal: PropTypes.bool.isRequired,
   setShowModal: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
-  message: PropTypes.string,
-};
-
-SuccessModal.defaultProps = {
-  message: null,
 };
 
 export default SuccessModal;

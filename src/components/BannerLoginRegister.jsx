@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const BannerLogin = ({ excludeIndex }) => {
+const BannerLogin = ({ excludeIndex, direction }) => {
     const bannerData = useSelector(state => state.movieData.bannerData);
     const imageURL = useSelector(state => state.movieData.imageURL);
     
@@ -11,20 +11,26 @@ const BannerLogin = ({ excludeIndex }) => {
         let newIndex;
         do {
             newIndex = Math.floor(Math.random() * bannerData.length);
-        } while (newIndex === excludeIndex); // Évite de choisir le même index que l'autre bannière
+        } while (newIndex === excludeIndex);
         return newIndex;
     };
 
     const [currentImage, setCurrentImage] = useState(getRandomIndex());
 
+    const operation = useMemo(() => {
+        return direction === "+" 
+            ? (prev) => (prev + 1) % bannerData.length 
+            : (prev) => (prev - 1 + bannerData.length) % bannerData.length;
+    }, []);
+
     const handleNext = () => {
-        setCurrentImage(prev => (prev + 1) % bannerData.length);
+            setCurrentImage(operation);     
     };
 
     useEffect(() => {
         const interval = setInterval(() => {
             handleNext();
-        }, 5000);
+        }, 3000);
 
         return () => clearInterval(interval);
     }, [bannerData, currentImage]);
@@ -65,7 +71,8 @@ const BannerLogin = ({ excludeIndex }) => {
 };
 
 BannerLogin.propTypes = {
-    excludeIndex: PropTypes.number // Permet d'exclure un index pour éviter les répétitions
+    excludeIndex: PropTypes.number,
+    direction: PropTypes.string,
 };
 
 export default BannerLogin;

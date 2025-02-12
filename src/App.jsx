@@ -40,8 +40,8 @@ function App() {
   return (
     <AuthProvider>
           <Header/>
-          <div className='min-h-[78vh] mt-14'>
-              <Outlet/>
+          <div className='min-h-[65vh] md:min-h-[75vh] mt-20'>
+              <Outlet />  
           </div>
           <Footer/>
     </AuthProvider>

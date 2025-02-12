@@ -22,10 +22,6 @@ const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
     const { user, isAdmin } = useAuth2();
 
-    useEffect(() => {
-        console.log(user);
-    }, [user]);
-
     const location = useLocation().pathname.slice(1);
  
     const menuItems = user

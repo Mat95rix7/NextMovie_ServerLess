@@ -1,6 +1,6 @@
 import { LoginForm } from '../components/LoginForm';
 import { Toaster } from 'react-hot-toast';
-import BannerLogin from '../components/BannerLogin';
+import BannerLogin from '../components/BannerLoginRegister';
 
 const LoginPage = () => {
   return (
@@ -25,13 +25,13 @@ const LoginPage = () => {
               <div className="relative rounded-2xl w-full max-w-xl 
               shadow-md transition-all duration-300 hover:shadow-lg hover:scale-105 
               border border-gray-700 hover:border-amber-500 animate-fade-in mx-auto mt-5">
-                <BannerLogin />
+                <BannerLogin excludeIndex={1} direction={'+'}/>
               </div>
               
               <div className="relative rounded-2xl w-full max-w-xl
               shadow-md transition-all duration-300 hover:shadow-lg hover:scale-105 
               border border-gray-700 hover:border-amber-500 animate-fade-in mx-auto mt-5">
-                <BannerLogin excludeIndex={-1}/>
+                <BannerLogin excludeIndex={-1} direction={'-'}/>
               </div>
           </div>
         </div>
