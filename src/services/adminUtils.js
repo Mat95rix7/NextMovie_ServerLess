@@ -1,5 +1,5 @@
 import { collection, getDocs, doc, getDoc, deleteDoc, updateDoc } from 'firebase/firestore';
-import { db, auth } from '../config/firebase';
+import { db } from '../config/firebase';
 
 export const checkIsAdmin = async (user) => {
   if (!user) return false;

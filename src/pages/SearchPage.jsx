@@ -13,7 +13,7 @@ export function SearchPage() {
   const { filters, filterHandlers, filteredMovies } = useMovieFilters(movies);
 
   return (
-    <div className="py-16">
+    <div className="py-1">
       <div className="fixed top-20 left-0 right-0 z-10 container mx-auto">
         <form onSubmit={(e) => e.preventDefault()} className="mb-6 flex gap-4 w-11/12 mx-auto">
           <div className="flex-1 relative">
@@ -22,7 +22,7 @@ export function SearchPage() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Rechercher un film..."
-              className="w-full px-4 py-3 pr-12 text-lg lg:text-xl font-semibold text-gray-900 rounded-3xl border focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+              className="w-full px-4 py-3 pr-12 text-lg lg:text-xl font-semibold text-gray-900 rounded-3xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
             />
             <button
               type="submit"
@@ -34,7 +34,6 @@ export function SearchPage() {
           <FilterDropdown
             genres={genres}
             selectedGenres={filters.selectedGenres}
-            // minRuntime={filters.minRuntime}
             maxRuntime={filters.maxRuntime}
             minRating={filters.minRating}
             isRecent={filters.isRecent}

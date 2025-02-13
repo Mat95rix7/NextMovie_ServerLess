@@ -4,6 +4,9 @@ export default {
     content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
     theme: {
     	extend: {
+			screens: {
+				xs: "400px",
+			  },
 			animation: {
 				'fadeIn': 'fadeIn 0.3s ease-in-out',
 			  },

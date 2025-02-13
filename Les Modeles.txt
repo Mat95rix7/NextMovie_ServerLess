@@ -1,0 +1,60 @@
+User Modele 
+	{
+
+		"uid": "xfvSXd2abgOT6Jg0M7zPIBwnOQc2",
+		"email": "n.djamel@free.fr",
+		"password":"xxxxxxxxx"
+		"displayName": "Mat95rix7",                 
+		"photoURL": null 
+		"createdAt": "1738019931386",
+		"lastLoginAt": "1738770712872",
+		"role": "admin"
+		"stats" :
+		{
+			"favorites": [],
+			"watchlist": [],
+			"reviews": [],
+	}
+
+Theatre modele : 
+  {
+		"dep": 75,
+		"nom": "UGC GEORGE V",
+		"adresse": "146 AVENUE DES CHAMPS ELYSEES",
+		"code_insee": 75108,
+		"commune": "Paris 8e Arrondissement",
+		"ecrans": 11,
+		"fauteuils": 1666,
+		"geo": {
+		  "lon": 2.298394,
+		  "lat": 48.873073
+		}
+
+	}
+	
+Movie Modele :
+{
+      id: 939243,
+	  backdrop_path: '/zOpe0eHsq0A2NvNyBbtT6sj53qV.jpg',
+      genre_ids: [
+        28,
+        878,
+        35,
+        10751
+      ],
+      overview: 'Sonic, Knuckles et Tails sont à nouveau réunis face à un puissant nouvel adversaire, Shadow, un mystérieux vilain doté de pouvoirs comme ils n\'en ont encore jamais vu. Leurs habiletés étant toutes surclassées, l\'Équipe Sonic doit tenter une alliance improbable dans l\'espoir d\'arrêter Shadow et de protéger la planète.',
+      popularity: 3149.096,
+      poster_path: '/gERwLGTa6JGN4qXjkip13eDaxy1.jpg',
+      release_date: '2024-12-19',
+      title: 'Sonic 3, le film',
+      video: false,
+      vote_average: 7.776,
+      vote_count: 1672
+    },
+}
+
+genre modele : 
+{
+	id: number,
+	name : string
+}

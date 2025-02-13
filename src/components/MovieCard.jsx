@@ -52,7 +52,7 @@ const MovieCard = ({ data }) => {
   };
 
   return (
-          <div className="relative group overflow-hidden min-w-[230px] max-w-[230px] rounded-lg shadow-lg transition-all duration-300 hover:scale-105 mb-8 mt-8">
+          <div onClick={handleDetailsClick} className="relative group overflow-hidden min-w-[230px] rounded-lg shadow-lg transition-all duration-300 hover:scale-105 mb-8 mt-8 cursor-pointer">
             <img
               src={ data.poster_path ? `https://image.tmdb.org/t/p/w500${data.poster_path}` : NoImage }
               alt={data.title}
@@ -71,7 +71,7 @@ const MovieCard = ({ data }) => {
                   {data.vote_average.toFixed(1)}
               </div>
               <div className="absolute bottom-0 p-4 w-full text-center text-white">
-                <h3 className="text-xl font-bold mb-2 cursor-pointer text-center" onClick={handleDetailsClick}>{data.title}</h3>
+                <h3 className="text-xl font-bold mb-2  text-center" >{data.title}</h3>
                 <div className="m-2 flex flex-wrap items-center justify-center gap-2">
                   {movieGenres
                     .map(genre => (

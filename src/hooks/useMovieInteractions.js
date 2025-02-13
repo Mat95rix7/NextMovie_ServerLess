@@ -52,7 +52,8 @@ export function useMovieInteractions(userId, movieId) {
     loadUserData();
   }, [userId, movieId]);
 
-  const toggleFavorite = useCallback(async () => {
+  const toggleFavorite = useCallback(async (e) => {
+    e.stopPropagation();
     if (!userId || !movieId || !userRef) return;
 
     try {
@@ -71,7 +72,8 @@ export function useMovieInteractions(userId, movieId) {
     }
   }, [userId, movieId, isFavorite, userRef]);
 
-  const toggleWatchLater = useCallback(async () => {
+  const toggleWatchLater = useCallback(async (e) => {
+    e.stopPropagation();
     if (!userId || !movieId || !userRef) return;
 
     try {

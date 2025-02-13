@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { IoSearchOutline } from "react-icons/io5";
 import { useAuth } from '../hooks/useAuth';
@@ -27,7 +27,7 @@ const Header = () => {
     const menuItems = user
     ? [
         { label: "Mon Espace", onClick: () => navigate('/profile') },
-        ...(isAdmin ? [{ label: "Dashboard", onClick: () => navigate('/admin') }] : []),
+        ...(isAdmin ? [{ label: "Administration", onClick: () => navigate('/admin') }] : []),
         { label: "Déconnexion", onClick: async() => {
             try {
                 await logout();
@@ -48,14 +48,14 @@ const Header = () => {
     <header className='fixed top-0 w-full h-14 sm:h-16 bg-gray-300 bg-opacity-50 dark:bg-black dark:bg-opacity-50 z-40 backdrop-blur-sm'>
         <div className='container mx-auto px-2 sm:px-3 flex items-center justify-between h-full'>
             {/* Logo */}
-            <Link to={"/"} className="flex-shrink-0">
+            <Link to={"/"} className="flex-shrink-0 flex items-center gap-4">
             <img 
                 src={logo} 
                 alt='logo' 
                 className='w-8 sm:w-9 rounded-lg transition-transform hover:scale-105'
             />
+            <span className="text-2xl font-bold text-amber-600 hidden xs:block">NextScreen</span>
             </Link>
-
             {/* Right Section */}
             <div className='flex items-center gap-2 sm:gap-5'>
             {/* Search Icon */}

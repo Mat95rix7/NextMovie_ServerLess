@@ -38,7 +38,7 @@ function MovieActions({ userId, movieId }) {
         <DropdownMenuTrigger asChild>
           <Button 
             variant="ghost" 
-            className="h-8 w-8 p-0 rounded-full bg-white/30 hover:bg-white/50"
+            className="h-8 w-8 p-0 rounded-full bg-white/50 hover:bg-white/70"
           >
             <MoreHorizontal className="h-4 w-4 text-black" />
             <span className="sr-only">Menu</span>
@@ -82,7 +82,7 @@ function MovieActions({ userId, movieId }) {
                       "font-bold cursor-pointer",
                       rating === stars && "bg-amber-200"
                     )}
-                    onClick={() => updateRating(stars)}
+                    onClick={(e) => { e.stopPropagation(); updateRating(stars) }}
                   >
                     {Array(stars).fill('★').join('')}
                   </DropdownMenuItem>

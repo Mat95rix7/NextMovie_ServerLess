@@ -11,7 +11,7 @@ const Home = () => {
 
    
   return (
-    <div>
+    <div className='min-w-[320px]'>
       <BannerHome/>
       <HorizontalScollCard data={nowPlayingData} heading={"Now Playing Movies"} />
       <HorizontalScollCard data={topPopularData} heading={"Popular Movies"} />

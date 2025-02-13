@@ -23,7 +23,7 @@ const Footer = () => {
       <div className="flex flex-col md:flex-row justify-center text-sm border-t border-gray-800 mt-1 mb-1 text-center text-gray-600 dark:text-gray-400">
         <p className='mt-5'>Created By <strong className='text-amber-600 pe-2'>Mat95rix7</strong></p>
         <div className='flex justify-center mt-0 md:mt-5'>
-          <p>© 2024 <span className='text-amber-600 pe-2'>MovieApp.</span></p>
+          <p>© 2025 <span className='text-amber-600 pe-2'>MovieApp.</span></p>
           <p>Tous droits réservés.</p>
         </div>
       </div>

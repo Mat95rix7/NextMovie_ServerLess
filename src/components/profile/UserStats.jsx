@@ -123,7 +123,7 @@ function UserStats({ stats }) {
       return (
         <div className="px-3 my-10 container mx-auto">
           <h2 className="text-xl lg:text-2xl font-bold mb-3 capitalize">{title}</h2>
-          <p>Aucun film dans cette catégorie.</p>
+          <p className="text-center text-amber-600">Aucun film dans cette catégorie.</p>
         </div>
       );
     }
@@ -142,7 +142,8 @@ function UserStats({ stats }) {
   }
 
   return (
-    <div className="w-full space-y-6 mt-8">
+    <div className="bg-white/70 backdrop-blur-sm p-6 md:p-8 rounded-2xl shadow-lg border border-gray-100 transition-all duration-300 hover:shadow-xl relative overflow-hidden">
+      {/* w-full space-y-6 mt-8 */}
       <div className="grid grid-cols-3 gap-4">
         {TABS_CONFIG.map(({ id, icon }) => (
           <StatButton
