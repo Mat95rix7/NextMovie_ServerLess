@@ -9,7 +9,7 @@ import { useAuth } from '../hooks/useAuth';
 
 const MovieCard = ({ data }) => {
 
-  const { user } = useAuth()
+ const { user } = useAuth()
   let  userId
   
   if (user){
@@ -47,7 +47,8 @@ const MovieCard = ({ data }) => {
 
   const navigate = useNavigate()
   
-  const handleDetailsClick = () => {
+  const handleDetailsClick = (e) => {
+    if (e.target.closest('.action-zone')) return;
     navigate(`/movie/${data.id}`)
   };
 
@@ -58,7 +59,7 @@ const MovieCard = ({ data }) => {
               alt={data.title}
               className="w-full h-[400px] object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
 
             { user && (
               <MovieActions

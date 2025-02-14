@@ -7,11 +7,11 @@ const HorizontalScrollCard = ({ data = [], heading, renderItem }) => {
     const containerRef = useRef();
 
     const handleNext = () => {
-        containerRef.current.scrollLeft += 300;
+        containerRef.current.scrollLeft += 265;
     };
 
     const handlePrevious = () => {
-        containerRef.current.scrollLeft -= 300;
+        containerRef.current.scrollLeft -= 265;
     };
 
     const defaultRenderItem = (item, index) => (

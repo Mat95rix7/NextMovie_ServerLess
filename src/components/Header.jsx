@@ -54,7 +54,7 @@ const Header = () => {
                 alt='logo' 
                 className='w-8 sm:w-9 rounded-lg transition-transform hover:scale-105'
             />
-            <span className="text-2xl font-bold text-amber-600 hidden xs:block">NextScreen</span>
+            <span className="text-2xl font-bold text-amber-600 hidden xs:block">Next Movie</span>
             </Link>
             {/* Right Section */}
             <div className='flex items-center gap-2 sm:gap-5'>
