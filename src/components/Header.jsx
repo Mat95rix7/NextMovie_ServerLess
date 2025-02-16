@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { IoSearchOutline } from "react-icons/io5";
 import { useAuth } from '../hooks/useAuth';
-import { useAuth2 } from '../context/userContext';
+import { useAuth2 } from '../context/auth/authContext';
 import { toast } from 'react-hot-toast';
 import ThemeToggle from './ThemeToggle';
 import logo from '../assets/Logo.jpg';

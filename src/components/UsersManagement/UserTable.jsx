@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import UserRow from './UserRow';
 import PropTypes from 'prop-types';
-const UserTable = ({ users, formatDate, getTotalMoviesPerUser }) => {
+const UserTable = ({ users, formatDate }) => {
   
   const [userList, setUserList] = useState(users);
   
@@ -21,11 +21,11 @@ const UserTable = ({ users, formatDate, getTotalMoviesPerUser }) => {
     <table className="min-w-full divide-y divide-gray-200">
       <thead>
         <tr>
-          {['Nom d\'utilisateur', 'Email', 'Rôle', 'Films vus', 'Films notés', 'Date d\'inscription', 'Dernière connexion', 'Actions']
+          {['Nom d\'utilisateur', 'Email', 'Rôle', 'Films Favoris', 'Watchlist', 'Films Notés', 'Date d\'inscription', 'Dernière connexion', 'Actions']
             .map(header => (
               <th 
                 key={header} 
-                className="px-6 py-3 bg-gray-50 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-3 bg-amber-100 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 {header}
               </th>
@@ -40,7 +40,6 @@ const UserTable = ({ users, formatDate, getTotalMoviesPerUser }) => {
             onSave={handleSaveUser}
             onDelete={handleDeleteUser}
             formatDate={formatDate}
-            getTotalMoviesPerUser={getTotalMoviesPerUser}
           />
         ))}
       </tbody>
@@ -51,7 +50,6 @@ const UserTable = ({ users, formatDate, getTotalMoviesPerUser }) => {
 UserTable.propTypes = {
   users: PropTypes.array.isRequired,
   formatDate: PropTypes.func.isRequired,
-  getTotalMoviesPerUser: PropTypes.func.isRequired,
 };
 
 export default UserTable;

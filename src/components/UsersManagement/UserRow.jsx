@@ -10,7 +10,6 @@ const UserRow = ({
   onSave, 
   onDelete, 
   formatDate, 
-  getTotalMoviesPerUser 
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedUsername, setEditedUsername] = useState(user.displayName);
@@ -78,7 +77,6 @@ const UserRow = ({
       const newStatus = !isActive;
       await updateProfile(user.id, { isActive: newStatus });
       setIsActive(newStatus);
-      // alert(`Compte ${newStatus ? 'activé' : 'désactivé'} avec succès.`);
     } catch (error) {
       console.error("Erreur lors de la mise à jour du statut du compte :", error);
       alert("Impossible de modifier le statut du compte.");
@@ -111,7 +109,10 @@ const UserRow = ({
           )}
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
-          {getTotalMoviesPerUser(user) || 0}
+          {user.stats?.favorites.length || 0 } 
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+          {user.stats?.watchlist.length || 0 } 
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
           {user.stats?.reviews.length || 0}
@@ -205,8 +206,7 @@ UserRow.propTypes = {
   user: PropTypes.object.isRequired,
   onSave: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-  formatDate: PropTypes.func.isRequired,
-  getTotalMoviesPerUser: PropTypes.func.isRequired,
+  formatDate: PropTypes.func.isRequired
 };
 
 export default UserRow;

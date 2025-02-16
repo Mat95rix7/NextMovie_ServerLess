@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, browserLocalPersistence, setPersistence} from 'firebase/auth';
-import { getFirestore, collection, getDocs, query, where } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, query, where, onSnapshot } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
@@ -40,4 +40,14 @@ export const getUserByMail = async (email) => {
     console.error('Erreur de recherche utilisateur:', error);
     return null;
   }
+};
+
+export const subscribeToUsers = (callback) => {
+  return onSnapshot(usersCollectionRef, (snapshot) => {
+    const users = snapshot.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id
+    }));
+    callback(users);
+  });
 };

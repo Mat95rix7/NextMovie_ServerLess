@@ -1,4 +1,4 @@
-import { doc, getDoc, setDoc, updateDoc, collection, query, where, getDocs, deleteDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc, collection, query, where, getDocs, deleteDoc, onSnapshot } from 'firebase/firestore';
 import { db, auth } from '../config/firebase';
 import { updateProfile as firebaseUpdateProfile } from 'firebase/auth';
 import axios from 'axios';
@@ -112,61 +112,123 @@ const getMovieDetails = async (movieId) => {
   };
 };
 
-export const getMovieStats = async () => {
-  const usersRef = collection(db, 'users');
-  const snapshot = await getDocs(usersRef);
+export const subscribeToMovieStats = (callback) => {
+  return onSnapshot(collection(db, 'users'), async (snapshot) => {
+    let movieStats = {};
 
-  let movieStats = {};
+    // Traitement des données utilisateurs
+    snapshot.docs.forEach(doc => {
+      const userData = doc.data().stats || {};
 
-  snapshot.forEach(doc => {
-    const userData = doc.data().stats || {};
+      // Traitement watchlist
+      if (Array.isArray(userData.watchlist)) {
+        userData.watchlist.forEach(movieId => {
+          if (!movieStats[movieId]) movieStats[movieId] = { id: movieId, watchlist: 0, favorites: 0, reviews: 0, ratings: [] };
+          movieStats[movieId].watchlist++;
+        });
+      }
 
-    if (Array.isArray(userData.watchlist)) {
-      userData.watchlist.forEach(movieId => {
-        if (!movieStats[movieId]) movieStats[movieId] = { id: movieId, watchlist: 0, favorites: 0, reviews: 0, ratings: [] };
-        movieStats[movieId].watchlist++;
-      });
-    }
+      // Traitement favorites
+      if (Array.isArray(userData.favorites)) {
+        userData.favorites.forEach(movieId => {
+          if (!movieStats[movieId]) movieStats[movieId] = { id: movieId, watchlist: 0, favorites: 0, reviews: 0, ratings: [] };
+          movieStats[movieId].favorites++;
+        });
+      }
 
-    if (Array.isArray(userData.favorites)) {
-      userData.favorites.forEach(movieId => {
-        if (!movieStats[movieId]) movieStats[movieId] = { id: movieId, watchlist: 0, favorites: 0, reviews: 0, ratings: [] };
-        movieStats[movieId].favorites++;
-      });
-    }
+      // Traitement reviews
+      if (Array.isArray(userData.reviews)) {
+        userData.reviews.forEach(review => {
+          if (review && review.movieId && typeof review.rating === 'number') {
+            if (!movieStats[review.movieId]) movieStats[review.movieId] = { id: review.movieId, watchlist: 0, favorites: 0, reviews: 0, ratings: [] };
+            movieStats[review.movieId].reviews++;
+            movieStats[review.movieId].ratings.push(review.rating);
+          }
+        });
+      }
+    });
 
-    if (Array.isArray(userData.reviews)) {
-      userData.reviews.forEach(review => {
-        if (review && review.movieId && typeof review.rating === 'number') {
-          if (!movieStats[review.movieId]) movieStats[review.movieId] = { id: review.movieId, watchlist: 0, favorites: 0, reviews: 0, ratings: [] };
-          movieStats[review.movieId].reviews++;
-          movieStats[review.movieId].ratings.push(review.rating);
+    // Calcul des moyennes et récupération des détails
+    for (const movieId in movieStats) {
+      const ratings = movieStats[movieId].ratings;
+      if (ratings.length > 0) {
+        movieStats[movieId].averageRating = ratings.reduce((a, b) => a + b) / ratings.length;
+      } else {
+        movieStats[movieId].averageRating = null;
+      }
+      delete movieStats[movieId].ratings;
+
+      try {
+        const movieDetails = await getMovieDetails(movieId);
+        if (movieDetails) {
+          movieStats[movieId].title = movieDetails.title || "Titre inconnu";
+          movieStats[movieId].releaseDate = movieDetails.releaseDate || "Date inconnue";
+        } else {
+          movieStats[movieId].title = "Titre inconnu";
+          movieStats[movieId].releaseDate = "Date inconnue";
         }
-      });
+      } catch (error) {
+        console.error(`Erreur lors de la récupération des détails du film ${movieId}:`, error);
+      }
     }
+
+    // Envoi des données mises à jour via le callback
+    callback(Object.values(movieStats));
   });
-
-  for (const movieId in movieStats) {
-    const ratings = movieStats[movieId].ratings;
-    if (ratings.length > 0) {
-      movieStats[movieId].averageRating = ratings.reduce((a, b) => a + b) / ratings.length;
-    } else {
-      movieStats[movieId].averageRating = null;
-    }
-    delete movieStats[movieId].ratings;
-
-    const movieDetails = await getMovieDetails(movieId);
-    if (movieDetails) {
-      movieStats[movieId].title = movieDetails.title || "Titre inconnu";
-      movieStats[movieId].releaseDate = movieDetails.releaseDate || "Date inconnue";
-    } else {
-      movieStats[movieId].title = "Titre inconnu";
-      movieStats[movieId].releaseDate = "Date inconnue";
-    }
-  }
-
-  return Object.values(movieStats);
 };
 
+// export const getMovieStats = async () => {
+//   const usersRef = collection(db, 'users');
+//   const snapshot = await getDocs(usersRef);
 
+//   let movieStats = {};
 
+//   snapshot.forEach(doc => {
+//     const userData = doc.data().stats || {};
+
+//     if (Array.isArray(userData.watchlist)) {
+//       userData.watchlist.forEach(movieId => {
+//         if (!movieStats[movieId]) movieStats[movieId] = { id: movieId, watchlist: 0, favorites: 0, reviews: 0, ratings: [] };
+//         movieStats[movieId].watchlist++;
+//       });
+//     }
+
+//     if (Array.isArray(userData.favorites)) {
+//       userData.favorites.forEach(movieId => {
+//         if (!movieStats[movieId]) movieStats[movieId] = { id: movieId, watchlist: 0, favorites: 0, reviews: 0, ratings: [] };
+//         movieStats[movieId].favorites++;
+//       });
+//     }
+
+//     if (Array.isArray(userData.reviews)) {
+//       userData.reviews.forEach(review => {
+//         if (review && review.movieId && typeof review.rating === 'number') {
+//           if (!movieStats[review.movieId]) movieStats[review.movieId] = { id: review.movieId, watchlist: 0, favorites: 0, reviews: 0, ratings: [] };
+//           movieStats[review.movieId].reviews++;
+//           movieStats[review.movieId].ratings.push(review.rating);
+//         }
+//       });
+//     }
+//   });
+
+//   for (const movieId in movieStats) {
+//     const ratings = movieStats[movieId].ratings;
+//     if (ratings.length > 0) {
+//       movieStats[movieId].averageRating = ratings.reduce((a, b) => a + b) / ratings.length;
+//     } else {
+//       movieStats[movieId].averageRating = null;
+//     }
+//     delete movieStats[movieId].ratings;
+
+//     const movieDetails = await getMovieDetails(movieId);
+//     if (movieDetails) {
+//       movieStats[movieId].title = movieDetails.title || "Titre inconnu";
+//       movieStats[movieId].releaseDate = movieDetails.releaseDate || "Date inconnue";
+//     } else {
+//       movieStats[movieId].title = "Titre inconnu";
+//       movieStats[movieId].releaseDate = "Date inconnue";
+//     }
+//   }
+
+//   return Object.values(movieStats);
+// };

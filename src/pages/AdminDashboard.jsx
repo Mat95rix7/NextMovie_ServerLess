@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Shield, Users, Film, Armchair, Star } from 'lucide-react';
-import { getUsers } from '../config/firebase';
+import { Shield, Users, User, Film, Armchair} from 'lucide-react';
+import { subscribeToUsers } from '../config/firebase';
 import CinemasData from '../data/cinemas.json';
 import UserManagement from '../components/UsersManagement';
 import MovieManagement from '../components/MoviesManagement';
 import TheaterManagement from '../components/TheatersManagement';
-import { getMovieStats, getTotalMoviesInApp } from '../hooks/userProfile';
+import { subscribeToMovieStats, getTotalMoviesInApp } from '../hooks/userProfile';
 import { useNavigate } from 'react-router-dom';
-import { useAuth2 } from '../context/userContext';
+import { useAuth2 } from '../context/auth/authContext';
 import PropTypes from 'prop-types';
 
 const StatCard = ({ icon: Icon, title, value }) => (
@@ -32,7 +32,7 @@ const TabButton = ({ isActive, onClick, children }) => (
     className={`${
       isActive
         ? 'border-amber-500 text-amber-500 font-bold'
-        : 'border-transparent text-gray-400 hover:text-gray-100 hover:border-gray-300 font-medium'
+        : 'border-transparent text-gray-500 hover:text-amber-500 hover:border-amber-500 font-medium'
     } whitespace-nowrap pb-4 px-1 border-b-2  text-xl`}
     onClick={onClick}
   >
@@ -45,7 +45,7 @@ function AdminDashboard() {
     activeTab: 'users',
     users: [],
     movieStats: [],
-    theaters: [],
+    theaters: CinemasData,
     loading: false,
     error: null
   });
@@ -55,51 +55,50 @@ function AdminDashboard() {
 
   useEffect(() => {
     if (!user || !isAdmin) {
-      navigate('/NotFound');
+      navigate('/notfound');
       return;
     }
 
-    const fetchData = async () => {
-      setState(prev => ({ ...prev, loading: true, error: null }));
-      try {
-        const [fetchedUsers, fetchedMovieStats] = await Promise.all([
-          getUsers(),
-          getMovieStats()
-        ]);
-
-        setState(prev => ({
-          ...prev,
-          users: fetchedUsers,
-          movieStats: fetchedMovieStats,
-          theaters: CinemasData,
-          loading: false
-        }));
-      } catch (err) {
-        setState(prev => ({
-          ...prev,
-          error: 'Failed to load data. Please try again later.',
-          loading: false
-        }));
-        console.error(err);
-      }
-    };
-
-    fetchData();
+    const unsubscribe = subscribeToUsers((updatedUsers) => {
+      const admins = updatedUsers.filter(user => user.role === 'admin');
+      setState(prev => ({
+        ...prev,
+        users: updatedUsers,
+        admins: admins,
+        loading: false
+      }));
+    });
+    // Nettoyage de l'abonnement
+    return () => unsubscribe();
   }, [user, isAdmin, navigate]);
+  
+  // Écouteur pour les statistiques de films
+  useEffect(() => {
+    const unsubscribe = subscribeToMovieStats((updatedMovies) => {
+      setState(prev => ({
+        ...prev,
+        movieStats: updatedMovies,
+        loading: false
+      }));
+    });
+  
+    // Cleanup de l'abonnement
+    return () => unsubscribe();
+  }, []);
 
-  const { totalMovies, totalFavorites } = getTotalMoviesInApp(state.users);
+  const { totalMovies } = getTotalMoviesInApp(state.users);
+  
   const stats = [
+    { icon: User, title: "Nombre d'admins", value: state.admins?.length || 0 },
     { icon: Users, title: "Nombre d'utilisateurs", value: state.users.length || 0 },
-    { icon: Armchair, title: "Nombre des salles", value: state.theaters?.length || 0 },
     { icon: Film, title: "Films Consultés", value: totalMovies || 0 },
-    { icon: Star, title: "Films Favoris", value: totalFavorites || 0 }
-    
+    { icon: Armchair, title: "Nombre des salles", value: state.theaters?.length || 0 }, 
   ];
 
   const tabs = [
     { id: 'users', icon: Users, label: 'Utilisateurs', component: <UserManagement /> },
-    { id: 'movies', icon: Armchair, label: 'Films', component: <MovieManagement movies={state.movieStats} /> },
-    { id: 'theaters', icon: Film, label: 'Salles', component: <TheaterManagement theaters={state.theaters} /> }
+    { id: 'movies', icon: Film, label: 'Films', component: <MovieManagement movies={state.movieStats} /> },
+    { id: 'theaters', icon: Armchair, label: 'Salles', component: <TheaterManagement theaters={state.theaters} /> }
   ];
 
   if (state.loading) {
@@ -117,13 +116,13 @@ function AdminDashboard() {
           <div className="flex justify-between h-16">
             <div className="flex items-center">
               <Shield className="h-8 w-8 text-amber-600" />
-              <span className="ml-2 text-xl font-bold text-gray-900">Admin Dashboard</span>
+              <span className="ml-2 text-2xl font-bold text-gray-900">Admin Dashboard</span>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto py-6">
         <div className="mb-8 border-b border-gray-200">
           <nav className="-mb-px flex justify-evenly space-x-8">
             {tabs.map(tab => (
@@ -164,44 +163,3 @@ StatCard.propTypes = {
 };
 
 export default AdminDashboard;
-
-
-
-
-  // const [userCount, setUserCount] = useState(0);
-  // const [movieCount, setMovieCount] = useState(0);
-  // const [theaterCount, setTheaterCount] = useState(0);
-  // const [isLoading, setIsLoading] = useState(true);
-  // const [error, setError] = useState(null);
-  
-
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       setIsLoading(true);
-  //       // Fetch users count
-  //       const users = await getUsers();
-  //       setUserCount(users.length);
-
-  //       // Fetch movies count
-  //       const movies = await getTotalMoviesInApp();
-  //       setMovieCount(movies);
-
-  //       // Get theaters count from JSON
-  //       setTheaterCount(CinemasData.length);
-        
-  //       setIsLoading(false);
-  //     } catch (err) {
-  //       setError(err.message);
-  //       setIsLoading(false);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
-
-
-
-

@@ -29,9 +29,9 @@ const MoviesManagement = ({  movies }) => {
 
   return (
     <div>
-    <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+    <div className="bg-amber-200 shadow overflow-hidden sm:rounded-lg">
       <div className="px-4 py-5 sm:px-6 flex justify-between items-center">
-        <h3 className="text-lg leading-6 font-medium text-gray-900">
+        <h3 className="text-lg leading-6 font-medium text-amber-800">
           Gestion des Films ({filteredMovies.length})
         </h3>
         <div className="relative">
@@ -51,7 +51,7 @@ const MoviesManagement = ({  movies }) => {
             <tr>
               {['Titre', 'Favoris', 'watchlist', 'reviews', 'AvRating' ]
                 .map(header => (
-                  <th key={header} className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th key={header} className="px-6 py-3 bg-amber-100 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                     {header}
                   </th>
                 ))}
@@ -69,25 +69,25 @@ const MoviesManagement = ({  movies }) => {
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  <div className="flex items-center">
-                    <Heart className="h-4 w-4 mr-1 text-amber-500" />
-                    {movie.favorites}
+                  <div className="flex justify-center items-center">
+                    <Heart className="h-4 w-4 mr-4 text-amber-500" />
+                    {movie.favorites || 0}
                   </div>
                 </td><td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  <div className="flex items-center">
-                    <Eye className="h-4 w-4 mr-1 text-amber-500" />
-                    {movie.watchlist}
+                  <div className="flex justify-center items-center">
+                    <Eye className="h-4 w-4 mr-4 text-amber-500" />
+                    {movie.watchlist || 0}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  <div className="flex items-center">
-                    <Star className="h-4 w-4 mr-1 text-amber-500" />
-                      {movie.reviews}
+                  <div className="flex justify-center items-center">
+                    <Star className="h-4 w-4 mr-4 text-amber-500" />
+                      {movie.reviews || 0}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  <div className="flex items-center">
-                  <Star className="h-4 w-4 mr-1 text-amber-500" />
+                  <div className="flex justify-center items-center">
+                  <Star className="h-4 w-4 mr-4 text-amber-500" />
                     {movie.averageRating || 0}
                   </div>
                 </td>

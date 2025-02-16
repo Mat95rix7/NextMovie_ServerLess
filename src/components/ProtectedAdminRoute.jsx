@@ -1,23 +1,12 @@
-// import { Navigate, Outlet } from 'react-router-dom'
-// import { useAuth2 } from '../context/userContext'
-
-// const ProtectedAdminRoute = () => {
-//     const { isAdmin, isAuthenticated, user } = useAuth2()
-
-//     if (!isAuthenticated || !isAdmin) {
-//         console.log('Accès refusé:', { isAuthenticated, role: user?.role })
-//         return <Navigate to="/NotFoundPage" replace />
-//     }
-
-//     return <Outlet />
-// }
-
-// export default ProtectedAdminRoute
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth2 } from '../context/userContext';
+import { useAuth2 } from '../context/auth/authContext';
 
 const ProtectedAdminRoute = () => {
-  const { isAdmin, isAuthenticated, user } = useAuth2();
+  const { isAdmin, isAuthenticated, user, loading } = useAuth2();
+
+  if (loading) {
+    return <div className="flex justify-center items-center min-h-screen">Vérification des droits...</div>
+  }
 
   if (!isAuthenticated) {
     console.log('User not authenticated');

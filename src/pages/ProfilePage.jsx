@@ -213,7 +213,7 @@ import UsernameSection from "../components/profile/UsernameSection";
 import PasswordSection from "../components/profile/PasswordSection";
 import ProfilePhotoSection from "../components/profile/ProfilePhotoSection";
 import UserStats from "../components/profile/UserStats";
-import { useAuth2 } from "../context/userContext";
+import { useAuth2 } from "../context/auth/authContext";
 import { Settings, User, Lock, Camera, ChevronRight, Loader2 } from "lucide-react";
 import PropTypes from "prop-types";
 

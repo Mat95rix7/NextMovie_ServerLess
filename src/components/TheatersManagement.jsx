@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Search, MapPin, Armchair, Projector} from 'lucide-react';
+import { Search, MapPin, Armchair, Tv} from 'lucide-react';
 import PropTypes from 'prop-types';
 
 const TheatersManagement = ({ theaters }) => {
@@ -47,9 +47,9 @@ const TheatersManagement = ({ theaters }) => {
 
   return (
     <div>
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+      <div className="bg-amber-200 shadow overflow-hidden sm:rounded-lg">
         <div className="px-4 py-5 sm:px-6 flex justify-between items-center">
-          <h3 className="text-lg leading-6 font-medium text-gray-900">
+          <h3 className="text-lg leading-6 font-medium text-amber-800">
             Gestion des Salles ({filteredTheaters.length})
           </h3>
           <div className="relative flex items-center space-x-4">
@@ -88,7 +88,7 @@ const TheatersManagement = ({ theaters }) => {
                 {['Nom', 'Département', 'Capacité', 'Écrans', 'Code'].map(header => (
                   <th
                     key={header}
-                    className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 bg-amber-100 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
                     {header}
                   </th>
@@ -114,19 +114,19 @@ const TheatersManagement = ({ theaters }) => {
                     {theater.dep}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                    <div className="flex items-center">
-                      <Armchair className="h-4 w-4 mr-1 text-amber-500" />
+                    <div className="flex justify-center items-center">
+                      <Armchair className="h-4 w-4 mr-2 text-amber-500" />
                       {theater.fauteuils} places
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                    <div className="flex items-center">
-                      <Projector className="h-4 w-4 mr-1 text-amber-500 " />
+                    <div className="flex justify-center items-center">
+                      <Tv className="h-4 w-4 mr-2 text-amber-500 " />
                       {theater.ecrans} écrans
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                    <div className="flex items-center">
+                    <div className="text-center">
                       {theater.code_insee}
                     </div>
                   </td>

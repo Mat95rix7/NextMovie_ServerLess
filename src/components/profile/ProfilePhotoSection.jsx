@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getAuth, updateProfile } from "firebase/auth";
-import { useAuth2 } from "../../context/userContext";
+import { useAuth2 } from "../../context/auth/authContext";
 import { Camera, Loader2, Trash2 } from "lucide-react";
 import { toast } from "react-hot-toast";
 import { doc, updateDoc } from 'firebase/firestore';

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Search } from 'lucide-react';
-import { getTotalMoviesPerUser } from '../../hooks/userProfile';
 import UserTable from './UserTable';
 import { collection, onSnapshot, query } from 'firebase/firestore';
 import { db } from '../../config/firebase';
@@ -28,12 +27,20 @@ const UsersManagement = () => {
 
     return () => unsubscribe();
   }, []);
-
-  const filteredUsers = usersList.filter((user) => {
-    const nameMatch = user.displayName?.toLowerCase().includes(searchTerm.toLowerCase()) || false;
-    const emailMatch = user.email?.toLowerCase().includes(searchTerm.toLowerCase()) || false;
-    return nameMatch || emailMatch;
-  });
+  
+  const filteredUsers = usersList
+    .filter((user) => {
+      const nameMatch = user.displayName?.toLowerCase().includes(searchTerm.toLowerCase()) || false;
+      const emailMatch = user.email?.toLowerCase().includes(searchTerm.toLowerCase()) || false;
+      return nameMatch || emailMatch;
+    })
+    .sort((a, b) => {
+      // Tri par rôle (admin en premier)
+      if (a.role === 'admin' && b.role !== 'admin') return -1;
+      if (a.role !== 'admin' && b.role === 'admin') return 1;
+      // Si même rôle, tri par nom
+      return (a.displayName || '').localeCompare(b.displayName || '');
+    });
 
   const formatDate = (dateString) => {
     if (!dateString) return 'N/A';
@@ -46,9 +53,9 @@ const UsersManagement = () => {
   }
 
   return (
-    <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+    <div className="bg-amber-200 shadow overflow-hidden sm:rounded-lg">
       <div className="px-4 py-5 sm:px-6 flex justify-between items-center">
-        <h3 className="text-lg leading-6 font-medium text-gray-900">
+        <h3 className="text-lg leading-6 font-medium text-amber-800 ">
           Gestion des utilisateurs ({filteredUsers.length})
         </h3>
         <div className="relative">
@@ -67,7 +74,6 @@ const UsersManagement = () => {
         <UserTable 
           users={filteredUsers} 
           formatDate={formatDate} 
-          getTotalMoviesPerUser={getTotalMoviesPerUser}
         />
       </div>
     </div>
