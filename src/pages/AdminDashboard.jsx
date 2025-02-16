@@ -31,9 +31,9 @@ const TabButton = ({ isActive, onClick, children }) => (
   <button
     className={`${
       isActive
-        ? 'border-amber-500 text-amber-600'
-        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-    } whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-xl`}
+        ? 'border-amber-500 text-amber-500 font-bold'
+        : 'border-transparent text-gray-400 hover:text-gray-100 hover:border-gray-300 font-medium'
+    } whitespace-nowrap pb-4 px-1 border-b-2  text-xl`}
     onClick={onClick}
   >
     {children}
@@ -55,7 +55,7 @@ function AdminDashboard() {
 
   useEffect(() => {
     if (!user || !isAdmin) {
-      navigate('/NotFoundPage');
+      navigate('/NotFound');
       return;
     }
 
@@ -97,9 +97,9 @@ function AdminDashboard() {
   ];
 
   const tabs = [
-    { id: 'users', label: 'Utilisateurs', component: <UserManagement /> },
-    { id: 'movies', label: 'Films', component: <MovieManagement movies={state.movieStats} /> },
-    { id: 'theaters', label: 'Salles', component: <TheaterManagement theaters={state.theaters} /> }
+    { id: 'users', icon: Users, label: 'Utilisateurs', component: <UserManagement /> },
+    { id: 'movies', icon: Armchair, label: 'Films', component: <MovieManagement movies={state.movieStats} /> },
+    { id: 'theaters', icon: Film, label: 'Salles', component: <TheaterManagement theaters={state.theaters} /> }
   ];
 
   if (state.loading) {
@@ -111,7 +111,7 @@ function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen mt-20">
+    <div className="min-h-screen min-w-[320px] mt-20">
       <div className="bg-amber-200 shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
@@ -125,13 +125,14 @@ function AdminDashboard() {
 
       <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="mb-8 border-b border-gray-200">
-          <nav className="-mb-px flex space-x-8">
+          <nav className="-mb-px flex justify-evenly space-x-8">
             {tabs.map(tab => (
               <TabButton
                 key={tab.id}
                 isActive={state.activeTab === tab.id}
                 onClick={() => setState(prev => ({ ...prev, activeTab: tab.id }))}
               >
+                <tab.icon className="w-8 h-8 mr-4 hidden sm:inline-block" />
                 {tab.label}
               </TabButton>
             ))}
@@ -163,3 +164,44 @@ StatCard.propTypes = {
 };
 
 export default AdminDashboard;
+
+
+
+
+  // const [userCount, setUserCount] = useState(0);
+  // const [movieCount, setMovieCount] = useState(0);
+  // const [theaterCount, setTheaterCount] = useState(0);
+  // const [isLoading, setIsLoading] = useState(true);
+  // const [error, setError] = useState(null);
+  
+
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       setIsLoading(true);
+  //       // Fetch users count
+  //       const users = await getUsers();
+  //       setUserCount(users.length);
+
+  //       // Fetch movies count
+  //       const movies = await getTotalMoviesInApp();
+  //       setMovieCount(movies);
+
+  //       // Get theaters count from JSON
+  //       setTheaterCount(CinemasData.length);
+        
+  //       setIsLoading(false);
+  //     } catch (err) {
+  //       setError(err.message);
+  //       setIsLoading(false);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
+
+
+
+
+

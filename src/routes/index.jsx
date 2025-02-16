@@ -9,7 +9,7 @@ import ProfilePage  from "../pages/ProfilePage";
 import ContactForm from "../pages/ContactForm";
 import About from "../pages/About";
 import AdminDashboard from "../pages/AdminDashboard";
-import NotFoundPage from "../pages/NotFoundPage";
+import NotFound from "../pages/NotFound";
 import ProtectedAdminRoute from "../components/ProtectedAdminRoute";
 
 const router = createBrowserRouter([
@@ -61,7 +61,7 @@ const router = createBrowserRouter([
             },
             {
                 path : "*",
-                element : <NotFoundPage />
+                element : <NotFound />
             }
         ]
     }

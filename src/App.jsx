@@ -15,7 +15,7 @@ function App() {
         const response = await axios.get('/movie/now_playing?include_adult=false&language=fr-FR')
         dispatch(setBannerData(response.data.results))
     } catch (error) {
-        console.log("error",error)
+        console.error("error",error)
     }
   }
 
@@ -24,7 +24,7 @@ function App() {
         const response = await axios.get("/configuration")
         dispatch(setImageURL(response.data.images.secure_base_url+"original"))
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
   }
 
@@ -35,7 +35,7 @@ function App() {
   useEffect(()=>{
     fetchNowPlaying()
     fetchConfiguration()
-  })
+  },[])
   
   return (
     <AuthProvider>
