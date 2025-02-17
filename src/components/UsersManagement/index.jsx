@@ -53,30 +53,32 @@ const UsersManagement = () => {
   }
 
   return (
-    <div className="bg-amber-200 shadow overflow-hidden sm:rounded-lg">
-      <div className="px-4 py-5 sm:px-6 flex justify-between items-center">
-        <h3 className="text-lg leading-6 font-medium text-amber-800 ">
-          Gestion des utilisateurs ({filteredUsers.length})
-        </h3>
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="Search users..."
-            className="pl-10 pr-4 py-2 text-gray-500 border rounded-lg"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <Search className="h-5 w-5 text-gray-400 absolute left-3 top-2.5" />
-        </div>
-      </div>
+        <div className="bg-amber-200 shadow overflow-hidden sm:rounded-lg w-full">
+          <div className="px-4 py-5 sm:px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <h3 className="text-lg leading-6 font-medium text-amber-800 text-center sm:text-left w-full sm:w-auto">
+              Gestion des utilisateurs ({filteredUsers.length})
+            </h3>
+            <div className="relative w-full sm:w-auto">
+              <input
+                type="text"
+                placeholder="Search users..."
+                className="w-full sm:w-64 pl-10 pr-4 py-2 text-gray-500 border rounded-lg"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <Search className="h-5 w-5 text-gray-400 absolute left-3 top-2.5" />
+            </div>
+          </div>
 
-      <div className="border-t border-gray-200 overflow-x-scroll lg:overflow-hidden">
-        <UserTable 
-          users={filteredUsers} 
-          formatDate={formatDate} 
-        />
-      </div>
-    </div>
+          <div className="border-t border-gray-200 overflow-x-auto">
+            <div className="min-w-full">
+              <UserTable 
+                users={filteredUsers} 
+                formatDate={formatDate} 
+              />
+            </div>
+          </div>
+          </div>
   );
 };
 
