@@ -9,7 +9,7 @@ const AboutPage = () => {
         {/* Hero Section avec animation */}
         <div className="text-center mb-16 transform hover:scale-105 transition-transform duration-300">
           <h1 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-800 to-amber-400 mb-6">
-            MovieApp
+          NextMovie
           </h1>
           <p className="text-2xl text-amber-600 max-w-2xl mx-auto leading-relaxed">
           Votre passerelle vers l&apos;univers magique du cinéma
@@ -100,7 +100,7 @@ const AboutPage = () => {
                 </h3>
                 <p className="text-gray-600 text-lg leading-relaxed mb-6">
                   Développeur fullstack passionné par le cinéma et l&apos;expérience utilisateur. 
-                  Dans le cadre de ma formation en tant que concepteur developpeur d&apos;applications, j&apos;ai décidé de créer <span className='font-bold text-amber-600'>MovieApp</span> pour révolutionner la façon dont nous découvrons et apprécions le cinéma.
+                  Dans le cadre de ma formation en tant que concepteur developpeur d&apos;applications, j&apos;ai décidé de créer <span className='font-bold text-amber-600'>NextMovie</span> pour révolutionner la façon dont nous découvrons et apprécions le cinéma.
                 </p>
                 <div className="flex gap-4 justify-center">
                   {[
