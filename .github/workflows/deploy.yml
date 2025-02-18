@@ -1,0 +1,28 @@
+name: Build and Push Docker Image to Docker Hub
+
+on:
+  push:
+    branches:
+      - main  # Déclenche l'action lorsqu'il y a un push sur la branche 'main'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3  # Checkout du code du repository
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v2  # Configuration de Buildx pour builder des images
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+        # Se connecter à Docker Hub avec ton username et ton password (en utilisant des secrets)
+
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/nextmovie:latest .  # Build de l'image Docker
+
+      - name: Push Docker image to Docker Hub
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/nextmovie:latest  # Pousse l'image sur Docker Hub

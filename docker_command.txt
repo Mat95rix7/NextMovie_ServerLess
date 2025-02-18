@@ -1,0 +1,11 @@
+Avec Compose :
+	docker-compose -f docker-compose.yml up --build
+
+Sans compose :
+	docker build -t vite-react-dev -f Dockerfile .
+	docker run -p 3000:3000 -v $(pwd):/app -v /app/node_modules vite-react-dev
+
+Lancement en dev :
+	docker-compose -f docker-compose.dev.yml up --build
+Lancement en prod :
+	docker-compose -f docker-compose.prod.yml up --build -d

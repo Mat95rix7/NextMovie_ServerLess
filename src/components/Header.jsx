@@ -62,7 +62,7 @@ const HeaderComponent = () => {
                             className='w-full h-full rounded object-contain'
                         />
                     </div>
-                    <span className="text-base sm:text-lg md:text-2xl font-bold text-amber-600 me-1 sm:me-2 hidden xs:block">NextMovie</span>
+                    <span className="text-base sm:text-xl md:text-2xl font-bold text-amber-600 mx-1 sm:mx-2 hidden xs:block">NextMovie</span>
                 </Link>
                 {/* Right Section */}
                 <div className='flex items-center gap-1 xs:gap-2 sm:gap-5'>

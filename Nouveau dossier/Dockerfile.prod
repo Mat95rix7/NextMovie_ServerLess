@@ -1,0 +1,25 @@
+# Étape 1 : Build de l’application
+FROM node:18-alpine AS builder
+
+# Définir le dossier de travail
+WORKDIR /app
+
+# Copier et installer uniquement les dépendances de production
+COPY package.json package-lock.json ./
+RUN npm install --only=production
+
+# Copier tout le code et construire l’application
+COPY . .
+RUN npm run build
+
+# Étape 2 : Serveur Web NGINX pour servir les fichiers statiques
+FROM nginx:alpine
+
+# Copier les fichiers buildés dans NGINX
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Exposer le port HTTP par défaut
+EXPOSE 80
+
+# Lancer NGINX
+CMD ["nginx", "-g", "daemon off;"]
