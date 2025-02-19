@@ -11,28 +11,7 @@ services:
     volumes:
       - .:/movieapp
       - /movieapp/node_modules
-    environment:
-      - VITE_API_TOKEN=eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZGM5NDE1ZDRhYmEyNDFlMTExMTc4NjMyMjcyNmIzMyIsIm5iZiI6MTczMzIzNDQxMC4xNTEsInN1YiI6IjY3NGYwZWVhYWY4OWVkNzYyMzdkZmRjYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.kP0CJtPVcZ1vkKfUSD5NNp_ZQKXCm8CjMjugUlNqrD0
-      - VITE_POSTER=https://image.tmdb.org/t/p/original/
-      - VITE_UPCOMING=https://api.themoviedb.org/3/movie/upcoming?language=fr-fr
-
-      - VITE_API_URL=https://api.themoviedb.org/3/search/movie?include_adult=false&language=fr-FR
-      - VITE_NP_API_URL=https://api.themoviedb.org/3/movie/now_playing?language=fr-FR
-
-      # FireBase
-
-      - VITE_FIREBASE_API_KEY=AIzaSyDE206cNQyYk-0z895UcnoV6WeVqp0mzzc
-      - VITE_FIREBASE_AUTH_DOMAIN=mycineapp-8135d.firebaseapp.com
-      - VITE_FIREBASE_PROJECT_ID=mycineapp-8135d
-      - VITE_FIREBASE_STORAGE_BUCKET=mycineapp-8135d.firebasestorage.app
-      - VITE_FIREBASE_MESSAGING_SENDER_ID=565253094631,
-      - VITE_FIREBASE_APP_ID=1:565253094631:web:96f3fecc5e13f1028cf642
-      - VITE_FIREBASE_MEASUREMENT_ID=G-KHFMERYYDY
-
-      # EmailJS
-
-      - VITE_EMAILJS_PUBLIC_KEY=Qaqy0Ylu1Hf7rAJzt
-      - VITE_EMAILJS_SERVICE_ID=service_gqco25h
-      - VITE_EMAILJS_TEMPLATE_ID=template_qt096uz
+    env_file:
+      - .env
     stdin_open: true
     tty: true
