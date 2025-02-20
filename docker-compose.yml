@@ -9,8 +9,8 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - .:/movieapp
-      - /movieapp/node_modules
+    - .:/movieapp:delegated
+    - /movieapp/node_modules
     env_file:
       - .env
     stdin_open: true

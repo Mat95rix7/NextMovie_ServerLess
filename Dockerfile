@@ -4,15 +4,11 @@ FROM node:18-alpine
 # Définir le dossier de travail
 WORKDIR /movieapp
 
-# Définir l’environnement (dev par défaut)
-ARG NODE_ENV=development
-ENV NODE_ENV=$NODE_ENV
-
 # Copier uniquement les fichiers essentiels pour l'installation des dépendances
 COPY package.json package-lock.json ./
 
 # Installer les dépendances (en fonction de l'environnement)
-RUN npm install --only=$NODE_ENV
+RUN npm install 
 
 # Copier le reste des fichiers
 COPY . .
