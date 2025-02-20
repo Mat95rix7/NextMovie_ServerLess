@@ -3,7 +3,7 @@ name: Build and Push Docker Image to Docker Hub
 on:
   push:
     branches:
-      - main  # Déclenche l'action lorsqu'il y a un push sur la branche 'main'
+      - master  # Déclenche l'action lorsqu'il y a un push sur la branche 'main'
 
 jobs:
   build-and-push:
