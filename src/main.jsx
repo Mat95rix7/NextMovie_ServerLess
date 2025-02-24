@@ -5,6 +5,7 @@ import router from './routes';
 import axios from 'axios';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+import { Analytics } from "@vercel/analytics/react"
 import './index.css'
 
 
