@@ -18,6 +18,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <RouterProvider router={router}/>
+      <Analytics />
     </Provider>
   </React.StrictMode>
 );
