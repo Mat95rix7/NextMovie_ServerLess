@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import { store } from './store/store';
 import { Analytics } from "@vercel/analytics/react"
 import './index.css'
+import { HelmetProvider } from 'react-helmet-async';
 
 
 /**setup axios */
@@ -17,8 +18,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router}/>
-      <Analytics />
+      <HelmetProvider>
+        <RouterProvider router={router}/>
+        <Analytics />
+      </HelmetProvider>
     </Provider>
   </React.StrictMode>
 );

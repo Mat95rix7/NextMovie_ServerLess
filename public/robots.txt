@@ -1,0 +1,12 @@
+# Allow all web crawlers to access all content
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://my-cineapp.vercel.app/api/sitemap
+
+# Prevent crawlers from accessing specific paths
+Disallow: /admin/
+Disallow: /login
+Disallow: /register
+Disallow: /profile
