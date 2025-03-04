@@ -6,7 +6,31 @@ import { getFirestore, collection, getDocs, query, where, limit } from 'firebase
 // import sallesCinema from './cinemas.json';
 
 
-  const Fetching = (endpoint)=>{
+
+// // Configuration Firebase
+// const firebaseConfig = {
+//   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+//   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+//   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+//   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+//   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+//   appId: import.meta.env.VITE_FIREBASE_APP_ID
+// };
+
+// Initialisation de Firebase (avec vérification pour éviter les réinitialisations multiples)
+let app;
+let db;
+try {
+  app = initializeApp(firebaseConfig);
+  db = getFirestore(app);
+} catch (error) {
+  // Si Firebase est déjà initialisé
+  if (!/already exists/.test(error.message)) {
+    console.error("Firebase initialization error", error);
+  }
+}
+
+const Fetching = (endpoint)=>{
   const [data,setData] = useState([])
   const [loading,setLoading] = useState(false)
 
@@ -27,29 +51,6 @@ import { getFirestore, collection, getDocs, query, where, limit } from 'firebase
 
   return { data , loading}
 }
-// Configuration Firebase
-const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID
-};
-
-// Initialisation de Firebase (avec vérification pour éviter les réinitialisations multiples)
-let app;
-let db;
-try {
-  app = initializeApp(firebaseConfig);
-  db = getFirestore(app);
-} catch (error) {
-  // Si Firebase est déjà initialisé
-  if (!/already exists/.test(error.message)) {
-    console.error("Firebase initialization error", error);
-  }
-}
-
 export default async function handler(req, res) {
   // Définir l'en-tête comme XML
   res.setHeader('Content-Type', 'application/xml');
