@@ -3,7 +3,7 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs, query, where, limit } from 'firebase/firestore';
 // import sallesCinema from '../../src/data/cinemas.json';
-import { Fetching } from '@/services/tmdb';
+import { Fetching } from '../../src/services/tmdb';
 
 // Configuration Firebase
 const firebaseConfig = {
