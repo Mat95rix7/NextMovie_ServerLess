@@ -29,7 +29,7 @@ async function fetchMoviesByCategory(category, page = 1, maxPages = 3) {
   let currentPage = page;
   
   // Récupérer le token API TMDB depuis les variables d'environnement Vite
-  const apiToken = process.env.VITE_TMDB_API_TOKEN;
+  const apiToken = process.env.VITE_API_TOKEN;
   console.log('API Token:', apiToken);
   
   while (currentPage <= maxPages) {
@@ -69,7 +69,7 @@ async function fetchMoviesByCategory(category, page = 1, maxPages = 3) {
 // Récupérer les genres pour enrichir le sitemap
 async function fetchGenres() {
   try {
-    const apiToken = process.env.VITE_TMDB_API_TOKEN;
+    const apiToken = process.env.VITE_API_TOKEN;
     
     const response = await axios.get('/genre/movie/list', {
       baseURL: 'https://api.themoviedb.org/3',
@@ -88,40 +88,15 @@ async function fetchGenres() {
   }
 }
 
-// Récupérer les événements récents
-async function fetchEvents() {
-  try {
-    const eventsQuery = query(
-      collection(db, 'events'),
-      where('date', '>=', new Date()),
-      orderBy('date', 'asc'),
-      limit(30)
-    );
-    
-    const eventDocs = await getDocs(eventsQuery);
-    const events = [];
-    
-    eventDocs.forEach(doc => {
-      events.push({
-        id: doc.id,
-        lastUpdated: doc.data().updatedAt?.toDate() || new Date()
-      });
-    });
-    
-    return events;
-  } catch (error) {
-    console.error('Erreur lors de la récupération des événements:', error);
-    return [];
-  }
-}
+
 
 export default async function handler(req, res) {
   res.setHeader('Content-Type', 'application/xml');
   
   try {
     // Vérifier que les variables d'environnement sont disponibles
-    if (!process.env.VITE_TMDB_API_TOKEN) {
-      console.warn('VITE_TMDB_API_TOKEN non défini. Certaines fonctionnalités peuvent être limitées.');
+    if (!process.env.VITE_API_TOKEN) {
+      console.warn('VITE_API_TOKEN non défini. Certaines fonctionnalités peuvent être limitées.');
     }
     
     // Définir les catégories
@@ -183,11 +158,8 @@ export default async function handler(req, res) {
       { url: '/movies', changefreq: 'daily', priority: '0.9' },
       // { url: '/cinemas', changefreq: 'weekly', priority: '0.8' },
       { url: '/search', changefreq: 'daily', priority: '0.8' },
-      { url: '/events', changefreq: 'daily', priority: '0.8' },
-      { url: '/trending', changefreq: 'daily', priority: '0.8' },
       { url: '/contact', changefreq: 'monthly', priority: '0.6' },
       { url: '/about', changefreq: 'monthly', priority: '0.5' },
-      { url: '/faq', changefreq: 'monthly', priority: '0.5' }
     ];
     
     // Ajouter les pages principales
