@@ -1,36 +1,11 @@
-// Fichier: api/sitemap.js
-
 import axios from 'axios';
-import { initializeApp, getApps } from 'firebase/app';
-import { getFirestore, collection, getDocs, query, where, limit, orderBy } from 'firebase/firestore';
-// import sallesCinema from '../data/salles.json';
-
-// Initialiser Firebase une seule fois avec les variables d'environnement de Vercel
-let db;
-if (!getApps().length) {
-  const firebaseConfig = {
-    apiKey: process.env.VITE_FIREBASE_API_KEY,
-    authDomain: process.env.VITE_FIREBASE_AUTH_DOMAIN,
-    projectId: process.env.VITE_FIREBASE_PROJECT_ID,
-    storageBucket: process.env.VITE_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.VITE_FIREBASE_APP_ID
-  };
-  
-  const app = initializeApp(firebaseConfig);
-  db = getFirestore(app);
-} else {
-  db = getFirestore();
-}
 
 // Récupérer les catégories TMDB avec pagination
 async function fetchMoviesByCategory(category, page = 1, maxPages = 3) {
   const results = [];
   let currentPage = page;
   
-  // Récupérer le token API TMDB depuis les variables d'environnement Vite
   const apiToken = process.env.VITE_API_TOKEN;
-  console.log('API Token:', apiToken);
   
   while (currentPage <= maxPages) {
     try {
@@ -88,8 +63,6 @@ async function fetchGenres() {
   }
 }
 
-
-
 export default async function handler(req, res) {
   res.setHeader('Content-Type', 'application/xml');
   
@@ -109,41 +82,20 @@ export default async function handler(req, res) {
     ];
     
     // Récupérer les données en parallèle pour optimiser les performances
-    const [genresPromise, moviesPromises, usersPromise, eventsPromise] = [
+    const [genresPromise, moviesPromises] = [
       fetchGenres(),
-      Promise.all(categories.map(category => fetchMoviesByCategory(category))),
-      // Requête pour les utilisateurs publics
-      getDocs(query(
-        collection(db, 'users'),
-        where('profilePublic', '==', true),
-        limit(100)
-      )).catch(error => {
-        console.error('Erreur lors de la récupération des utilisateurs:', error);
-        return { docs: [] };
-      }),
-      fetchEvents()
+      Promise.all(categories.map(category => fetchMoviesByCategory(category)))
     ];
     
     // Attendre toutes les données
-    const [genresData, moviesData, usersData, eventsData] = await Promise.all([
+    const [genresData, moviesData] = await Promise.all([
       genresPromise, 
-      moviesPromises, 
-      usersPromise, 
-      eventsPromise
+      moviesPromises
     ]);
     
     // Traiter les résultats
     const allMovies = moviesData.flat();
     const uniqueMovieIds = new Set();
-    
-    // Traiter les utilisateurs
-    const publicUsers = [];
-    usersData.docs?.forEach(doc => {
-      publicUsers.push({
-        id: doc.id,
-        lastUpdated: doc.data().lastUpdated?.toDate() || new Date()
-      });
-    });
     
     // Générer le XML
     let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
@@ -156,7 +108,6 @@ export default async function handler(req, res) {
     const mainPages = [
       { url: '/', changefreq: 'daily', priority: '1.0' },
       { url: '/movies', changefreq: 'daily', priority: '0.9' },
-      // { url: '/cinemas', changefreq: 'weekly', priority: '0.8' },
       { url: '/search', changefreq: 'daily', priority: '0.8' },
       { url: '/contact', changefreq: 'monthly', priority: '0.6' },
       { url: '/about', changefreq: 'monthly', priority: '0.5' },
@@ -205,41 +156,6 @@ export default async function handler(req, res) {
       }
     });
     
-    // Ajouter les salles de cinéma
-  //   if (sallesCinema && Array.isArray(sallesCinema)) {
-  //     sallesCinema.forEach(salle => {
-  //       const salleId = salle.id || salle._id;
-  //       if (salleId) {
-  //         xml += `  <url>
-  //   <loc>${domain}/cinema/${salleId}</loc>
-  //   <lastmod>${currentDate}</lastmod>
-  //   <changefreq>monthly</changefreq>
-  //   <priority>0.6</priority>
-  // </url>\n`;
-  //       }
-  //     });
-  //   }
-    
-    // Ajouter les événements
-    eventsData.forEach(event => {
-      xml += `  <url>
-    <loc>${domain}/event/${event.id}</loc>
-    <lastmod>${event.lastUpdated instanceof Date ? event.lastUpdated.toISOString().split('T')[0] : currentDate}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>\n`;
-    });
-    
-    // Ajouter les profils publics des utilisateurs
-    publicUsers.forEach(user => {
-      xml += `  <url>
-    <loc>${domain}/profile/${user.id}</loc>
-    <lastmod>${user.lastUpdated instanceof Date ? user.lastUpdated.toISOString().split('T')[0] : currentDate}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>\n`;
-    });
-    
     // Fermer le XML
     xml += '</urlset>';
     
@@ -256,7 +172,6 @@ export default async function handler(req, res) {
     const essentialPages = [
       { url: '/', changefreq: 'daily', priority: '1.0' },
       { url: '/movies', changefreq: 'daily', priority: '0.9' },
-      // { url: '/cinemas', changefreq: 'weekly', priority: '0.8' },
       { url: '/search', changefreq: 'daily', priority: '0.8' },
       { url: '/contact', changefreq: 'monthly', priority: '0.6' }
     ];
@@ -278,3 +193,27 @@ export default async function handler(req, res) {
     res.status(200).send(fallbackXml);
   }
 }
+
+
+
+
+// import sallesCinema from '../data/salles.json';
+
+      // { url: '/cinemas', changefreq: 'weekly', priority: '0.8' },
+
+  // Ajouter les salles de cinéma
+  //   if (sallesCinema && Array.isArray(sallesCinema)) {
+  //     sallesCinema.forEach(salle => {
+  //       const salleId = salle.id || salle._id;
+  //       if (salleId) {
+  //         xml += `  <url>
+  //   <loc>${domain}/cinema/${salleId}</loc>
+  //   <lastmod>${currentDate}</lastmod>
+  //   <changefreq>monthly</changefreq>
+  //   <priority>0.6</priority>
+  // </url>\n`;
+  //       }
+  //     });
+  //   }
+    
+  // { url: '/cinemas', changefreq: 'weekly', priority: '0.8' },
