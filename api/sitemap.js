@@ -30,6 +30,7 @@ async function fetchMoviesByCategory(category, page = 1, maxPages = 3) {
   
   // Récupérer le token API TMDB depuis les variables d'environnement Vite
   const apiToken = process.env.VITE_TMDB_API_TOKEN;
+  console.log('API Token:', apiToken);
   
   while (currentPage <= maxPages) {
     try {
