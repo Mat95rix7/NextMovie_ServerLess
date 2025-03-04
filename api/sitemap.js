@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs, query, where, limit } from 'firebase/firestore';
-import sallesCinema from './cinemas.json';
+// import sallesCinema from './cinemas.json';
 
 
   const Fetching = (endpoint)=>{
@@ -144,19 +144,19 @@ export default async function handler(req, res) {
     });
     
     // Ajouter les salles de cinéma si elles existent dans le JSON
-    if (sallesCinema && Array.isArray(sallesCinema)) {
-      sallesCinema.forEach(salle => {
-        const salleId = salle.id || salle._id;
-        if (salleId) {
-          xml += `  <url>
-    <loc>${domain}/cinema/${salleId}</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>\n`;
-        }
-      });
-    }
+  //   if (sallesCinema && Array.isArray(sallesCinema)) {
+  //     sallesCinema.forEach(salle => {
+  //       const salleId = salle.id || salle._id;
+  //       if (salleId) {
+  //         xml += `  <url>
+  //   <loc>${domain}/cinema/${salleId}</loc>
+  //   <lastmod>${currentDate}</lastmod>
+  //   <changefreq>monthly</changefreq>
+  //   <priority>0.6</priority>
+  // </url>\n`;
+  //       }
+  //     });
+  //   }
     
     // Fermer le XML
     xml += '</urlset>';
