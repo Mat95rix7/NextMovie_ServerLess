@@ -1,5 +1,5 @@
 import axios from 'axios';
-import '../public/sitemap.xsl'
+// import '../public/sitemap.xsl'
 
 // Récupérer les catégories TMDB avec pagination
 async function fetchMoviesByCategory(category, page = 1, maxPages = 3) {
@@ -67,7 +67,7 @@ async function fetchGenres() {
 export default async function handler(req, res) {
   res.setHeader('Content-Type', 'application/xml');
 
-  const xmlStylesheet = `<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>`;
+  // const xmlStylesheet = `<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>`;
   
   try {
     // Vérifier que les variables d'environnement sont disponibles
