@@ -1,4 +1,5 @@
 import axios from 'axios';
+import '../public/sitemap.xsl'
 
 // Récupérer les catégories TMDB avec pagination
 async function fetchMoviesByCategory(category, page = 1, maxPages = 3) {
