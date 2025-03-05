@@ -59,7 +59,7 @@
         </style>
       </head>
       <body>
-        <h1>Plan du site - My CineApp 🎬</h1>
+        <h1>Plan du site - NextMovie 🎬</h1>
         <p>Dernière mise à jour : <xsl:value-of select="urlset/url[1]/lastmod"/></p>
         <table>
           <thead>

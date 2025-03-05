@@ -47,7 +47,11 @@ async function fetchGenres() {
 }
 
 export default async function handler(req, res) {
+  // Important : définir le bon content-type
   res.setHeader('Content-Type', 'application/xml');
+  
+  // Optionnel : mettre en cache pour réduire les appels API
+  res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate');
 
   try {
     const categories = [
@@ -68,12 +72,10 @@ export default async function handler(req, res) {
     const domain = 'https://my-cineapp.vercel.app';
     const currentDate = new Date().toISOString().split('T')[0];
 
-    // Définition du XML avec le fichier XSL
     let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
     xml += `<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>\n`;
     xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
 
-    // Ajout des pages principales
     const mainPages = [
       { url: '/', changefreq: 'daily', priority: '1.0' },
       { url: '/movies', changefreq: 'daily', priority: '0.9' },
@@ -91,7 +93,6 @@ export default async function handler(req, res) {
   </url>\n`;
     });
 
-    // Ajout des catégories
     categories.forEach(category => {
       xml += `  <url>
     <loc>${domain}/movies/${category.name}</loc>
@@ -101,7 +102,6 @@ export default async function handler(req, res) {
   </url>\n`;
     });
 
-    // Ajout des genres
     genresData.forEach(genre => {
       xml += `  <url>
     <loc>${domain}/genre/${genre.id}</loc>
@@ -111,7 +111,6 @@ export default async function handler(req, res) {
   </url>\n`;
     });
 
-    // Ajout des films sans doublons
     allMovies.forEach(movie => {
       if (!uniqueMovieIds.has(movie.id)) {
         uniqueMovieIds.add(movie.id);
@@ -129,6 +128,6 @@ export default async function handler(req, res) {
     res.status(200).send(xml);
   } catch (error) {
     console.error('Erreur génération sitemap:', error);
-    res.status(500).send('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>');
+    res.status(500).send('Erreur de génération du sitemap');
   }
 }
