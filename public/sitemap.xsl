@@ -57,7 +57,7 @@
       </head>
       <body>
         <h1>Plan du site - NextMovie  🎬</h1>
-        <p>Dernière mise à jour : <xsl:value-of select="urlset/url[1]/lastmod"/></p>
+        <p>Dernière mise à jour : <xsl:value-of select="sitemap:urlset/sitemap:url[1]/sitemap:lastmod"/></p>
         <table>
           <tr>
             <th>URL</th>
