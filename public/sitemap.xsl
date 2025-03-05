@@ -19,7 +19,7 @@
           }
           table {
             width: 100%;
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 20px auto;
             border-collapse: collapse;
             background: #fff;

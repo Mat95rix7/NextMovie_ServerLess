@@ -392,7 +392,7 @@ export default async function handler(req, res) {
 
     const mainPages = [
       { url: '/', changefreq: 'daily', priority: '1.0' },
-      { url: '/movies', changefreq: 'daily', priority: '0.9' },
+      // { url: '/movies', changefreq: 'daily', priority: '0.9' },
       { url: '/search', changefreq: 'daily', priority: '0.8' },
       { url: '/contact', changefreq: 'monthly', priority: '0.6' },
       { url: '/about', changefreq: 'monthly', priority: '0.5' }
@@ -416,14 +416,14 @@ export default async function handler(req, res) {
   </url>\n`;
     });
 
-    genresData.forEach(genre => {
-      xml += `  <url>
-    <loc>${domain}/genre/${genre.id}</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>\n`;
-    });
+  //   genresData.forEach(genre => {
+  //     xml += `  <url>
+  //   <loc>${domain}/genre/${genre.id}</loc>
+  //   <lastmod>${currentDate}</lastmod>
+  //   <changefreq>weekly</changefreq>
+  //   <priority>0.7</priority>
+  // </url>\n`;
+  //   });
 
     allMovies.forEach(movie => {
       if (!uniqueMovieIds.has(movie.id)) {
