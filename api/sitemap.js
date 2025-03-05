@@ -65,6 +65,8 @@ async function fetchGenres() {
 
 export default async function handler(req, res) {
   res.setHeader('Content-Type', 'application/xml');
+
+  const xmlStylesheet = `<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>`;
   
   try {
     // Vérifier que les variables d'environnement sont disponibles
@@ -98,7 +100,7 @@ export default async function handler(req, res) {
     const uniqueMovieIds = new Set();
     
     // Générer le XML
-    let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+    let xml = `${xmlStylesheet}\n<?xml version="1.0" encoding="UTF-8"?>\n`;
     xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
     
     const domain = 'https://my-cineapp.vercel.app';
