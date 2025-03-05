@@ -1,15 +1,25 @@
 import axios from 'axios';
+import NodeCache from 'node-cache';
+
+const cache = new NodeCache({ stdTTL: 3600 }); // Cache pour 1 heure
+
+const axiosInstance = axios.create({
+  baseURL: 'https://api.themoviedb.org/3',
+  timeout: 10000, // 10 secondes
+});
 
 async function fetchMoviesByCategory(category, page = 1, maxPages = 3) {
   const results = [];
   let currentPage = page;
   
   const apiToken = process.env.VITE_API_TOKEN;
+  if (!apiToken) {
+    throw new Error('API Token non défini');
+  }
   
   while (currentPage <= maxPages) {
     try {
-      const response = await axios.get(category.path, {
-        baseURL: 'https://api.themoviedb.org/3',
+      const response = await axiosInstance.get(category.path, {
         headers: { 'Authorization': `Bearer ${apiToken}` },
         params: { language: 'fr-FR', page: currentPage, region: 'FR' }
       });
@@ -23,7 +33,7 @@ async function fetchMoviesByCategory(category, page = 1, maxPages = 3) {
       if (currentPage >= response.data.total_pages) break;
       currentPage++;
     } catch (error) {
-      console.error(`Erreur catégorie ${category.name}, page ${currentPage}:`, error);
+      console.error(`Erreur catégorie ${category.name}, page ${currentPage}:`, error.message);
       break;
     }
   }
@@ -32,25 +42,35 @@ async function fetchMoviesByCategory(category, page = 1, maxPages = 3) {
 }
 
 async function fetchGenres() {
+  const apiToken = process.env.VITE_API_TOKEN;
+  if (!apiToken) {
+    throw new Error('API Token non défini');
+  }
+
   try {
-    const response = await axios.get('/genre/movie/list', {
-      baseURL: 'https://api.themoviedb.org/3',
-      headers: { 'Authorization': `Bearer ${process.env.VITE_API_TOKEN}` },
+    const response = await axiosInstance.get('/genre/movie/list', {
+      headers: { 'Authorization': `Bearer ${apiToken}` },
       params: { language: 'fr-FR' }
     });
     
     return response.data.genres || [];
   } catch (error) {
-    console.error('Erreur récupération genres:', error);
+    console.error('Erreur récupération genres:', error.message);
     return [];
   }
 }
 
 export default async function handler(req, res) {
-  // Important : définir le bon content-type
+  console.log('Début de la génération du sitemap');
+
+  const cachedSitemap = cache.get('sitemap');
+  if (cachedSitemap) {
+    console.log('Utilisation du sitemap en cache');
+    res.setHeader('Content-Type', 'application/xml');
+    return res.status(200).send(cachedSitemap);
+  }
+
   res.setHeader('Content-Type', 'application/xml');
-  
-  // Optionnel : mettre en cache pour réduire les appels API
   res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate');
 
   try {
@@ -125,9 +145,12 @@ export default async function handler(req, res) {
 
     xml += '</urlset>';
     
+    console.log('XML généré :', xml.substring(0, 500) + '...'); // Affiche les 500 premiers caractères
+    
+    cache.set('sitemap', xml);
     res.status(200).send(xml);
   } catch (error) {
-    console.error('Erreur génération sitemap:', error);
+    console.error('Erreur génération sitemap:', error.message);
     res.status(500).send('Erreur de génération du sitemap');
   }
 }
