@@ -40,7 +40,7 @@
             background: #f1f1f1;
           }
           a {
-            color: #ff8f00;
+            color: #3498db;
             text-decoration: none;
             font-weight: bold;
           }

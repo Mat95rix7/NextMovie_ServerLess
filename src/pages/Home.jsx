@@ -3,11 +3,15 @@ import { Fetching } from '../services/tmdb';
 import HorizontalScollCard from '../components/HorizontalScollCard';
 import { Helmet } from 'react-helmet-async';
 
+
 const Home = () => {
+  
+  const { data : topTrendingData } = Fetching('/trending/movie/day')
   const { data : nowPlayingData } = Fetching('/movie/now_playing')
   const { data : topRatedData } = Fetching('/movie/top_rated')
   const { data : topPopularData } = Fetching('/movie/popular')
   const { data : topUpcomingData } = Fetching('/movie/upcoming')
+
 
 
    
@@ -23,10 +27,11 @@ const Home = () => {
         <link rel="canonical" href="https://my-cineapp.vercel.app/" />
       </Helmet>
       <BannerHome/>
-      <HorizontalScollCard data={nowPlayingData} heading={"Now Playing Movies"} />
-      <HorizontalScollCard data={topPopularData} heading={"Popular Movies"} />
-      <HorizontalScollCard data={topRatedData} heading={"Top Rated Movies"} />
-      <HorizontalScollCard data={topUpcomingData} heading={"Upcoming Movies"} />
+      <HorizontalScollCard data={topTrendingData} heading={"Trending Movies"} click={true} link={"trending"}/>
+      <HorizontalScollCard data={nowPlayingData} heading={"Now Playing Movies"} click={true} link={"now-playing"}/>
+      <HorizontalScollCard data={topPopularData} heading={"Popular Movies"} click={true} link={"popular"}/>
+      <HorizontalScollCard data={topRatedData} heading={"Top Rated Movies"} click={true} link={"top-rated"}/>
+      <HorizontalScollCard data={topUpcomingData} heading={"Upcoming Movies"} click={true} link={"upcoming"} />
     </div>
   );
 };

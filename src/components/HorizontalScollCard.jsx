@@ -2,9 +2,11 @@ import { useRef } from 'react';
 import PropTypes from 'prop-types';
 import MovieCard from './MovieCard';
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
+import { useNavigate } from 'react-router-dom';
 
-const HorizontalScrollCard = ({ data = [], heading, renderItem }) => {
+const HorizontalScrollCard = ({ data = [], heading, renderItem, click = false, link }) => {
     const containerRef = useRef();
+    const navigate = useNavigate();
 
     const handleNext = () => {
         containerRef.current.scrollLeft += 265;
@@ -18,11 +20,24 @@ const HorizontalScrollCard = ({ data = [], heading, renderItem }) => {
         <MovieCard key={`${item.id}-scroll-${index}`} data={item} index={index + 1} />
     );
 
+    const handleClick = () => {
+        if (click) {
+            navigate(`/movies/${link}`, {
+                state: { data, heading }
+            });
+        }
+    };
+
     const itemRenderer = renderItem || defaultRenderItem;
 
     return (
         <div className='container mx-auto px-3 my-10'>
-            <h2 className='text-xl lg:text-2xl font-bold mb-3 capitalize'>{heading}</h2>
+            <h2
+                className={`heading text-xl lg:text-2xl font-bold mb-3 capitalize ${click ? "cursor-pointer text-amber-500" : ""}`}
+                onClick={handleClick}
+            >
+                {heading}
+            </h2>
 
             <div className='relative'>
                 <div 

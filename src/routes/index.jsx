@@ -6,11 +6,12 @@ import RegisterPage from '../pages/RegisterPage'
 import LoginPage from '../pages/LoginPage'
 import SearchPage from "../pages/SearchPage";
 import ProfilePage  from "../pages/ProfilePage";
-import ContactForm from "../pages/ContactForm";
+import ContactForm from "../pages/Contact";
 import About from "../pages/About";
 import AdminDashboard from "../pages/AdminDashboard";
 import NotFound from "../pages/NotFound";
 import ProtectedAdminRoute from "../components/ProtectedAdminRoute";
+import CategoryPage from "../pages/Category";
 
 const router = createBrowserRouter([
     {
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
             {
                 path : "movie/:id",
                 element : <MovieDetails />
+            },
+            {
+                path :"/movies/:category",
+                element: <CategoryPage/>
             },
             {
                 path : "*",
