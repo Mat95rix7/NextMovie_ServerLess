@@ -18,8 +18,7 @@
             color: #2c3e50;
           }
           table {
-            width: 100%;
-            max-width: 1200px;
+            width: 80%;
             margin: 20px auto;
             border-collapse: collapse;
             background: #fff;
@@ -33,7 +32,7 @@
             text-align: left;
           }
           th {
-            background: #3498db;
+            background: #ff8f00;
             color: white;
             text-transform: uppercase;
           }
@@ -41,7 +40,7 @@
             background: #f1f1f1;
           }
           a {
-            color: #3498db;
+            color: #ffb300;
             text-decoration: none;
             font-weight: bold;
           }
