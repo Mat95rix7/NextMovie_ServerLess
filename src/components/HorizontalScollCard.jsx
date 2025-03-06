@@ -69,7 +69,9 @@ const HorizontalScrollCard = ({ data = [], heading, renderItem, click = false, l
 HorizontalScrollCard.propTypes = {
     data: PropTypes.array.isRequired,
     heading: PropTypes.string.isRequired,
-    renderItem: PropTypes.func
+    renderItem: PropTypes.func,
+    click: PropTypes.bool,
+    link: PropTypes.string
 };
 
 export default HorizontalScrollCard;

@@ -3,7 +3,6 @@ import { Fetching } from '../services/tmdb';
 import HorizontalScollCard from '../components/HorizontalScollCard';
 import { Helmet } from 'react-helmet-async';
 
-
 const Home = () => {
   
   const { data : topTrendingData } = Fetching('/trending/movie/day')
@@ -12,14 +11,11 @@ const Home = () => {
   const { data : topPopularData } = Fetching('/movie/popular')
   const { data : topUpcomingData } = Fetching('/movie/upcoming')
 
-
-
-   
   return (
     <div className='min-w-[320px]'>
       <Helmet>
-        <title>NextMovie - Découvrez les meilleurs films | my-cineapp</title>
-        <meta name="description" content="Explorez les films à l'affiche, les plus populaires et les prochaines sorties sur my-cineapp" />
+        <title>NextMovie - Découvrez les meilleurs films à voir</title>
+        <meta name="description" content="Explorez les films à l'affiche, les plus populaires et les prochaines sorties sur NextMovie" />
         <meta property="og:title" content="NextMovie - Les meilleurs films à découvrir" />
         <meta property="og:description" content="Découvrez notre collection de films populaires, bien notés et à venir" />
         <meta property="og:type" content="website" />
