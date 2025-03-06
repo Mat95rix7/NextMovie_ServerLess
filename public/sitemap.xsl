@@ -21,7 +21,7 @@
             width: 80%;
             margin: 20px auto;
             border-collapse: collapse;
-            background: #fff;
+            background: #e0e0e0;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             overflow: hidden;
@@ -40,7 +40,7 @@
             background: #f1f1f1;
           }
           a {
-            color: #ffb300;
+            color: #ff8f00;
             text-decoration: none;
             font-weight: bold;
           }
