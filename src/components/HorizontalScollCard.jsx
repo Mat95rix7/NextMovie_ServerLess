@@ -31,9 +31,9 @@ const HorizontalScrollCard = ({ data = [], heading, renderItem, click = false, l
     const itemRenderer = renderItem || defaultRenderItem;
 
     return (
-        <div className='container mx-auto px-3 my-10'>
+        <div className='container min-h-[300px] mx-auto px-3 my-10'>
             <h2
-                className={`heading text-xl lg:text-2xl font-bold mb-3 capitalize ${click ? "cursor-pointer text-amber-500" : ""}`}
+                className={`heading text-xl lg:text-2xl font-bold mb-3 capitalize ${click ? "cursor-pointer dark:text-amber-500 text-gray-900" : ""}`}
                 onClick={handleClick}
             >
                 {heading}

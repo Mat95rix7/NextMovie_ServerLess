@@ -7,6 +7,7 @@ const BannerHome = () => {
     const bannerData = useSelector(state => state.movieData.bannerData)
     const imageURL = useSelector(state => state.movieData.imageURL)
     const [currentImage,setCurrentImage] = useState(0)
+    console.log(imageURL);
 
     const handleNext = ()=>{
         if(currentImage < bannerData.length - 1){
@@ -42,6 +43,10 @@ const BannerHome = () => {
                                     <img
                                         src={imageURL+data.backdrop_path}
                                         className='h-full w-full object-cover'
+                                        alt={data.title || data.name}
+                                        height={450}
+                                        width={1000}
+                                        loading='lazy'
                                     />
                                 </div>
 

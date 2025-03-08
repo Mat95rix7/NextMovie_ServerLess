@@ -59,6 +59,8 @@ const HeaderComponent = () => {
                         <img 
                             src={logo} 
                             alt='logo' 
+                            height="32"
+                            width="32"
                             className='w-full h-full rounded object-contain'
                         />
                     </div>
@@ -81,25 +83,30 @@ const HeaderComponent = () => {
                     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
                         <DropdownMenuTrigger asChild aria-label="Menu utilisateur">
                             {user ? (
-                                <div className="flex items-center gap-2 cursor-pointer px-1 py-0.5 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors">
+                                <button className="flex items-center gap-2 cursor-pointer px-1 py-0.5 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors">
                                     {user.photoURL ? (
                                         <img 
                                             src={user.photoURL} 
-                                            alt="Photo de profil" 
+                                            alt="Photo de profil"
+                                            height="32"
+                                            width="32"
                                             className="w-8 h-8 sm:w-9 sm:h-9 rounded-2xl object-cover flex-shrink-0"
                                         />
                                     ) : null}
                                     <span className={usernameStyle}>
                                         {user.displayName || user.email?.split('@')[0]}
                                     </span>
-                                </div>
+                                </button>
                             ) : (
                                 <Button 
                                     variant="ghost" 
                                     className={iconButtonStyle}
                                     aria-label="Ouvrir le menu utilisateur"
                                 >
-                                    <img src={userIcon} alt="Icône utilisateur" className="w-8 sm:w-9"/>
+                                    <img src={userIcon} alt="Icône utilisateur" 
+                                            height="32"
+                                            width="32"
+                                            className="w-8 sm:w-9"/>
                                 </Button>
                             )}
                         </DropdownMenuTrigger>
