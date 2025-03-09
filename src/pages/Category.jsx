@@ -2,6 +2,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect, useMemo } from "react";
 import MovieCard from "../components/MovieCard";
 import { Fetching } from "../services/tmdb";
+import { Helmet } from "react-helmet-async";
 
 function CategoryPage() {
     // Mémoriser le tableau validCategories
@@ -92,9 +93,28 @@ function CategoryPage() {
     if (!isValidCategory) {
         return null;
     }
+
+    const capitalizeFirstLetter = (str) => {
+        return str
+          .split('-') // Divise la chaîne en mots
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Mets la première lettre de chaque mot en majuscule
+          .join(' '); // Réassemble les mots
+      };
+    const title = `${capitalizeFirstLetter(category)} Movies`;
     
     return (
         <>
+            <Helmet>
+                <title>{title} - NextMovie</title>
+                <meta name="description" content={`Explorez les meilleurs films de la catégorie ${category} sur NextMovie.`} />
+                <meta name="keywords" content={`films, catégorie ${category}, cinéma, NextMovie, films ${category}`} />
+                <meta property="og:title" content={`Films ${category} - NextMovie`} />
+                <meta property="og:description" content={`Découvrez les films ${category} les plus populaires et à venir sur NextMovie.`} />
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content={`https://my-cineapp.vercel.app/movies/${category.toLowerCase()}`} />
+                <meta property="og:image" content="https://my-cineapp.vercel.app/assets/Logo-T_7X-Wo7.jpg" />
+                <link rel="canonical" href={`https://my-cineapp.vercel.app/movies/${category.toLowerCase()}`} />
+            </Helmet>
             <h1 className="text-2xl font-bold ms-28 mt-28">{displayHeading}</h1>
             <div className="grid grid-cols-[repeat(auto-fit,250px)] gap-14 justify-center w-[80%] mx-auto">
                 {loading ? (

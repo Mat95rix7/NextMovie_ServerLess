@@ -8,6 +8,7 @@ import { FetchDetails } from '../services/tmdb';
 import { useAuth } from '../hooks/useAuth';
 import { useMovieInteractions } from '../hooks/useMovieInteractions';
 import { cn } from '@/lib/utils';
+import { Helmet } from 'react-helmet-async';
 
 const MovieDetails = () => {
   const imageURL = import.meta.env.VITE_POSTER;
@@ -122,6 +123,15 @@ const MovieDetails = () => {
 
   return (
     <div>
+      <Helmet>
+          <title>{data.title} - NextMovie</title>
+          <meta name="description" content={data.overview} />
+          <meta name="keywords" content={`film, ${data.title}`} />
+          <meta property="og:title" content={data.title} />
+          <meta property="og:description" content={data.overview} />
+          <meta property="og:image" content={`https://image.tmdb.org/t/p/w500${data.poster_path}`} />
+          <meta property="og:url" content={`https://ton-site.com/datas/${data.id}`} />
+      </Helmet>
       <div>
         <div className='w-full h-[280px] relative hidden lg:block'>
           <div className='w-full h-full'>

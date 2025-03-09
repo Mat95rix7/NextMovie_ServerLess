@@ -1,10 +1,20 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Camera, Star, Ticket, Smartphone, Mail, Github, Linkedin } from 'lucide-react';
 import Mat95rix7 from '../assets/profile.jpg'
+import { Helmet } from 'react-helmet-async';
 
 const AboutPage = () => {
   return (
     <div className="min-h-screen  py-20 px-4">
+      <Helmet>
+        <title>À propos de NextMovie</title>
+        <meta name="description" content="Découvrez l'histoire de NextMovie, votre site de cinéma pour tout savoir sur les films récents et à venir." />
+        <meta name="keywords" content="à propos, cinéma, NextMovie, films, critiques, nouveautés cinéma" />
+        <meta property="og:title" content="À propos de NextMovie" />
+        <meta property="og:description" content="NextMovie vous propose des critiques, des informations sur les films à venir et bien plus encore." />
+        <meta property="og:url" content="https://my-cineapp.vercel.app/about" />
+        <meta property="og:image" content="https://my-cineapp.vercel.app/assets/Logo-T_7X-Wo7.jpg" />
+      </Helmet>
       <div className="max-w-4xl mx-auto">
         {/* Hero Section avec animation */}
         <div className="text-center mb-16 transform hover:scale-105 transition-transform duration-300">

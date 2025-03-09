@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import { setBannerData,setImageURL } from './store/movieSlice';
 import  { AuthProvider } from './context/auth/AuthProvider';
+import HelmetSeo from './components/HelmetSeo';
 
 function App() {
   
@@ -39,6 +40,7 @@ function App() {
   
   return (
     <AuthProvider>
+          <HelmetSeo/>  
           <Header/>
           <div className='min-h-[65vh] md:min-h-[75vh] mt-[60px]'>
               <Outlet />  

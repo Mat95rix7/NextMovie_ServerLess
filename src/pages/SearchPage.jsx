@@ -5,6 +5,7 @@ import { useMovieSearch } from '../hooks/useMovieSearch';
 import { useGenres } from '../hooks/useGenres';
 import { useMovieFilters } from '../hooks/useMovieFilters';
 import { Search } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 
 export function SearchPage() {
   const [query, setQuery] = useState('');
@@ -12,8 +13,27 @@ export function SearchPage() {
   const { genres } = useGenres();
   const { filters, filterHandlers, filteredMovies } = useMovieFilters(movies);
 
+  const title = query
+  ? `Résultats pour "${query}" - NextMovie`
+  : "Recherche - NextMovie";
+
+const description = query
+  ? `Découvrez les films correspondant à votre recherche pour "${query}" sur NextMovie.`
+  : "Recherchez les films que vous aimez sur NextMovie.";
+
   return (
     <div className="py-1">
+      <Helmet>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta name="keywords" content={`films, recherche, cinéma, ${query}, NextMovie`} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://my-cineapp.vercel.app/search" />
+        <meta property="og:image" content="https://my-cineapp.vercel.app/assets/Logo-T_7X-Wo7.jpg" />
+        <link rel="canonical" href="https://my-cineapp.vercel.app/search"/>
+      </Helmet>
       <div className="fixed top-20 left-0 right-0 z-10 container mx-auto">
         <form onSubmit={(e) => e.preventDefault()} className="mb-6 flex gap-4 w-11/12 mx-auto">
           <div className="flex-1 relative">

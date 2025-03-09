@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Mail, User, MessageSquare, Send, CheckCircle } from 'lucide-react';
 import emailjs from 'emailjs-com'
+import { Helmet } from 'react-helmet-async';
 
 function ContactForm() {
   // Référence pour le formulaire
@@ -38,6 +39,15 @@ function ContactForm() {
   
   return (
     <div className="w-full max-w-3xl mx-auto pt-20">
+      <Helmet>
+        <title>Contactez-nous - NextMovie</title>
+        <meta name="description" content="Contactez-nous pour toute question sur les films, critiques, et plus encore sur NextMovie." />
+        <meta name="keywords" content="contact, cinéma, film, questions, critiques, NextMovie" />
+        <meta property="og:title" content="Contactez-nous - NextMovie" />
+        <meta property="og:description" content="Contactez l'équipe de NextMovie pour toute demande d'information." />
+        <meta property="og:url" content="https://my-cineapp.vercel.app/contact" />
+        <meta property="og:image" content="https://my-cineapp.vercel.app/assets/Logo-T_7X-Wo7.jpg" />
+      </Helmet>
       <form 
         ref={form} 
         id="contact-form" 

@@ -17,7 +17,6 @@ export const movieSlice = createSlice({
         }
     }
 })
-console.log(movieSlice);
 export const { setBannerData, setImageURL } = movieSlice.actions
 
 
