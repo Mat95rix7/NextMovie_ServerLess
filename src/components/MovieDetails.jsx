@@ -130,7 +130,7 @@ const MovieDetails = () => {
           <meta property="og:title" content={data.title} />
           <meta property="og:description" content={data.overview} />
           <meta property="og:image" content={`https://image.tmdb.org/t/p/w500${data.poster_path}`} />
-          <meta property="og:url" content={`https://ton-site.com/datas/${data.id}`} />
+          <meta property="og:url" content={`https://nextmoviez.vercel.app/movie/${data.id}`} />
       </Helmet>
       <div>
         <div className='w-full h-[280px] relative hidden lg:block'>

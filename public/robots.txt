@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://my-cineapp.vercel.app/api/sitemap
+Sitemap: https://nextmoviez.vercel.app/api/sitemap
 
 # Prevent crawlers from accessing specific paths
 Disallow: /admin/

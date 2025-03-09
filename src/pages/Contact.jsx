@@ -45,8 +45,8 @@ function ContactForm() {
         <meta name="keywords" content="contact, cinéma, film, questions, critiques, NextMovie" />
         <meta property="og:title" content="Contactez-nous - NextMovie" />
         <meta property="og:description" content="Contactez l'équipe de NextMovie pour toute demande d'information." />
-        <meta property="og:url" content="https://my-cineapp.vercel.app/contact" />
-        <meta property="og:image" content="https://my-cineapp.vercel.app/assets/Logo-T_7X-Wo7.jpg" />
+        <meta property="og:url" content="https://nextmoviez.vercel.app/contact" />
+        <meta property="og:image" content="https://nextmoviez.vercel.app/assets/Logo-T_7X-Wo7.jpg" />
       </Helmet>
       <form 
         ref={form} 

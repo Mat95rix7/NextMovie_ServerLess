@@ -111,9 +111,9 @@ function CategoryPage() {
                 <meta property="og:title" content={`Films ${category} - NextMovie`} />
                 <meta property="og:description" content={`Découvrez les films ${category} les plus populaires et à venir sur NextMovie.`} />
                 <meta property="og:type" content="website" />
-                <meta property="og:url" content={`https://my-cineapp.vercel.app/movies/${category.toLowerCase()}`} />
-                <meta property="og:image" content="https://my-cineapp.vercel.app/assets/Logo-T_7X-Wo7.jpg" />
-                <link rel="canonical" href={`https://my-cineapp.vercel.app/movies/${category.toLowerCase()}`} />
+                <meta property="og:url" content={`https://nextmoviez.vercel.app/movies/${category.toLowerCase()}`} />
+                <meta property="og:image" content="https://nextmoviez.vercel.app/assets/Logo-T_7X-Wo7.jpg" />
+                <link rel="canonical" href={`https://nextmoviez.vercel.app/movies/${category.toLowerCase()}`} />
             </Helmet>
             <h1 className="text-2xl font-bold ms-28 mt-28">{displayHeading}</h1>
             <div className="grid grid-cols-[repeat(auto-fit,250px)] gap-14 justify-center w-[80%] mx-auto">

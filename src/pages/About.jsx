@@ -12,8 +12,8 @@ const AboutPage = () => {
         <meta name="keywords" content="à propos, cinéma, NextMovie, films, critiques, nouveautés cinéma" />
         <meta property="og:title" content="À propos de NextMovie" />
         <meta property="og:description" content="NextMovie vous propose des critiques, des informations sur les films à venir et bien plus encore." />
-        <meta property="og:url" content="https://my-cineapp.vercel.app/about" />
-        <meta property="og:image" content="https://my-cineapp.vercel.app/assets/Logo-T_7X-Wo7.jpg" />
+        <meta property="og:url" content="https://nextmoviez.vercel.app/about" />
+        <meta property="og:image" content="https://nextmoviez.vercel.app/assets/Logo-T_7X-Wo7.jpg" />
       </Helmet>
       <div className="max-w-4xl mx-auto">
         {/* Hero Section avec animation */}

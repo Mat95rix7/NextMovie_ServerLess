@@ -2,28 +2,28 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Pages principales basées sur les routes exactes -->
   <url>
-    <loc>https://my-cineapp.vercel.app/</loc>
+    <loc>https://nextmoviez.vercel.app/</loc>
     <lastmod>2025-03-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
-    <loc>https://my-cineapp.vercel.app/about</loc>
+    <loc>https://nextmoviez.vercel.app/about</loc>
     <lastmod>2025-03-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://my-cineapp.vercel.app/contact</loc>
+    <loc>https://nextmoviez.vercel.app/contact</loc>
     <lastmod>2025-03-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://my-cineapp.vercel.app/search</loc>
+    <loc>https://nextmoviez.vercel.app/search</loc>
     <lastmod>2025-03-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -31,14 +31,14 @@
   
   <!-- Pages d'authentification (priorité basse) -->
   <url>
-    <loc>https://my-cineapp.vercel.app/login</loc>
+    <loc>https://nextmoviez.vercel.app/login</loc>
     <lastmod>2025-03-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   
   <url>
-    <loc>https://my-cineapp.vercel.app/register</loc>
+    <loc>https://nextmoviez.vercel.app/register</loc>
     <lastmod>2025-03-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
@@ -46,21 +46,21 @@
   
   <!-- Exemples de pages de films (à compléter dynamiquement) -->
   <url>
-    <loc>https://my-cineapp.vercel.app/movie/550</loc>
+    <loc>https://nextmoviez.vercel.app/movie/550</loc>
     <lastmod>2025-03-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
-    <loc>https://my-cineapp.vercel.app/movie/299536</loc>
+    <loc>https://nextmoviez.vercel.app/movie/299536</loc>
     <lastmod>2025-03-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
-    <loc>https://my-cineapp.vercel.app/movie/299534</loc>
+    <loc>https://nextmoviez.vercel.app/movie/299534</loc>
     <lastmod>2025-03-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

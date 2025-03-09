@@ -30,9 +30,9 @@ const description = query
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://my-cineapp.vercel.app/search" />
-        <meta property="og:image" content="https://my-cineapp.vercel.app/assets/Logo-T_7X-Wo7.jpg" />
-        <link rel="canonical" href="https://my-cineapp.vercel.app/search"/>
+        <meta property="og:url" content="https://nextmoviez.vercel.app/search" />
+        <meta property="og:image" content="https://nextmoviez.vercel.app/assets/Logo-T_7X-Wo7.jpg" />
+        <link rel="canonical" href="https://nextmoviez.vercel.app/search"/>
       </Helmet>
       <div className="fixed top-20 left-0 right-0 z-10 container mx-auto">
         <form onSubmit={(e) => e.preventDefault()} className="mb-6 flex gap-4 w-11/12 mx-auto">
