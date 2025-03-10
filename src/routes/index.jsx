@@ -12,6 +12,7 @@ import AdminDashboard from "../pages/AdminDashboard";
 import NotFound from "../pages/NotFound";
 import ProtectedAdminRoute from "../components/ProtectedAdminRoute";
 import CategoryPage from "../pages/Category";
+import GenrePage from "../pages/Genres";
 
 const router = createBrowserRouter([
     {
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
             {
                 path :"/movies/:category",
                 element: <CategoryPage/>
+            },
+            {
+                path :"/genres/:genreId",
+                element: <GenrePage/>
             },
             {
                 path : "*",
