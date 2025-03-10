@@ -75,7 +75,7 @@ const MoviesManagement = ({  movies }) => {
                       { icon: Heart, value: movie.favorites },
                       { icon: Eye, value: movie.watchlist },
                       { icon: Star, value: movie.reviews },
-                      { icon: Star, value: movie.averageRating }
+                      { icon: Star, value: movie.averageRating?.toFixed(1) }
                     ].map((item, index) => (
                       <td key={index} className="px-3 sm:px-6 py-4 whitespace-nowrap text-xs sm:text-sm text-gray-500">
                         <div className="flex justify-center items-center">

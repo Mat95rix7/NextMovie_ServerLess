@@ -87,7 +87,6 @@ export default async function handler(req, res) {
       Promise.all(categories.map(category => fetchMoviesByCategory(category)))
     ]);
 
-    // const allMovies = moviesData.flat();
     const allMovies = moviesData.flat()
     .sort((a, b) => new Date(b.release_date) - new Date(a.release_date)) // Tri décroissant par date
     .slice(0, 50); // Garde seulement les 50 premiers
