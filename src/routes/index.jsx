@@ -66,7 +66,7 @@ const router = createBrowserRouter([
                 element: <CategoryPage/>
             },
             {
-                path :"/genres/:genreId",
+                path :"/genre/:genreId",
                 element: <GenrePage/>
             },
             {

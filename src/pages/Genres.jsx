@@ -103,9 +103,9 @@ function GenrePage() {
             <meta property="og:title" content={`Films ${currentGenre.name} - NextMovie`} />
             <meta property="og:description" content={`Découvrez les films ${currentGenre.name} les plus populaires et à venir sur NextMovie.`} />
             <meta property="og:type" content="website" />
-            <meta property="og:url" content={`https://nextmoviez.vercel.app/genres/${currentGenre.id}`} />
+            <meta property="og:url" content={`https://nextmoviez.vercel.app/genre/${currentGenre.id}`} />
             <meta property="og:image" content="https://nextmoviez.vercel.app/assets/Logo-T_7X-Wo7.jpg" />
-            <link rel="canonical" href={`https://nextmoviez.vercel.app/genres/${currentGenre.id}`} />
+            <link rel="canonical" href={`https://nextmoviez.vercel.app/genre/${currentGenre.id}`} />
         </Helmet>
         <h1 className="text-2xl font-bold ms-28 mt-28">Catégorie :  <span className="text-amber-600"> {currentGenre.name}</span></h1>
         
