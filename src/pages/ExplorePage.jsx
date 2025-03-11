@@ -16,30 +16,42 @@ const ExplorePage = () => {
         const response = await axios.get(
           `/discover/movie?with_genres=${genreId}&language=fr-FR`
         );
-        return response.data.results;
+        return { genreId, movies: response.data.results };
       } catch (err) {
-        setError('Erreur lors du chargement des films');
-        console.error(err);
-        return [];
+        console.error(`Erreur pour le genre ${genreId}:`, err);
+        return { genreId, movies: [] };
       }
     };
 
     const getMoviesData = async () => {
+      if (genres.length === 0) return;
+      
       setLoading(true);
-      const genreMovies = {};
-
-      // Pour chaque genre, on récupère les films
-      for (const genre of genres) {
-        genreMovies[genre.name] = await fetchMoviesByGenre(genre.id);
+      
+      try {
+        // Créer une promesse pour chaque genre
+        const requests = genres.map(genre => fetchMoviesByGenre(genre.id));
+        const results = await Promise.all(requests);
+        
+        // Organiser les résultats par genre
+        const genreMovies = {};
+        results.forEach(result => {
+          const genre = genres.find(g => g.id === result.genreId);
+          if (genre) {
+            genreMovies[genre.name] = result.movies;
+          }
+        });
+        
+        setMoviesByGenre(genreMovies);
+      } catch (err) {
+        setError('Erreur lors du chargement des films');
+        console.error('Erreur globale:', err);
+      } finally {
+        setLoading(false);
       }
-
-      setMoviesByGenre(genreMovies);
-      setLoading(false);
     };
 
-    if (genres.length > 0) {
-      getMoviesData();
-    }
+    getMoviesData();
   }, [genres]);
 
   if (loading) {
@@ -58,7 +70,7 @@ const ExplorePage = () => {
           data={moviesByGenre[genreName]}
           heading={`${genreName}`}
           click={true}
-          link={`/genre/${genres.find(genre => genre.name === genreName).id}`}
+          link={`/genre/${genres.find(genre => genre.name === genreName)?.id}`}
         />
       ))}
     </div>

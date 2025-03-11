@@ -45,7 +45,6 @@ const BannerHome = () => {
                                         alt={data.title || data.name}
                                         height={450}
                                         width={1000}
-                                        loading='lazy'
                                     />
                                 </div>
 
