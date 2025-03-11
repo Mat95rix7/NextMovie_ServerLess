@@ -22,7 +22,7 @@ const HorizontalScrollCard = ({ data = [], heading, renderItem, click = false, l
 
     const handleClick = () => {
         if (click) {
-            navigate(`/movies/${link}`, {
+            navigate(`${link}`, {
                 state: { data, heading }
             });
         }

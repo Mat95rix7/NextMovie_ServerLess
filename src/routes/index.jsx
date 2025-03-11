@@ -13,6 +13,7 @@ import NotFound from "../pages/NotFound";
 import ProtectedAdminRoute from "../components/ProtectedAdminRoute";
 import CategoryPage from "../pages/Category";
 import GenrePage from "../pages/Genres";
+import ExplorePage from "../pages/ExplorePage";
 
 const router = createBrowserRouter([
     {
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
             {
                 path : "search",
                 element : <SearchPage />
+            },
+            {
+                path : "explore",
+                element : <ExplorePage />
             },
             {
                 path : "movie/:id",

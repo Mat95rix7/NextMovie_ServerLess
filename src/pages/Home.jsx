@@ -12,11 +12,11 @@ const Home = () => {
   return (
     <div className='min-w-[320px]'>
       <BannerHome/>
-      <HorizontalScollCard data={topTrendingData} heading={"Trending Movies"} click={true} link={"trending"}/>
-      <HorizontalScollCard data={nowPlayingData} heading={"Now Playing Movies"} click={true} link={"now-playing"}/>
-      <HorizontalScollCard data={topPopularData} heading={"Popular Movies"} click={true} link={"popular"}/>
-      <HorizontalScollCard data={topRatedData} heading={"Top Rated Movies"} click={true} link={"top-rated"}/>
-      <HorizontalScollCard data={topUpcomingData} heading={"Upcoming Movies"} click={true} link={"upcoming"} />
+      <HorizontalScollCard data={topTrendingData} heading={"Trending Movies"} click={true} link={"/movies/trending"}/>
+      <HorizontalScollCard data={nowPlayingData} heading={"Now Playing Movies"} click={true} link={"/movies/now-playing"}/>
+      <HorizontalScollCard data={topPopularData} heading={"Popular Movies"} click={true} link={"/movies/popular"}/>
+      <HorizontalScollCard data={topRatedData} heading={"Top Rated Movies"} click={true} link={"/movies/top-rated"}/>
+      <HorizontalScollCard data={topUpcomingData} heading={"Upcoming Movies"} click={true} link={"/movies/upcoming"} />
     </div>
   );
 };

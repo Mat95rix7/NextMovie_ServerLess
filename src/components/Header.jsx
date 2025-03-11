@@ -6,6 +6,7 @@ import { useAuth2 } from '../context/auth/authContext';
 import { toast } from 'react-hot-toast';
 import ThemeToggle from './ThemeToggle';
 import logo from '../assets/Logo.jpg';
+import explore from '../assets/explore.svg';
 import userIcon from '../assets/user.png';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -66,8 +67,22 @@ const HeaderComponent = () => {
                     </div>
                     <span className="text-base sm:text-xl md:text-2xl font-bold text-amber-600 mx-1 sm:mx-2 hidden xs:block">NextMovie</span>
                 </Link>
-                {/* Right Section */}
+                {/* Right Section */}                    
+                <Link to="/explore">
+                    <div className='text-base sm:text-xl md:text-2xl font-bold text-amber-600 mx-1 sm:mx-2 hidden md:block'>Explorer</div>
+                    <div className='text-base sm:text-xl md:text-2xl font-bold  mx-1 sm:mx-2 block md:hidden'>
+                        <img 
+                            src={explore} 
+                            alt="Explorer"
+                            height="32"
+                            width="32"
+                            className="w-8 h-8 sm:w-9 sm:h-9 rounded-2xl object-cover flex-shrink-0"
+                        />
+                    </div>
+                </Link>
                 <div className='flex items-center gap-1 xs:gap-2 sm:gap-5'>
+
+                    
                     {/* Search Icon */}
                     <div className="me-0 sm:me-16">
                         <IoSearchOutline 
