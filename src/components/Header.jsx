@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useAuth2 } from '../context/auth/authContext';
 import { toast } from 'react-hot-toast';
@@ -7,14 +7,14 @@ import ThemeToggle from './ThemeToggle';
 import logo from '../assets/Logo.jpg';
 import userIcon from '../assets/user.png';
 import { Button } from './ui/button';
-import { cn } from '../lib/utils';
+import { GiHamburgerMenu } from "react-icons/gi";
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger, 
 } from './ui/dropdown-menu';
-import { IoCompassOutline, IoInformationCircleOutline, IoMailOutline, IoMenu, IoSearchOutline } from "react-icons/io5";
+import { IoCompassOutline, IoInformationCircleOutline, IoMailOutline, IoSearchOutline } from "react-icons/io5";
 
 const HeaderComponent = () => {
     const navigate = useNavigate();
@@ -22,8 +22,7 @@ const HeaderComponent = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const { user, isAdmin } = useAuth2();
-    const location = useLocation().pathname.slice(1);
-
+    console.log(user);
     const handleLogout = useCallback(async () => {
         try {
             await logout();
@@ -65,41 +64,69 @@ const HeaderComponent = () => {
 
     return (
         <header className='fixed top-0 w-full h-14 sm:h-16 px-4 sm:px-6 lg:px-8 bg-gray-300 bg-opacity-50 dark:bg-black dark:bg-opacity-50 z-40 backdrop-blur-sm transition-all duration-300 ease-in-out'>
-            <div className='container mx-auto px-2 sm:px-3 max-w-7xl flex items-center justify-between h-full'>
-                {/* Logo Section */}
-                <div className="flex items-center gap-4">
+            <div className='container mx-auto px-2 sm:px-3 max-w-7xl flex items-center h-full'>
+                {/* Première section: Burger + Logo */}
+                <div className="flex items-center flex-shrink-0 mr-auto">
+                    {/* Burger Menu */}
+                    <div className="md:hidden mr-1">
+                        <DropdownMenu open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" size="icon" className="p-1 m-2">
+                                    <GiHamburgerMenu  size={48} className="text-amber-600 stroke-2" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent
+                                align="start"
+                                className="w-48 dark:bg-gray-100 bg-gray-900 text-amber-600 border-none rounded-lg shadow-lg"
+                            >
+                                {navItems.map((item, index) => (
+                                    <Link 
+                                        key={index} 
+                                        to={item.to} 
+                                        className="flex items-center gap-2 p-3 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-800 rounded-lg m-1"
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                    >
+                                        {item.icon}
+                                        <span className="text-lg font-bold">{item.label}</span>
+                                    </Link>
+                                ))}
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </div>
+
+                    {/* Logo Section */}
                     <Link to="/" className="flex items-center gap-2">
                         <img 
                             src={logo} 
                             alt='logo'
                             className='w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded object-contain'
                         />
-                        <span className="text-base sm:text-xl md:text-2xl font-bold text-amber-600 hidden sm:block">
+                        <span className="text-[clamp(1.2rem,2vw,1.5rem)] font-bold text-amber-600">
                             NextMovie
                         </span>
                     </Link>
                 </div>
 
                 {/* Desktop Navigation */}
-                <div className="hidden md:flex items-center gap-4">
+                <div className="hidden md:flex items-center justify-center flex-1">
                     {[
                         { to: "/explore", text: "Explorer" },
                         { to: "/search", text: "Rechercher" },
                         { to: "/about", text: "À propos" },
                         { to: "/contact", text: "Contact" }
                     ].map(link => (
-                            <Link 
+                        <Link 
                             key={link.to}
                             to={link.to} 
-                            className="text-[clamp(1rem,2vw,1.5rem)] font-bold text-gray-600 dark:text-gray-400 hover:text-amber-600 transition-colors"
-                            >
+                            className="text-[clamp(1rem,2vw,1.3rem)] font-bold text-gray-600 dark:text-gray-400 hover:text-amber-600 transition-colors mx-4"
+                        >
                             {link.text}
-                            </Link>
-                        ))}
-                    </div>
+                        </Link>
+                    ))}
+                </div>
 
                 {/* Right Section */}
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 ml-auto">
                     {/* User Menu */}
                     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
                         <DropdownMenuTrigger asChild>
@@ -111,8 +138,12 @@ const HeaderComponent = () => {
                                             alt="Profile"
                                             className="w-8 h-8 rounded-full object-cover"
                                         />
-                                    ) : null}
-                                    <span className="hidden sm:block font-semibold">
+                                    ) : (
+                                        <span className="font-bold block text-amber-600 sm:hidden">
+                                            {(user.displayName || user.email?.split('@')[0])}
+                                        </span>
+                                    )}
+                                    <span className="hidden sm:block text-amber-600 font-bold">
                                         {user.displayName || user.email?.split('@')[0]}
                                     </span>
                                 </button>
@@ -140,33 +171,6 @@ const HeaderComponent = () => {
                     </DropdownMenu>
 
                     <ThemeToggle />
-
-                    {/* Mobile Menu */}
-                    <div className="md:hidden">
-                        <DropdownMenu open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" size="icon" className="p-2">
-                                    <IoMenu size={24} />
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent
-                                align="end"
-                                className="w-48 dark:bg-gray-100 bg-gray-900 text-amber-600 border-none rounded-lg shadow-lg"
-                            >
-                                {navItems.map((item, index) => (
-                                    <Link 
-                                        key={index} 
-                                        to={item.to} 
-                                        className="flex items-center gap-2 p-3 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-800 rounded-lg m-1"
-                                        onClick={() => setIsMobileMenuOpen(false)}
-                                    >
-                                        {item.icon}
-                                        <span className="text-lg font-bold">{item.label}</span>
-                                    </Link>
-                                ))}
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </div>
                 </div>
             </div>
         </header>

@@ -1,11 +1,11 @@
 import { useState, useRef } from 'react';
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import { getAuth, updateProfile } from "firebase/auth";
 import { useAuth2 } from "../../context/auth/authContext";
 import { Camera, Loader2, Trash2 } from "lucide-react";
 import { toast } from "react-hot-toast";
-import { doc, updateDoc } from 'firebase/firestore';
-import { db } from "../../config/firebase";
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db, storage } from "../../config/firebase";
 
 const ProfilePhotoSection = () => {
   const { user, setUser } = useAuth2();
@@ -60,21 +60,56 @@ const ProfilePhotoSection = () => {
     }
   };
 
+  // const handleRemovePhoto = async () => {
+  //   try {
+  //     // Mettre à jour le profil dans Auth
+  //     if (auth.currentUser) {
+  //       await updateProfile(auth.currentUser, { photoURL: null });
+  //     }
+
+  //     // Mettre à jour Firestore
+  //     const userRef = doc(db, 'users', user.uid);
+  //     await updateDoc(userRef, {
+  //       photoURL: null
+  //     });
+  //     console.log(user);
+
+  //     // Mettre à jour le contexte
+  //     setUser(prev => ({ ...prev, photoURL: null }));
+  //     toast.success("Photo de profil supprimée.");
+  //   } catch (error) {
+  //     console.error("Erreur lors de la suppression:", error);
+  //     toast.error("Échec de la suppression.");
+  //   }
+  // };
   const handleRemovePhoto = async () => {
     try {
+      // Référence à l'image dans Storage (ajustez le chemin selon votre structure)
+      const storageRef = ref(storage, `profilePhotos/${user.uid}`);
+      
+      // Supprimer l'image de Storage
+      try {
+        await deleteObject(storageRef);
+        console.log("Image supprimée de Storage");
+      } catch (storageErr) {
+        console.log("Pas d'image trouvée dans Storage ou erreur:", storageErr);
+        // Continuez même si l'image n'existe pas dans Storage
+      }
+      
       // Mettre à jour le profil dans Auth
       if (auth.currentUser) {
         await updateProfile(auth.currentUser, { photoURL: null });
       }
-
+  
       // Mettre à jour Firestore
       const userRef = doc(db, 'users', user.uid);
       await updateDoc(userRef, {
         photoURL: null
       });
-
+  
       // Mettre à jour le contexte
       setUser(prev => ({ ...prev, photoURL: null }));
+      
       toast.success("Photo de profil supprimée.");
     } catch (error) {
       console.error("Erreur lors de la suppression:", error);
