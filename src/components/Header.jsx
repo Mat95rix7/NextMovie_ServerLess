@@ -117,7 +117,7 @@ const HeaderComponent = () => {
                         <Link 
                             key={link.to}
                             to={link.to} 
-                            className="text-[clamp(1rem,2vw,1.3rem)] font-bold text-gray-600 dark:text-gray-400 hover:text-amber-600 transition-colors"
+                            className="text-[clamp(1rem,2vw,1.3rem)] font-bold text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-600 transition-colors"
                         >
                             {link.text}
                         </Link>
