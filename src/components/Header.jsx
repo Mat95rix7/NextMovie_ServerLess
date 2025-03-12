@@ -22,7 +22,6 @@ const HeaderComponent = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const { user, isAdmin } = useAuth2();
-    console.log(user);
     const handleLogout = useCallback(async () => {
         try {
             await logout();
@@ -63,7 +62,7 @@ const HeaderComponent = () => {
     }, []);
 
     return (
-        <header className='fixed top-0 w-full h-14 sm:h-16 px-4 sm:px-6 lg:px-8 bg-gray-300 bg-opacity-50 dark:bg-black dark:bg-opacity-50 z-40 backdrop-blur-sm transition-all duration-300 ease-in-out'>
+        <header className='fixed top-0 w-full min-w-[320px] h-14 sm:h-16 px-4 sm:px-6 lg:px-8 bg-gray-300 bg-opacity-50 dark:bg-black dark:bg-opacity-50 z-40 backdrop-blur-sm transition-all duration-300 ease-in-out'>
             <div className='container mx-auto px-2 sm:px-3 max-w-7xl flex items-center h-full'>
                 {/* Première section: Burger + Logo */}
                 <div className="flex items-center flex-shrink-0 mr-auto">
@@ -101,14 +100,14 @@ const HeaderComponent = () => {
                             alt='logo'
                             className='w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded object-contain'
                         />
-                        <span className="text-[clamp(1.2rem,2vw,1.5rem)] font-bold text-amber-600">
+                        <span className="text-[clamp(1rem,2vw,1.5rem)] font-bold text-amber-600">
                             NextMovie
                         </span>
                     </Link>
                 </div>
 
                 {/* Desktop Navigation */}
-                <div className="hidden md:flex items-center justify-center flex-1">
+                <div className="hidden md:flex items-center justify-center flex-1 gap-[clamp(1rem,3.5vw,5rem)]">
                     {[
                         { to: "/explore", text: "Explorer" },
                         { to: "/search", text: "Rechercher" },
@@ -118,7 +117,7 @@ const HeaderComponent = () => {
                         <Link 
                             key={link.to}
                             to={link.to} 
-                            className="text-[clamp(1rem,2vw,1.3rem)] font-bold text-gray-600 dark:text-gray-400 hover:text-amber-600 transition-colors mx-4"
+                            className="text-[clamp(1rem,2vw,1.3rem)] font-bold text-gray-600 dark:text-gray-400 hover:text-amber-600 transition-colors"
                         >
                             {link.text}
                         </Link>

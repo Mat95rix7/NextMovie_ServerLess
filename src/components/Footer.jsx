@@ -50,13 +50,13 @@ const Footer = () => {
           <div className="text-center mt-3 mb-3 text-amber-600">Réseaux Sociaux</div>
           <div className='grid grid-cols-3 justify-center items-center text-center gap-4 text-gray-600 dark:text-gray-400'>
             <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-              <FaFacebook className="inline mr-1" /> Facebook
+              <FaFacebook className="inline mr-1 text-amber-600" /> Facebook
             </a>
             <a href="https://x.com" target="_blank" rel="noopener noreferrer">
-              <FaXTwitter className="inline mr-1" /> Twitter
+              <FaXTwitter className="inline mr-1 text-amber-600" /> Twitter
             </a>
             <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-              <FaInstagram className="inline mr-1" /> Instagram
+              <FaInstagram className="inline mr-1 text-amber-600" /> Instagram
             </a>
           </div>
         </div>

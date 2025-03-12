@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Footer from './components/Footer';
 import Header from './components/Header';
@@ -29,6 +29,16 @@ function App() {
     }
   }
 
+  function ScrollToTop() {
+    const { pathname } = useLocation();
+    
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [pathname]);
+    
+    return null;
+  }
+
   useEffect(() => {
     document.documentElement.classList.add('dark');
   }, []);
@@ -40,7 +50,8 @@ function App() {
   
   return (
     <AuthProvider>
-          <HelmetSeo/>  
+          <HelmetSeo/>
+          <ScrollToTop/>
           <Header/>
           <div className='min-h-[65vh] md:min-h-[75vh] mt-[60px]'>
               <Outlet />  

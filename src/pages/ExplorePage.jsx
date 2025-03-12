@@ -1,88 +1,8 @@
-// import { useEffect, useState } from 'react';
-// import axios from 'axios';
-// import HorizontalScrollCard from '../components/HorizontalScollCard';
-// import { useGenres } from '../hooks/useGenres';
-
-// const ExplorePage = () => {
-//   const [moviesByGenre, setMoviesByGenre] = useState({});
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState(null);
-
-//   const { genres } = useGenres();
-
-//   useEffect(() => {
-//     const fetchMoviesByGenre = async (genreId) => {
-//       try {
-//         const response = await axios.get(
-//           `/discover/movie?with_genres=${genreId}&language=fr-FR`
-//         );
-//         return { genreId, movies: response.data.results };
-//       } catch (err) {
-//         console.error(`Erreur pour le genre ${genreId}:`, err);
-//         return { genreId, movies: [] };
-//       }
-//     };
-
-//     const getMoviesData = async () => {
-//       if (genres.length === 0) return;
-      
-//       setLoading(true);
-      
-//       try {
-//         // Créer une promesse pour chaque genre
-//         const requests = genres.map(genre => fetchMoviesByGenre(genre.id));
-//         const results = await Promise.all(requests);
-        
-//         // Organiser les résultats par genre
-//         const genreMovies = {};
-//         results.forEach(result => {
-//           const genre = genres.find(g => g.id === result.genreId);
-//           if (genre) {
-//             genreMovies[genre.name] = result.movies;
-//           }
-//         });
-        
-//         setMoviesByGenre(genreMovies);
-//       } catch (err) {
-//         setError('Erreur lors du chargement des films');
-//         console.error('Erreur globale:', err);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     getMoviesData();
-//   }, [genres]);
-
-//   if (loading) {
-//     return <div className="flex flex-col items-center justify-center h-screen text-amber-600">Chargement...</div>;
-//   }
-
-//   if (error) {
-//     return <div className="flex flex-col items-center justify-center h-screen text-amber-600">{error}</div>;
-//   }
-
-//   return (
-//     <div className="mt-28 w-[80%] mx-auto">
-//       {Object.keys(moviesByGenre).map((genreName) => (
-//         <HorizontalScrollCard
-//           key={genreName}
-//           data={moviesByGenre[genreName]}
-//           heading={`${genreName}`}
-//           click={true}
-//           link={`/genre/${genres.find(genre => genre.name === genreName)?.id}`}
-//         />
-//       ))}
-//     </div>
-//   );
-// };
-
-// export default ExplorePage;
-
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import axios from 'axios';
 import HorizontalScrollCard from '../components/HorizontalScollCard';
 import { useGenres } from '../hooks/useGenres';
+import { Helmet } from 'react-helmet-async';
 
 const ExplorePage = () => {
   const [moviesByGenre, setMoviesByGenre] = useState({});
@@ -106,24 +26,22 @@ const ExplorePage = () => {
     };
 
     const getMoviesData = async () => {
-      if (genres.length === 0) return;
-      
+      if (genres.length === 0 || Object.keys(moviesByGenre).length > 0) return;
+
       setLoading(true);
       
       try {
-        // Créer une promesse pour chaque genre
-        const requests = genres.map(genre => fetchMoviesByGenre(genre.id));
+        const requests = genres.map((genre) => fetchMoviesByGenre(genre.id));
         const results = await Promise.all(requests);
-        
-        // Organiser les résultats par genre
+
         const genreMovies = {};
-        results.forEach(result => {
-          const genre = genres.find(g => g.id === result.genreId);
+        results.forEach((result) => {
+          const genre = genres.find((g) => g.id === result.genreId);
           if (genre) {
             genreMovies[genre.name] = result.movies;
           }
         });
-        
+
         setMoviesByGenre(genreMovies);
       } catch (err) {
         setError('Erreur lors du chargement des films');
@@ -135,19 +53,24 @@ const ExplorePage = () => {
 
     getMoviesData();
 
-    // Fonction pour gérer l'affichage du bouton de retour en haut
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 300);
     };
 
-    // Ajouter l'écouteur d'événements
     window.addEventListener('scroll', handleScroll);
 
-    // Nettoyage de l'écouteur d'événements
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [genres]);
+  }, [genres, moviesByGenre]);
+
+  // Utilisation de useMemo pour éviter les recalculs inutiles
+  const genreNames = useMemo(() => Object.keys(moviesByGenre), [moviesByGenre]);
+
+  const topGenres = useMemo(
+    () => ["Action", "Animation", "Comédie", "Drame", "Familial", "Fantastique", "Horreur", "Thriller"],
+    []
+  );
 
   // Fonction pour créer un ID d'ancrage à partir du nom du genre
   const createAnchorId = (genreName) => {
@@ -157,21 +80,22 @@ const ExplorePage = () => {
       .replace(/\s+/g, '-'); // Remplacer les espaces par des tirets
   };
 
-  // Fonction pour faire défiler vers une ancre
-  const scrollToAnchor = (anchorId) => {
-    const element = document.getElementById(anchorId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
+  // Fonction optimisée pour faire défiler vers une ancre avec un léger délai
+  const scrollToAnchor = useCallback((anchorId) => {
+    setTimeout(() => {
+      const element = document.getElementById(anchorId);
+      if (element) {
+        const yOffset = -150;
+        const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
+        window.scrollTo({ top: y, behavior: "smooth" });
+      }
+    }, 100);
+  }, []);
 
-  // Fonction pour remonter en haut de la page
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  };
+  // Fonction optimisée pour remonter en haut de la page
+  const scrollToTop = useCallback(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   if (loading) {
     return <div className="flex flex-col items-center justify-center h-screen text-amber-600">Chargement...</div>;
@@ -181,14 +105,22 @@ const ExplorePage = () => {
     return <div className="flex flex-col items-center justify-center h-screen text-amber-600">{error}</div>;
   }
 
-  const genreNames = Object.keys(moviesByGenre);
-
   return (
-    <div className="mt-20 w-[90%] mx-auto relative">
+    <div className="mt-20 w-[80%] min-w-[320px] mx-auto relative">
+      <Helmet>
+        <title>Explorer les films par genre - NextMovie</title>
+        <meta name="description" content="Découvrez des films organisés par genre. Explorez une vaste sélection d'actions, d'animations, de comédies et plus encore." />
+        <meta name="keywords" content="films, genre, action, animation, comédie, drame, fantastique, horreur, thriller" />
+        <meta name="author" content="Mat95rix7" />
+        <meta property="og:title" content="Explorer les films par genre" />
+        <meta property="og:description" content="Découvrez des films organisés par genre. Explorez une vaste sélection d'actions, d'animations, de comédies et plus encore." />
+        <meta property="og:image" content="https://nextmoviez.vercel.app/assets/Logo-T_7X-Wo7.jpg" />
+        <meta property="og:url" content="https://nextmoviez.vercel.app/explore" />
+      </Helmet>
       {/* Boutons d'ancrage pour chaque genre */}
       <div className="sticky top-16 z-30 bg-white dark:bg-gray-900 py-3 px-2 my-6 rounded-lg shadow-md">
-        <div className="flex flex-wrap justify-center gap-2 pb-2">
-          {genreNames.map((genreName) => (
+        <div className="flex flex-wrap justify-center gap-[clamp(1rem,1vw,2rem)]">
+          {topGenres.map((genreName) => (
             <button
               key={`anchor-${genreName}`}
               onClick={() => scrollToAnchor(createAnchorId(genreName))}
@@ -211,7 +143,7 @@ const ExplorePage = () => {
             data={moviesByGenre[genreName]}
             heading={`${genreName}`}
             click={true}
-            link={`/genre/${genres.find(genre => genre.name === genreName)?.id}`}
+            link={`/genre/${genres.find((genre) => genre.name === genreName)?.id}`}
           />
         </div>
       ))}
