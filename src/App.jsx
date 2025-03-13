@@ -13,7 +13,7 @@ function App() {
   const dispatch = useDispatch()
   const fetchNowPlaying = async()=>{
     try {
-        const response = await axios.get('/movie/now_playing?include_adult=false&language=fr-FR')
+        const response = await axios.get('/movie/now_playing')
         dispatch(setBannerData(response.data.results))
     } catch (error) {
         console.error("error",error)

@@ -16,7 +16,7 @@ const ExplorePage = () => {
     const fetchMoviesByGenre = async (genreId) => {
       try {
         const response = await axios.get(
-          `/discover/movie?with_genres=${genreId}&language=fr-FR`
+          `/discover/movie?with_genres=${genreId}`
         );
         return { genreId, movies: response.data.results };
       } catch (err) {

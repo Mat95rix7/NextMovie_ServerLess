@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { auth } from "../../config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { getUserProfile } from "../../hooks/userProfile";
+import { getUserProfile } from "../../services/userProfile";
 import { AuthContext } from "./authContext";
 
 export const AuthProvider = ({ children }) => {

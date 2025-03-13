@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Trash2, Edit, Save, X} from 'lucide-react';
 import ConfirmationModal from './ConfirmationModal';
-import { deleteUserAccount, updateProfile } from '../../hooks/userProfile';
+import { deleteUserAccount, updateProfile } from '../../services/userProfile';
 import PropTypes from 'prop-types';
 import { Switch } from "@/components/ui/switch"
 

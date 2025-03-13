@@ -3,18 +3,16 @@ import { useState, useMemo } from 'react';
 export function useMovieFilters(movies) {
   const [filters, setFilters] = useState({
     selectedGenres: [],
-    // minRuntime: 0,
     maxRuntime: 240,
     minRating: 0,
     isRecent: false,
-    searchQuery: '' // Added search functionality
+    searchQuery: ''
   });
 
   const filterHandlers = {
     setSelectedGenres: (genres) => 
       setFilters(prev => ({ ...prev, selectedGenres: genres })),
-    // setRuntime: (min, max) => 
-    //   setFilters(prev => ({ ...prev, minRuntime: min, maxRuntime: max })),
+
     setRuntime: (max) => 
       setFilters(prev => ({ ...prev, maxRuntime: max })),
     setMinRating: (rating) => 
@@ -47,9 +45,6 @@ export function useMovieFilters(movies) {
       }
 
       // Runtime filter
-      // if (movie.runtime < filters.minRuntime || movie.runtime > filters.maxRuntime) {
-      //   return false;
-      // }
       if (movie.runtime >  filters.maxRuntime) {
         return false;
       }

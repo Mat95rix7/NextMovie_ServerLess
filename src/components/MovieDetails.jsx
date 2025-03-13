@@ -27,7 +27,7 @@ const MovieDetails = () => {
     userId = user.uid
   }
 
-  const { data: data, Loading, error } = FetchDetails(`/movie/${id}?language=fr-FR&append_to_response=credits`);
+  const { data: data, Loading, error } = FetchDetails(`/movie/${id}?append_to_response=credits`);
 
   const {
     isFavorite,

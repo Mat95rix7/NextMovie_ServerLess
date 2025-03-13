@@ -11,7 +11,13 @@
 
 
   /**setup axios */
-  axios.defaults.baseURL = "https://api.themoviedb.org/3"
+  axios.defaults.baseURL = 'https://api.themoviedb.org/3';
+  // Ajouter des paramètres par défaut
+  axios.defaults.params = {
+    ...axios.defaults.params,
+    include_adult: false, 
+    language: 'fr-FR',
+  };
   axios.defaults.headers.common['Authorization'] = `Bearer ${import.meta.env.VITE_API_TOKEN}`
 
   const root = ReactDOM.createRoot(document.getElementById('root'));

@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { validateField } from '../../services/errorMessages';
-import { checkUsernameAvailability } from '../../hooks/userProfile';
-import { updateProfile } from '../../hooks/userProfile';
+import { updateProfile, checkUsernameAvailability } from '../../services/userProfile';
 import { toast } from 'react-hot-toast';
 
 function UsernameSection({ user, onDisplayNameUpdate, isOpen }) {

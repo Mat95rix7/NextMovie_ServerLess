@@ -14,7 +14,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger, 
 } from './ui/dropdown-menu';
-import { IoCompassOutline, IoInformationCircleOutline, IoMailOutline, IoSearchOutline } from "react-icons/io5";
+import { IoCompassOutline, IoHomeOutline, IoInformationCircleOutline, IoMailOutline, IoSearchOutline } from "react-icons/io5";
 
 const HeaderComponent = () => {
     const navigate = useNavigate();
@@ -45,6 +45,7 @@ const HeaderComponent = () => {
           ];
 
     const navItems = [
+        { to: "/", label: "Accueil", icon: <IoHomeOutline className="w-6 h-6 text-amber-600" /> },
         { to: "/explore", label: "Explorer", icon: <IoCompassOutline className="w-6 h-6 text-amber-600" /> },
         { to: "/search", label: "Rechercher", icon: <IoSearchOutline className="w-6 h-6 text-amber-600" /> },
         { to: "/about", label: "À propos", icon: <IoInformationCircleOutline className="w-6 h-6 text-amber-600" /> },
@@ -76,7 +77,7 @@ const HeaderComponent = () => {
                             </DropdownMenuTrigger>
                             <DropdownMenuContent
                                 align="start"
-                                className="w-48 dark:bg-gray-100 bg-gray-900 text-amber-600 border-none rounded-lg shadow-lg"
+                                className="w-48 dark:bg-gray-100 bg-gray-900 dark:text-gray-800 text-gray-300 border-none rounded-lg shadow-lg"
                             >
                                 {navItems.map((item, index) => (
                                     <Link 
@@ -107,6 +108,7 @@ const HeaderComponent = () => {
                 </div>
 
                 {/* Desktop Navigation */}
+
                 <div className="hidden md:flex items-center justify-center flex-1 gap-[clamp(1rem,3.5vw,5rem)]">
                     {[
                         { to: "/explore", text: "Explorer" },
@@ -117,7 +119,10 @@ const HeaderComponent = () => {
                         <Link 
                             key={link.to}
                             to={link.to} 
-                            className="text-[clamp(1rem,2vw,1.3rem)] font-bold text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-600 transition-colors"
+                            className={`text-[clamp(1rem,2vw,1.3rem)] font-bold transition-colors relative
+                                ${location.pathname === link.to 
+                                ? "text-amber-600 dark:text-amber-600 after:absolute after:bottom-[-6px] after:left-0 after:w-full after:h-[3px] after:bg-amber-600" 
+                                : "text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-600"}`}
                         >
                             {link.text}
                         </Link>

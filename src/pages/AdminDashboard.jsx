@@ -5,7 +5,7 @@ import CinemasData from '../data/cinemas.json';
 import UserManagement from '../components/UsersManagement';
 import MovieManagement from '../components/MoviesManagement';
 import TheaterManagement from '../components/TheatersManagement';
-import { subscribeToMovieStats, getTotalMoviesInApp } from '../hooks/userProfile';
+import { subscribeToMovieStats, getTotalMoviesInApp } from '../services/userProfile';
 import { useNavigate } from 'react-router-dom';
 import { useAuth2 } from '../context/auth/authContext';
 import PropTypes from 'prop-types';

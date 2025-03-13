@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { createUserProfile, checkUsernameAvailability } from '../hooks/userProfile';
+import { createUserProfile, checkUsernameAvailability } from '../services/userProfile';
 import { Link, useNavigate } from 'react-router-dom';
 import { validateField } from '../services/errorMessages';
 import  SuccessModal  from './SuccessModal';

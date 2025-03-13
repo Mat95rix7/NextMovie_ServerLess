@@ -2,12 +2,12 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 export async function fetchMovies(query, page = 1) {
-  const searchResponse = await axios.get(`/search/movie?&query=${query}&language=fr-FR&page=${page}`)
+  const searchResponse = await axios.get(`/search/movie?&query=${query}&page=${page}`)
   const searchData = searchResponse.data;
   
   let movies = await Promise.all(
     searchData.results.map(async (movie) => {
-      const detailsResponse = await axios.get(`/movie/${movie.id}?&language=fr-FR`)
+      const detailsResponse = await axios.get(`/movie/${movie.id}`)
       const details = detailsResponse.data;
       return { ...movie, runtime: details.runtime };
     })
@@ -22,24 +22,25 @@ export async function fetchMovies(query, page = 1) {
 }
 
 export async function fetchGenres() {
-  const response = await axios.get(`/genre/movie/list?&language=fr-FR`)
+  const response = await axios.get('/genre/movie/list')
   const data = response.data;
-  // const data = await response.json();
   return data.genres;
 }
 
 export const Fetching = (endpoint)=>{
-  const [data,setData] = useState([])
+  const [data,setData] = useState()
   const [loading,setLoading] = useState(false)
+  const [error,setError] = useState(false)
 
   const fetchData = async()=>{
       try {
           setLoading(true)
-          const response = await axios.get(`${endpoint}?include_adult=false&language=fr-FR`)
+          const response = await axios.get(endpoint)
           setLoading(false)
           setData(response.data.results)
       } catch (error) {
           console.log('error',error)
+          setError(error)
      }
   }
 
@@ -47,7 +48,7 @@ export const Fetching = (endpoint)=>{
       fetchData()
   },[endpoint])
 
-  return { data , loading}
+  return { data, loading, error}
 }
 
 export const FetchDetails = (endpoint)=>{
@@ -66,10 +67,9 @@ export const FetchDetails = (endpoint)=>{
             setError(error)
        }
     }
-
     useEffect(()=>{
         fetchData()
     },[endpoint])
 
-    return { data , loading, error}
+    return { data, loading, error}
 }

@@ -57,19 +57,6 @@ export async function checkUsernameAvailability(username) {
     return false; // Ou gérer l'erreur différemment selon vos besoins
   }
 }
-
-export const getTotalMoviesPerUser =  (user) => {
-  
-    const favorites = user.stats?.favorites || [];
-    const watchlist = user.stats?.watchlist || [];
-    const ratedMovies = user.stats?.reviews ? user.stats.reviews.map((review) => review.movieId) : [];
-    const allMovies = [...favorites, ...watchlist, ...ratedMovies];
-    // Use a Set to remove duplicates
-    const uniqueMovies = new Set(allMovies);
-    // Return the size of the Set
-    return uniqueMovies.size;
-};
-
 export const getTotalMoviesInApp = (users) => {
   let totalUniqueMovies = new Set();
   let uniqueFavorites = new Set();
@@ -105,7 +92,7 @@ export async function deleteUserAccount(userid) {
 }
 
 const getMovieDetails = async (movieId) => {
-  const response = await axios.get(`/movie/${movieId}?&language=fr`);
+  const response = await axios.get(`/movie/${movieId}`);
   return {
     title: response.data.title,
     releaseDate: response.data.release_date
@@ -176,59 +163,3 @@ export const subscribeToMovieStats = (callback) => {
     callback(Object.values(movieStats));
   });
 };
-
-// export const getMovieStats = async () => {
-//   const usersRef = collection(db, 'users');
-//   const snapshot = await getDocs(usersRef);
-
-//   let movieStats = {};
-
-//   snapshot.forEach(doc => {
-//     const userData = doc.data().stats || {};
-
-//     if (Array.isArray(userData.watchlist)) {
-//       userData.watchlist.forEach(movieId => {
-//         if (!movieStats[movieId]) movieStats[movieId] = { id: movieId, watchlist: 0, favorites: 0, reviews: 0, ratings: [] };
-//         movieStats[movieId].watchlist++;
-//       });
-//     }
-
-//     if (Array.isArray(userData.favorites)) {
-//       userData.favorites.forEach(movieId => {
-//         if (!movieStats[movieId]) movieStats[movieId] = { id: movieId, watchlist: 0, favorites: 0, reviews: 0, ratings: [] };
-//         movieStats[movieId].favorites++;
-//       });
-//     }
-
-//     if (Array.isArray(userData.reviews)) {
-//       userData.reviews.forEach(review => {
-//         if (review && review.movieId && typeof review.rating === 'number') {
-//           if (!movieStats[review.movieId]) movieStats[review.movieId] = { id: review.movieId, watchlist: 0, favorites: 0, reviews: 0, ratings: [] };
-//           movieStats[review.movieId].reviews++;
-//           movieStats[review.movieId].ratings.push(review.rating);
-//         }
-//       });
-//     }
-//   });
-
-//   for (const movieId in movieStats) {
-//     const ratings = movieStats[movieId].ratings;
-//     if (ratings.length > 0) {
-//       movieStats[movieId].averageRating = ratings.reduce((a, b) => a + b) / ratings.length;
-//     } else {
-//       movieStats[movieId].averageRating = null;
-//     }
-//     delete movieStats[movieId].ratings;
-
-//     const movieDetails = await getMovieDetails(movieId);
-//     if (movieDetails) {
-//       movieStats[movieId].title = movieDetails.title || "Titre inconnu";
-//       movieStats[movieId].releaseDate = movieDetails.releaseDate || "Date inconnue";
-//     } else {
-//       movieStats[movieId].title = "Titre inconnu";
-//       movieStats[movieId].releaseDate = "Date inconnue";
-//     }
-//   }
-
-//   return Object.values(movieStats);
-// };

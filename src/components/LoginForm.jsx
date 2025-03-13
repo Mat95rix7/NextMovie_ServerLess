@@ -3,7 +3,7 @@ import { useAuth } from '../hooks/useAuth';
 import { useNavigate, Link } from 'react-router-dom';
 import { validateField } from '../services/errorMessages';
 import  SuccessModal  from './SuccessModal';
-import { getUserProfile } from '../hooks/userProfile';
+import { getUserProfile } from '../services/userProfile';
 import ResetPasswordModal from './ResetPassword';
 export function LoginForm() {
 
