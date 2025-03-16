@@ -11,8 +11,6 @@
     { "src": "/api/movies/now-playing", "dest": "/api/movies/now-playing.js" },
     { "src": "/api/movies/top-rated", "dest": "/api/movies/top-rated.js" },
     { "src": "/api/movies/upcoming", "dest": "/api/movies/upcoming.js" },
-    { "src": "/api/movies/search", "dest": "/api/movies/search.js" },
-    { "src": "/api/movies/discover", "dest": "/api/movies/discover.js" },
     { "src": "/api/movies/([^/]+)", "dest": "/api/movies/[id].js?id=$1" },
     { "src": "/api/movies/trending/([^/]+)", "dest": "/api/movies/trending/[timeWindow].js?timeWindow=$1" },
     { "src": "/api/configuration", "dest": "/api/configuration/index.js" },
