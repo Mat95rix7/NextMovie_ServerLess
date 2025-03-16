@@ -2,16 +2,12 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 export async function fetchMovies(query, page = 1) {
-  // const searchResponse = await axios.get(`/search/movie?&query=${query}&page=${page}`)
-  const searchResponse = await axios.get('/api/movies/search', {
-    params: { query, page }
-});
-console.log(searchResponse);
+  const searchResponse = await axios.get(`/search/movie?&query=${query}&page=${page}`)
   const searchData = searchResponse.data;
   
   let movies = await Promise.all(
     searchData.results.map(async (movie) => {
-      const detailsResponse = await axios.get(`/api/movies/${movie.id}`)
+      const detailsResponse = await axios.get(`/movie/${movie.id}`)
       const details = detailsResponse.data;
       return { ...movie, runtime: details.runtime };
     })
@@ -26,7 +22,7 @@ console.log(searchResponse);
 }
 
 export async function fetchGenres() {
-  const response = await axios.get('/api/movies/genres/list')
+  const response = await axios.get('/genre/movie/list')
   const data = response.data;
   return data.genres;
 }

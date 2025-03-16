@@ -13,7 +13,7 @@ function App() {
   const dispatch = useDispatch()
   const fetchNowPlaying = async()=>{
     try {
-        const response = await axios.get('/api/movies/now-playing')
+        const response = await axios.get('/movie/now_playing')
         dispatch(setBannerData(response.data.results))
     } catch (error) {
         console.error("error",error)
@@ -22,7 +22,7 @@ function App() {
 
   const fetchConfiguration = async()=>{
     try {
-        const response = await axios.get("/api/configuration")
+        const response = await axios.get("/configuration")
         dispatch(setImageURL(response.data.images.secure_base_url+"original"))
     } catch (error) {
         console.error(error);

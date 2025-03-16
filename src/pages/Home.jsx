@@ -3,11 +3,11 @@ import { Fetching } from '../services/tmdb';
 import HorizontalScollCard from '../components/HorizontalScollCard';
 const Home = () => {
   
-  const { data : topTrendingData } = Fetching('/api/movies/trending/day')
+  const { data : topTrendingData } = Fetching('/trending/movie/day')
   const { data : nowPlayingData } = Fetching('/movie/now_playing')
-  const { data : topRatedData } = Fetching('/api/movies/top-rated')
-  const { data : topPopularData } = Fetching('/api/movies/popular')
-  const { data : topUpcomingData } = Fetching('/api/movies/upcoming')
+  const { data : topRatedData } = Fetching('/movie/top_rated')
+  const { data : topPopularData } = Fetching('/movie/popular')
+  const { data : topUpcomingData } = Fetching('/movie/upcoming')
 
   return (
     <div className='min-w-[320px]'>

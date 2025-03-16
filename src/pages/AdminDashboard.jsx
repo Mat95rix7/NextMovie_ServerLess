@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Shield, Users, User, Film, Armchair} from 'lucide-react';
 import { subscribeToUsers } from '../config/firebase';
+import CinemasData from '../data/cinemas.json';
 import UserManagement from '../components/UsersManagement';
 import MovieManagement from '../components/MoviesManagement';
 import TheaterManagement from '../components/TheatersManagement';
@@ -40,46 +41,14 @@ const TabButton = ({ isActive, onClick, children }) => (
 );
 
 function AdminDashboard() {
-
-  const [state, setState] = useState({ 
+  const [state, setState] = useState({
     activeTab: 'users',
     users: [],
     movieStats: [],
-    theaters: [],
+    theaters: CinemasData,
     loading: false,
     error: null
   });
-
-  useEffect(() => {
-    const fetchCinemas = async () => {
-      
-      setState(prevState => ({ ...prevState, loading: true }));
-
-      try {
-        // Remplacez ici par l'URL de votre API, en local ou en production
-        const response = await fetch('api/cinemas');
-        console.log(response);     
-        if (!response.ok) {
-          throw new Error('Erreur lors de la récupération des cinémas');
-        }
-        const cinemasData = await response.json(); // Récupération des données JSON
-        console.log(cinemasData);
-        setState(prevState => ({
-          ...prevState,
-          theaters: cinemasData,  // On met à jour l'état des cinémas
-          loading: false,  // On indique que la récupération est terminée
-        }));
-      } catch (error) {
-        setState(prevState => ({
-          ...prevState,
-          error: error.message,  // En cas d'erreur, on met à jour l'état avec l'erreur
-          loading: false, // Fin du chargement même en cas d'erreur
-        }));
-      }
-    };
-
-    fetchCinemas();
-  }, []);
 
   const { user, isAdmin } = useAuth2();
   const navigate = useNavigate();
