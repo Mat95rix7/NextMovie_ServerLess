@@ -1,8 +1,8 @@
 import { useEffect, useState, useMemo, useCallback } from 'react';
 import axios from 'axios';
 import HorizontalScrollCard from '../components/HorizontalScollCard';
-import { useGenres } from '../hooks/useGenres';
 import { Helmet } from 'react-helmet-async';
+import genres from '../data/genres.json';
 
 const ExplorePage = () => {
   const [moviesByGenre, setMoviesByGenre] = useState({});
@@ -10,14 +10,12 @@ const ExplorePage = () => {
   const [error, setError] = useState(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
-  const { genres } = useGenres();
-
   useEffect(() => {
     const fetchMoviesByGenre = async (genreId) => {
       try {
-        const response = await axios.get(
-          `/discover/movie?with_genres=${genreId}`
-        );
+        const response = await axios.get(`/api/movies/discover`, {
+          params: { genreId }
+      });
         return { genreId, movies: response.data.results };
       } catch (err) {
         console.error(`Erreur pour le genre ${genreId}:`, err);

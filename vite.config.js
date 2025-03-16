@@ -7,6 +7,10 @@ export default defineConfig({
   server: {
     host: true, // Permet l'accès via le réseau local
     port: 3000, // Port par défaut (vous pouvez le changer)
+    open: true, // Ouvre le navigateur automatiquement
+    proxy: {
+      '/api': 'http://localhost:5000',
+    },
   },
   build: {
     outDir: "dist" // Par défaut, Vite construit dans "dist"

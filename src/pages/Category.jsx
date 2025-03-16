@@ -49,27 +49,27 @@ function CategoryPage() {
         
         switch (category) {
             case "trending": {
-                endpoint = '/trending/movie/day';
+                endpoint = '/api/movies/trending/day';
                 categoryHeading = "Trending Movies";
                 break;
             }
             case "now-playing": {
-                endpoint = '/movie/now_playing';
+                endpoint = '/api/movies/now-playing';
                 categoryHeading = "Now Playing Movies";
                 break;
             }
             case "upcoming": {
-                endpoint = '/movie/upcoming';
+                endpoint = '/api/movies/upcoming';
                 categoryHeading = "Upcoming Movies";
                 break;
             }
             case "top-rated": {
-                endpoint = '/movie/top_rated';
+                endpoint = '/api/movies/top-rated';
                 categoryHeading = "Top Rated Movies";
                 break;
             }
             case "popular": {
-                endpoint = '/movie/popular';
+                endpoint = '/api/movies/popular';
                 categoryHeading = "Popular Movies";
                 break;
             }
