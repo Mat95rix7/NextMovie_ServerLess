@@ -11,14 +11,6 @@ import HelmetSeo from './components/HelmetSeo';
 function App() {
   
   const dispatch = useDispatch()
-  // const fetchNowPlaying = async()=>{
-  //   try {
-  //       const response = await axios.get('/api/movies/now-playing')
-  //       dispatch(setBannerData(response.data.results))
-  //   } catch (error) {
-  //       console.error("error",error)
-  //   }
-  // }
   const fetchNowPlaying = async () => {
     try {
       const response = await axios.get('/api/movies/now-playing');

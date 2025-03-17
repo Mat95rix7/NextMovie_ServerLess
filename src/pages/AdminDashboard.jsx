@@ -57,13 +57,11 @@ function AdminDashboard() {
 
       try {
         // Remplacez ici par l'URL de votre API, en local ou en production
-        const response = await fetch('api/cinemas');
-        console.log(response);     
+        const response = await fetch('api/cinemas');    
         if (!response.ok) {
           throw new Error('Erreur lors de la récupération des cinémas');
         }
         const cinemasData = await response.json(); // Récupération des données JSON
-        console.log(cinemasData);
         setState(prevState => ({
           ...prevState,
           theaters: cinemasData,  // On met à jour l'état des cinémas
