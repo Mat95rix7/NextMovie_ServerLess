@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils';
 import { Helmet } from 'react-helmet-async';
 
 const MovieDetails = () => {
-  const imageURL = import.meta.env.VITE_POSTER;
+  const imageURL = import.meta.env.VITE_BASE_IMAGE_URL;
   const [playVideo, setPlayVideo] = useState(false);
   const [playVideoId, setPlayVideoId] = useState("");
   
@@ -129,14 +129,14 @@ const MovieDetails = () => {
           <meta name="keywords" content={`film, ${data.title}`} />
           <meta property="og:title" content={data.title} />
           <meta property="og:description" content={data.overview} />
-          <meta property="og:image" content={`https://image.tmdb.org/t/p/w500${data.poster_path}`} />
+          <meta property="og:image" content={`${imageURL}w500${data.poster_path}`} />
           <meta property="og:url" content={`https://nextmoviez.vercel.app/movie/${data.id}`} />
       </Helmet>
       <div>
         <div className='w-full h-[280px] relative hidden lg:block'>
           <div className='w-full h-full'>
             <img
-              src={imageURL + data?.backdrop_path}
+              src={imageURL+'original'+data?.backdrop_path}
               className='h-full w-full object-cover'
               alt={data.title}
             />
@@ -148,7 +148,7 @@ const MovieDetails = () => {
           <div className="w-full md:w-3/4 md:mx-auto lg:w-1/4 flex-shrink-0">
             {data.poster_path && (
               <img
-                src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
+                src={`${imageURL}w500${data.poster_path}`}
                 alt={data.title}
                 className="w-full rounded-lg shadow-xl"
               />
@@ -255,7 +255,7 @@ const MovieDetails = () => {
                   <div key={actor.id} className="text-center">
                     {actor.profile_path ? (
                       <img
-                        src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
+                        src={`${imageURL}w185${actor.profile_path}`}
                         alt={actor.name}
                         className="w-1/2 rounded-xl mx-auto mb-2"
                       />

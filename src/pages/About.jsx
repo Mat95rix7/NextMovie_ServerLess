@@ -92,7 +92,7 @@ const AboutPage = () => {
         </Card>
 
         {/* Section Créateur */}
-        <Card className="overflow-hidden hover:shadow-xl transition-shadow duration-300">
+        <Card className="overflow-hidden hover:shadow-xl transition-shadow duration-300 bg-gray-200">
           <CardContent className="p-8">
             <div className="flex flex-col md:flex-row items-center gap-8">
               <div className="relative group">

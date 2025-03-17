@@ -62,7 +62,7 @@ function UserStats({ stats }) {
       try {
         const movieData = await Promise.all(
           missingIds.map(async (id) => {
-            const response = await axios.get(`/movie/${id}`);
+            const response = await axios.get(`/api/movies/${id}`);
             return response.data;
           })
         );

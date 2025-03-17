@@ -92,7 +92,7 @@ export async function deleteUserAccount(userid) {
 }
 
 const getMovieDetails = async (movieId) => {
-  const response = await axios.get(`/movie/${movieId}`);
+  const response = await axios.get(`/api/movies/${movieId}`);
   return {
     title: response.data.title,
     releaseDate: response.data.release_date

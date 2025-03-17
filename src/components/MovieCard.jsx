@@ -9,6 +9,8 @@ import { useAuth } from '../hooks/useAuth';
 
 const MovieCard = ({ data }) => {
 
+  const imageURL = import.meta.env.VITE_BASE_IMAGE_URL
+
  const { user } = useAuth()
   let  userId
   
@@ -55,7 +57,7 @@ const MovieCard = ({ data }) => {
   return (
           <div onClick={handleDetailsClick} className="relative group overflow-hidden min-w-[230px] rounded-lg shadow-lg transition-all duration-300 hover:scale-105 mb-8 mt-8 cursor-pointer">
             <img
-              src={ data.poster_path ? `https://image.tmdb.org/t/p/w500${data.poster_path}` : NoImage }
+              src={ data.poster_path ? `${imageURL}w500${data.poster_path}` : NoImage }
               alt={data.title}
               className="w-full h-[400px] object-cover"
             />
