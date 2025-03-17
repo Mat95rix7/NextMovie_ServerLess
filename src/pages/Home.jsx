@@ -4,7 +4,7 @@ import HorizontalScollCard from '../components/HorizontalScollCard';
 const Home = () => {
   
   const { data : topTrendingData } = Fetching('/api/movies/trending/day')
-  const { data : nowPlayingData } = Fetching('/movie/now_playing')
+  const { data : nowPlayingData } = Fetching('/api/movies/now-playing')
   const { data : topRatedData } = Fetching('/api/movies/top-rated')
   const { data : topPopularData } = Fetching('/api/movies/popular')
   const { data : topUpcomingData } = Fetching('/api/movies/upcoming')
