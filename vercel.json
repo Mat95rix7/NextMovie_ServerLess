@@ -1,6 +1,22 @@
 {
+  "framework": "vite",
   "rewrites": [
-    { "source": "/api/:path*", "destination": "/api/:path*" },
+    { "source": "/api/movies/popular", "destination": "/api/movies/categories.js?category=popular" },
+    { "source": "/api/movies/now-playing", "destination": "/api/movies/categories.js?category=now-playing" },
+    { "source": "/api/movies/top-rated", "destination": "/api/movies/categories.js?category=top-rated" },
+    { "source": "/api/movies/upcoming", "destination": "/api/movies/categories.js?category=upcoming" },
+    { "source": "/api/movies/trending/:timeWindow", "destination": "/api/movies/categories.js?category=trending&timeWindow=:timeWindow" },
+    
+    { "source": "/api/movies/search", "destination": "/api/movies/finder.js?type=search" },
+    { "source": "/api/movies/discover", "destination": "/api/movies/finder.js?type=discover" },
+    { "source": "/api/movies/genres/list", "destination": "/api/movies/finder.js?type=genres" },
+    
+    { "source": "/api/movies/:id", "destination": "/api/movies/details.js?id=:id" },
+    
+    { "source": "/api/configuration", "destination": "/api/configuration/index.js" },
+    { "source": "/api/users", "destination": "/api/users/index.js" },
+    { "source": "/api/cinemas", "destination": "/api/cinemas/index.js" },
+    
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
