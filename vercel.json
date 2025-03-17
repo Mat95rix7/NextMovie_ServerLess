@@ -1,33 +1,6 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "api/**/*.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    { "src": "/api", "dest": "/api/index.js" },
-    { "src": "/api/movies", "dest": "/api/movies/index.js" },
-    
-
-    { "src": "/api/movies/popular", "dest": "/api/movies/categories.js?category=popular" },
-    { "src": "/api/movies/now-playing", "dest": "/api/movies/categories.js?category=now-playing" },
-    { "src": "/api/movies/top-rated", "dest": "/api/movies/categories.js?category=top-rated" },
-    { "src": "/api/movies/upcoming", "dest": "/api/movies/categories.js?category=upcoming" },
-    { "src": "/api/movies/trending/([^/]+)", "dest": "/api/movies/categories.js?category=trending&timeWindow=$1" },
-    
-
-    { "src": "/api/movies/search", "dest": "/api/movies/finder.js?type=search" },
-    { "src": "/api/movies/discover", "dest": "/api/movies/finder.js?type=discover" },
-  
-
-    { "src": "/api/movies/([^/]+)", "dest": "/api/movies/details.js?id=$1" },
-    
-
-    { "src": "/api/configuration", "dest": "/api/configuration/index.js" },
-    { "src": "/api/users", "dest": "/api/users/index.js" },
-    { "src": "/api/cinemas", "dest": "/api/cinemas/index.js" },
-    { "src": "/(.*)", "dest": "/index.html" }
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "/api/:path*" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
