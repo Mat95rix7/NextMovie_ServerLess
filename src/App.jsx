@@ -11,14 +11,26 @@ import HelmetSeo from './components/HelmetSeo';
 function App() {
   
   const dispatch = useDispatch()
-  const fetchNowPlaying = async()=>{
+  // const fetchNowPlaying = async()=>{
+  //   try {
+  //       const response = await axios.get('/api/movies/now-playing')
+  //       dispatch(setBannerData(response.data.results))
+  //   } catch (error) {
+  //       console.error("error",error)
+  //   }
+  // }
+  const fetchNowPlaying = async () => {
     try {
-        const response = await axios.get('/api/movies/now-playing')
-        dispatch(setBannerData(response.data.results))
+      const response = await axios.get('/api/movies/now-playing');
+      const moviesWithImages = response.data.results.filter(
+        movie => movie.backdrop_path !== null && movie.poster_path !== null
+      );
+      dispatch(setBannerData(moviesWithImages));
     } catch (error) {
-        console.error("error",error)
+      console.error("error", error);
     }
-  }
+  };
+
 
   const fetchConfiguration = async()=>{
     try {

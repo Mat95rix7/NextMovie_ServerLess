@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 import NoImage from '../assets/non_dispo.jpg'
 import { Star, Calendar, ThumbsUp } from 'lucide-react';
-import { fetchGenres } from '../services/tmdb'
+// import { fetchGenres } from '../services/tmdb'
+import genres from '../data/genres.json'
 import MovieActions from './profile/MovieActions';
 import { useAuth } from '../hooks/useAuth';
 
@@ -18,20 +19,20 @@ const MovieCard = ({ data }) => {
     userId = user.uid
   }
   
-  const [genres, setGenres] = useState([]);
+  // const [genres, setGenres] = useState([genreList]);
 
-  useEffect(() => {
-    const loadGenres = async () => {
-      try {
-        const genresList = await fetchGenres();
-        setGenres(genresList || []);
-      } catch (error) {
-        console.error('Erreur lors du chargement des genres:', error);
-        setGenres([]);
-      }
-    };
-    loadGenres();
-  }, []);
+  // useEffect(() => {
+  //   const loadGenres = async () => {
+  //     try {
+  //       const genresList = await fetchGenres();
+  //       setGenres(genresList || []);
+  //     } catch (error) {
+  //       console.error('Erreur lors du chargement des genres:', error);
+  //       setGenres([]);
+  //     }
+  //   };
+  //   loadGenres();
+  // }, []);
   const normalizeData = (data) => {
     const normalizedData = { ...data };
     if (Array.isArray(data.genres)) {

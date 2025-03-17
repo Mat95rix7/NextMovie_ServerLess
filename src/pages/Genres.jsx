@@ -3,7 +3,7 @@ import { useParams, useLocation } from 'react-router-dom';
 import MovieCard from '../components/MovieCard';
 import axios from 'axios';
 import { Helmet } from 'react-helmet-async';
-import { useGenres } from '../hooks/useGenres';
+import genres from '../data/genres.json';
 
 function GenrePage() {
   const { genreId } = useParams();
@@ -13,8 +13,6 @@ function GenrePage() {
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
   const [currentGenre, setCurrentGenre] = useState(null);
-
-  const { genres } = useGenres();
 
   const dataFromState = location.state?.data; 
   const headingFromState = location.state?.heading;
@@ -36,14 +34,20 @@ function GenrePage() {
     }
   }, [genreId, genres, dataFromState, headingFromState]);
 
+
   useEffect(() => {
     if (!dataFromState && currentGenre) {
       const fetchMovies = async () => {
         setLoading(true);
         try {
-          const response = await axios.get(
-            `/discover/movie?with_genres=${currentGenre.id}&page=${page}`
-          );
+          let genreId = currentGenre.id;
+          const response = await axios.get(`/api/movies/discover`, {
+            params: { 
+              genreId,
+              page,
+            },
+          });
+          console.log(response);
 
           if (response.status !== 200) {
             throw new Error('Erreur lors de la récupération des données');

@@ -9,9 +9,12 @@ import { useAuth } from '../hooks/useAuth';
 import { useMovieInteractions } from '../hooks/useMovieInteractions';
 import { cn } from '@/lib/utils';
 import { Helmet } from 'react-helmet-async';
+import NoImage from '../assets/non_dispo.jpg'
 
 const MovieDetails = () => {
+
   const imageURL = import.meta.env.VITE_BASE_IMAGE_URL;
+  
   const [playVideo, setPlayVideo] = useState(false);
   const [playVideoId, setPlayVideoId] = useState("");
   
@@ -136,7 +139,9 @@ const MovieDetails = () => {
         <div className='w-full h-[280px] relative hidden lg:block'>
           <div className='w-full h-full'>
             <img
-              src={imageURL+'original'+data?.backdrop_path}
+              src= {data?.backdrop_path 
+              ? `${imageURL}original${data.backdrop_path}` 
+              : NoImage }
               className='h-full w-full object-cover'
               alt={data.title}
             />

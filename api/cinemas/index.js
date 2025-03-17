@@ -1,7 +1,9 @@
 import path from 'path';
 import { promises as fs } from 'fs';
+import { setCorsHeaders } from '../../utils/setHeaders.js';
 
 export default async function handler(req, res) {
+  setCorsHeaders(res);
   try {
     const filePath = path.join(process.cwd(), 'public', 'cinemas.json');
     const data = await fs.readFile(filePath, 'utf-8');

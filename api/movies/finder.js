@@ -1,6 +1,10 @@
+import { setCorsHeaders } from "../../utils/setHeaders.js";
 import tmdbApi from "../../lib/tmdb-api.js";
 
 export default async function handler(req, res) {
+  
+  setCorsHeaders(res);
+  
   const { type, query, page = 1, genreId } = req.query;
   
   switch(type) {
