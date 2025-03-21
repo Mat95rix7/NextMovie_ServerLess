@@ -5,7 +5,7 @@ import axios from 'axios';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import { setBannerData,setImageURL } from './store/movieSlice';
-import  { AuthProvider } from './context/auth/AuthProvider';
+import  { AuthProvider } from './context/AuthProvider';
 import HelmetSeo from './components/HelmetSeo';
 
 function App() {

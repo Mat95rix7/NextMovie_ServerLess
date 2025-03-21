@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { validateField } from '../../services/errorMessages';
-import { updateProfile, checkUsernameAvailability } from '../../services/userProfile';
+import { updateUserProfile, checkUsernameAvailability } from '../../services/userProfile';
 import { toast } from 'react-hot-toast';
 
 function UsernameSection({ user, onDisplayNameUpdate, isOpen }) {
@@ -45,7 +45,7 @@ function UsernameSection({ user, onDisplayNameUpdate, isOpen }) {
     setIsDisplayNameLoading(true);
     if (usernameError || !displayName || displayName === user.displayName) return;
     try {
-      await updateProfile(user.uid, { displayName: displayName });
+      await updateUserProfile(user.uid, { displayName: displayName });
       const success = onDisplayNameUpdate(displayName);
       toast.success('Profil mis à jour avec succès');
       if (success) {

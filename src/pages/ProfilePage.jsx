@@ -6,7 +6,7 @@ import UsernameSection from "../components/profile/UsernameSection";
 import PasswordSection from "../components/profile/PasswordSection";
 import ProfilePhotoSection from "../components/profile/ProfilePhotoSection";
 import UserStats from "../components/profile/UserStats";
-import { useAuth2 } from "../context/auth/authContext";
+import { useAuth } from "../context/useAuth";
 import { Settings, User, Lock, Camera, ChevronRight, Loader2 } from "lucide-react";
 import PropTypes from "prop-types";
 
@@ -80,7 +80,7 @@ export function ProfilePage() {
     profilePhotoUrl: null
    });
   const [loading, setLoading] = useState(true);
-  const { user, setUser } = useAuth2();
+  const { user, setUser } = useAuth();
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);

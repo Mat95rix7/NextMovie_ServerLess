@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Trash2, Edit, Save, X} from 'lucide-react';
 import ConfirmationModal from './ConfirmationModal';
-import { deleteUserAccount, updateProfile } from '../../services/userProfile';
+import { deleteUserProfile, updateUserProfile } from '../../services/userProfile';
 import PropTypes from 'prop-types';
 import { Switch } from "@/components/ui/switch"
 
@@ -39,7 +39,7 @@ const UserRow = ({
   const handleSave = async () => {
     setIsLoading(true);
     try {
-      await updateProfile(user.id, { displayName: editedUsername, role: editedRole });
+      await updateUserProfile(user.id, { displayName: editedUsername, role: editedRole });
       onSave(user.id, editedUsername, editedRole);
       setIsEditing(false);
     } catch (error) {
@@ -60,7 +60,7 @@ const UserRow = ({
   const handleDeleteUser = async () => {
     setIsLoading(true);
     try {
-      await deleteUserAccount(user.id);
+      await deleteUserProfile(user.id);
       onDelete(user.id);
     } catch (error) {
       console.error('Erreur de suppression :', error);
@@ -75,7 +75,7 @@ const UserRow = ({
     setIsLoading(true);
     try {
       const newStatus = !isActive;
-      await updateProfile(user.id, { isActive: newStatus });
+      await updateUserProfile(user.id, { isActive: newStatus });
       setIsActive(newStatus);
     } catch (error) {
       console.error("Erreur lors de la mise à jour du statut du compte :", error);

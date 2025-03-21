@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useAuth } from '../hooks/useAuth';
-import { createUserProfile, checkUsernameAvailability } from '../services/userProfile';
+import {  checkUsernameAvailability } from '../services/userProfile';
 import { Link, useNavigate } from 'react-router-dom';
 import { validateField } from '../services/errorMessages';
 import  SuccessModal  from './SuccessModal';
+import  { signup } from '../services/auth';
 
 export function RegisterForm() {
 
@@ -11,6 +11,7 @@ export function RegisterForm() {
   const [validation, setValidation] = useState("");
   const [validUsername, setValidUsername] = useState("")
   const [showModal, setShowModal] = useState(false);
+
 
   const [formData, setFormData] = useState({
     displayName: '',
@@ -26,7 +27,7 @@ export function RegisterForm() {
     confirmPassword: ''
   });
 
-  const { signup } = useAuth();
+  // const { signup } = useAuth();
   const navigate = useNavigate()
 
   const handleChange = (e) => {
@@ -79,11 +80,7 @@ export function RegisterForm() {
       return
     }
     try {
-          const userCredential = await signup(formData.email, formData.password, formData.displayName);
-          await createUserProfile(userCredential.user.uid, {
-            displayName: formData.displayName,
-            email: formData.email
-          });
+          await signup(formData.email, formData.password, formData.displayName);
           setShowModal(true);
           navigate("/")
       } catch (error) {

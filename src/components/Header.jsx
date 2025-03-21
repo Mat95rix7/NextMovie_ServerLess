@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
-import { useAuth2 } from '../context/auth/authContext';
+import { logout } from '../services/auth';
+import  { useAuth }  from '../context/useAuth';
 import { toast } from 'react-hot-toast';
 import ThemeToggle from './ThemeToggle';
 import logo from '../assets/Logo.jpg';
@@ -15,16 +15,18 @@ import {
     DropdownMenuTrigger, 
 } from './ui/dropdown-menu';
 import { IoCompassOutline, IoHomeOutline, IoInformationCircleOutline, IoMailOutline, IoSearchOutline } from "react-icons/io5";
+import { set } from 'lodash';
 
 const HeaderComponent = () => {
     const navigate = useNavigate();
-    const { logout } = useAuth();
+
     const [isOpen, setIsOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const { user, isAdmin } = useAuth2();
+    const { user, setUser, isAdmin } = useAuth();
     const handleLogout = useCallback(async () => {
         try {
             await logout();
+            setUser(null);
             toast.success('Déconnexion réussie');
             navigate('/');
         } catch (error) {

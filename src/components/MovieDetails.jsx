@@ -5,7 +5,7 @@ import Divider from './Divider'
 import VideoPlay from './VideoPlay'
 import { NearbyCinemas } from './NearbyCinemas';
 import { FetchDetails } from '../services/tmdb';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../context/useAuth';
 import { useMovieInteractions } from '../hooks/useMovieInteractions';
 import { cn } from '@/lib/utils';
 import { Helmet } from 'react-helmet-async';

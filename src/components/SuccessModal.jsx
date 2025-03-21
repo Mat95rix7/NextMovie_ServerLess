@@ -7,8 +7,28 @@ import {
   DialogDescription 
 } from '@/components/ui/dialog';
 import { CheckCircle } from 'lucide-react';
+import { useEffect } from 'react';
 
 const SuccessModal = ({ showModal, setShowModal, type }) => {
+
+  useEffect(() => {
+    if (showModal) {
+      const timer = setTimeout(() => {
+        setShowModal(false);
+      }, 2000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [showModal, setShowModal]);
+
+  if (!showModal) return null;
+
+  const messages = {
+    connexion: "Connexion réussie!",
+    inscription: "Inscription réussie!",
+    reset: "Email de réinitialisation envoyé!",
+    update: "Profil mis à jour avec succès!"
+  };
 
   
   return (
@@ -47,7 +67,7 @@ const SuccessModal = ({ showModal, setShowModal, type }) => {
                 id="success-dialog-title"
                 className="text-2xl font-bold text-center text-gray-800"
               >
-                {type} réussie !
+                {messages[type] || "Opération réussie!"}
               </DialogTitle>
               <DialogDescription 
                 id="success-dialog-description"

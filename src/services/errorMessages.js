@@ -2,6 +2,7 @@ export const validateField = (name, value) => {
     switch (name) {
       
       case 'username':
+        if (!value) return '';
         if (value.length < 3) return 'Le nom d\'utilisateur doit contenir au moins 3 caractères';
         if (value.length > 20) return 'Le nom d\'utilisateur ne doit pas dépasser 20 caractères';
         if (!/^[a-zA-Z0-9_]+$/.test(value)) return "Le nom d'utilisateur ne peut contenir que des lettres, chiffres et _";
@@ -16,6 +17,7 @@ export const validateField = (name, value) => {
           return '';
   
       case 'email':
+        if (!value) return '';
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(value)) {
           return 'Veuillez entrer une adresse email valide';

@@ -1,14 +1,14 @@
 import { useState, useRef } from 'react';
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import { getAuth, updateProfile } from "firebase/auth";
-import { useAuth2 } from "../../context/auth/authContext";
+import { useAuth } from "../../context/useAuth";
 import { Camera, Loader2, Trash2 } from "lucide-react";
 import { toast } from "react-hot-toast";
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
 import { db, storage } from "../../config/firebase";
 
 const ProfilePhotoSection = () => {
-  const { user, setUser } = useAuth2();
+  const { user, setUser } = useAuth();
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef(null);
   const auth = getAuth();

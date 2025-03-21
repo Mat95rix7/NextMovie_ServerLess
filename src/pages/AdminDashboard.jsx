@@ -6,7 +6,7 @@ import MovieManagement from '../components/MoviesManagement';
 import TheaterManagement from '../components/TheatersManagement';
 import { subscribeToMovieStats, getTotalMoviesInApp } from '../services/userProfile';
 import { useNavigate } from 'react-router-dom';
-import { useAuth2 } from '../context/auth/authContext';
+import { useAuth } from '../context/useAuth';
 import PropTypes from 'prop-types';
 
 const StatCard = ({ icon: Icon, title, value }) => (
@@ -79,7 +79,7 @@ function AdminDashboard() {
     fetchCinemas();
   }, []);
 
-  const { user, isAdmin } = useAuth2();
+  const { user, isAdmin } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {

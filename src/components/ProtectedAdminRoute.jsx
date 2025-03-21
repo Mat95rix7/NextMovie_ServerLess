@@ -1,8 +1,8 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth2 } from '../context/auth/authContext';
+import { useAuth } from '../context/useAuth';
 
 const ProtectedAdminRoute = () => {
-  const { isAdmin, isAuthenticated, user, loading } = useAuth2();
+  const { isAdmin, isAuthenticated, user, loading } = useAuth();
 
   if (loading) {
     return <div className="flex justify-center items-center min-h-screen">Vérification des droits...</div>

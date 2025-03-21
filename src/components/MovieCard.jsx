@@ -6,7 +6,7 @@ import { Star, Calendar, ThumbsUp } from 'lucide-react';
 // import { fetchGenres } from '../services/tmdb'
 import genres from '../data/genres.json'
 import MovieActions from './profile/MovieActions';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../context/useAuth';
 
 const MovieCard = ({ data }) => {
 
