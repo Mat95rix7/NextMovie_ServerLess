@@ -14,7 +14,7 @@
     { "source": "/api/movies/:id", "destination": "/api/movies/details.js?id=:id" },
     
     { "source": "/api/configuration", "destination": "/api/configuration/index.js" },
-    { "source": "/api/auth/action", "destination": "/api/auth/action.js", "methods": ["POST"] },
+    { "source": "/api/auth/action", "destination": "/api/auth/action.js"},
     { "source": "/api/cinemas", "destination": "/api/cinemas/index.js" },
     
     { "source": "/(.*)", "destination": "/index.html" }
